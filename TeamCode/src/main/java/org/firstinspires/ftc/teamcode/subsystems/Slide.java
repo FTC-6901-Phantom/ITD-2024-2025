@@ -6,18 +6,17 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class SlideSubsystem {
-    private DcMotor leftSlide;
-    private DcMotor rightSlide;
+public class Slide {
+    private final DcMotor leftSlide;
+    private final DcMotor rightSlide;
 
     private final HardwareMap hardwareMap;
     private final Gamepad gamepad1;
 
-    public SlideSubsystem(OpMode opMode){
+    public Slide(OpMode opMode){
         gamepad1 = opMode.gamepad1;
         hardwareMap = opMode.hardwareMap;
-    }
-    public void init(){
+
         leftSlide = hardwareMap.get(DcMotor.class, "leftSlide");
         rightSlide = hardwareMap.get(DcMotor.class, "rightSlide");
 
@@ -27,6 +26,7 @@ public class SlideSubsystem {
         leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
+
     public void teleOpCommand(){
         if (gamepad1.dpad_down) {
             leftSlide.setPower(.5);

@@ -3,27 +3,27 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.ClawSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.SlideSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.subsystems.Claw;
+import org.firstinspires.ftc.teamcode.subsystems.Drive;
+import org.firstinspires.ftc.teamcode.subsystems.Slide;
 
 @TeleOp (name = "TeleOp6901")
 public class TeleOp6901 extends OpMode {
 
     //declare subsystems
-    ArmSubsystem arm = new ArmSubsystem(this);
-    ClawSubsystem claw = new ClawSubsystem(this);
-    DriveSubsystem drive = new DriveSubsystem(this);
-    SlideSubsystem slide = new SlideSubsystem(this);
+    Arm arm;
+    Claw claw;
+    Drive drive;
+    Slide slide;
 
     @Override
     public void init() {
-        //init subsystems
-        arm.init();
-        claw.init();
-        drive.init();
-        slide.init();
+        // create hardwares subsystems using their constructors and initalize motors and servos
+        arm = new Arm(this);
+        claw = new Claw(this);
+        drive = new Drive(this);
+        slide = new Slide(this);
     }
 
     @Override
