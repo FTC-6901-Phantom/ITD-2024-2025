@@ -11,6 +11,12 @@ public class Arm {
     //set positions
     public static double UP = .4;
     public static double DOWN = 0.2;
+    public static double INITIAL_POSITION = 0.4;
+    public static double CHANGE_POS = 0.0003;
+
+    private double arm_left_position = INITIAL_POSITION;
+    private double arm_rigth_position = INITIAL_POSITION;
+
 
     //create hardware variables
     private final Servo armLeft;
@@ -48,24 +54,19 @@ public class Arm {
         }
     }
 
-    public static double initialPostition = 0.4;
-    public double arm_left_position = initialPostition;
-    public double arm_rigth_position = initialPostition;
-    private static final double changePos = 0.0003;
-
     public void testCommand() {
 
         if(gamepad1.a){
-            arm_left_position +=changePos;
+            arm_left_position += CHANGE_POS;
         }
         else if(gamepad1.b){
-            arm_left_position -=changePos;
+            arm_left_position -= CHANGE_POS;
         }
         if(gamepad1.x){
-            arm_rigth_position +=changePos;
+            arm_rigth_position += CHANGE_POS;
         }
         else if(gamepad1.y){
-            arm_rigth_position -=changePos;
+            arm_rigth_position -= CHANGE_POS;
         }
         armLeft.setPosition(arm_left_position);
         armRight.setPosition(arm_rigth_position);
