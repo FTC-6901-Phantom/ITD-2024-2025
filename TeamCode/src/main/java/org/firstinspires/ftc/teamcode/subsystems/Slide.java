@@ -7,6 +7,11 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Slide {
+
+    public static double POWER = 0.5;
+    public static int UP = 150;
+    public static int DOWN = 0;
+
     private final DcMotor leftSlide;
     private final DcMotor rightSlide;
 
@@ -25,25 +30,27 @@ public class Slide {
 
         leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void teleOpCommand(){
         if (gamepad1.dpad_down) {
-            leftSlide.setPower(.5);
-            leftSlide.setTargetPosition(0);
-            rightSlide.setPower(.5);
-            rightSlide.setTargetPosition(0);
+           moveMoters(DOWN);
         }
-        //down
         else if (gamepad1.dpad_up) {
-            leftSlide.setPower(-.5);
-            leftSlide.setTargetPosition(150);
-            rightSlide.setPower(-.5);
-            rightSlide.setTargetPosition(150);
+           moveMoters(UP);
         }
-        else  {
-            leftSlide.setPower(0);
-            rightSlide.setPower(0);
-        }
+    }
+
+    public void moveMoters(int position){
+        leftSlide.setTargetPosition(position);
+        rightSlide.setTargetPosition(position);
+        leftSlide.setPower(POWER);
+        rightSlide.setPower(POWER);
     }
 }
