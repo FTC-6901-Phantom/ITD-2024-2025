@@ -8,14 +8,17 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Claw {
-    //values
+    public static double INITIAL_POSITION = 0;
+    public double CHANGE_AMOUNT = 0.0003;
+    public static double CLOSED = 0.4;
+    public static double OPEN = 0;
+
+    private double leftClawPosition = INITIAL_POSITION;
+    private double rightClawPosition = INITIAL_POSITION;
 
     // create hardware variables
     private final Servo clawLeft;
     private final Servo clawRight;
-
-    public static double CLOSED;
-    public static double OPEN;
 
     private final HardwareMap hardwareMap;
     private final Gamepad gamepad2;
@@ -48,23 +51,20 @@ public class Claw {
         }
     }
 
-    public static double initialPosition = 0;
-    public double leftClawPosition = initialPosition;
-    public double rightClawPosition = initialPosition;
-    private static final double changePos = 0.0003;
+
     public void testCommand(){
 
         if(gamepad1.a){
-            leftClawPosition +=changePos;
+            leftClawPosition += CHANGE_AMOUNT;
         }
         else if(gamepad1.b){
-            leftClawPosition -=changePos;
+            leftClawPosition -= CHANGE_AMOUNT;
         }
         if(gamepad1.x){
-            rightClawPosition +=changePos;
+            rightClawPosition += CHANGE_AMOUNT;
         }
         else if(gamepad1.y){
-            rightClawPosition -=changePos;
+            rightClawPosition -= CHANGE_AMOUNT;
         }
         clawLeft.setPosition(leftClawPosition);
         clawRight.setPosition(rightClawPosition);
