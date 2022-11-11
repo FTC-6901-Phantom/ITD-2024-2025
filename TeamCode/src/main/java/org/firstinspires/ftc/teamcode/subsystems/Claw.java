@@ -10,8 +10,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Claw {
     public static double INITIAL_POSITION = 0;
     public double CHANGE_AMOUNT = 0.0003;
-    public static double CLOSED = 0.4;
-    public static double OPEN = 0;
+    public static double CLOSED_LEFT = 0.3;
+    public static double CLOSED_RIGHT = 0.6;
+    public static double OPEN_LEFT = 0.5;
+    public static double OPEN_RIGHT = 0.7;
 
     private double leftClawPosition = INITIAL_POSITION;
     private double rightClawPosition = INITIAL_POSITION;
@@ -42,12 +44,16 @@ public class Claw {
     public void teleOpCommand() {
 
         if (gamepad2.right_bumper){
-            clawLeft.setPosition(CLOSED);
-            clawRight.setPosition(CLOSED);
+            clawLeft.setPosition(CLOSED_LEFT);
+            clawRight.setPosition(CLOSED_RIGHT);
         }
         if (gamepad2.left_bumper){
-            clawLeft.setPosition(OPEN);
-            clawRight.setPosition(OPEN);
+            clawLeft.setPosition(OPEN_LEFT);
+            clawRight.setPosition(OPEN_RIGHT);
+        }
+        if (gamepad2.dpad_down){
+            clawLeft.setPosition(OPEN_LEFT);
+            clawRight.setPosition(OPEN_RIGHT);
         }
     }
 

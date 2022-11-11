@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Slide {
 
     public static double POWER = 0.5;
+
     public static int UP = 150;
     public static int DOWN = 0;
 
