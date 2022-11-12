@@ -31,9 +31,9 @@ public class Drive {
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
         rightRear = hardwareMap.get(DcMotor.class, "rightRear");
 
-        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRear.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
         leftRear.setDirection(DcMotorSimple.Direction.FORWARD);
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -44,14 +44,14 @@ public class Drive {
     }
 
     public void teleOpCommand() {
-        if (gamepad1.left_bumper) {
+        if (gamepad1.right_bumper) {
             speed = SLOW_SPEED;
         } else {
             speed = NORMAL_SPEED;
         }
-        leftFront.setPower((-gamepad1.left_stick_y + gamepad1.right_stick_x - gamepad1.left_stick_x) * speed);
-        leftRear.setPower((-gamepad1.left_stick_y + gamepad1.right_stick_x + gamepad1.left_stick_x) * speed);
-        rightRear.setPower((-gamepad1.left_stick_y - gamepad1.right_stick_x - gamepad1.left_stick_x) * speed);
-        rightFront.setPower((-gamepad1.left_stick_y - gamepad1.right_stick_x + gamepad1.left_stick_x) * speed);
+        leftFront.setPower((-gamepad1.left_stick_y - gamepad1.right_stick_x + gamepad1.left_stick_x) * speed);
+        leftRear.setPower((-gamepad1.left_stick_y - gamepad1.right_stick_x - gamepad1.left_stick_x) * speed);
+        rightRear.setPower((-gamepad1.left_stick_y + gamepad1.right_stick_x + gamepad1.left_stick_x) * speed);
+        rightFront.setPower((-gamepad1.left_stick_y + gamepad1.right_stick_x - gamepad1.left_stick_x) * speed);
     }
 }

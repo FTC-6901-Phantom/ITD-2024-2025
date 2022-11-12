@@ -9,8 +9,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Arm {
     //set positions
-    public static double UP = 0.6;
-    public static double DOWN = 0.9;
+    public static double UP = 0.55;
+    public static double DOWN = 1;
     public static double INITIAL_POSITION = 0;
     public static double CHANGE_POS = 0.0003;
 
@@ -52,7 +52,7 @@ public class Arm {
             armLeft.setPosition(DOWN);
             armRight.setPosition(DOWN);
         }
-        if (gamepad1.dpad_down){
+        if (gamepad2.dpad_down){
             armLeft.setPosition(DOWN);
             armRight.setPosition(DOWN);
         }
