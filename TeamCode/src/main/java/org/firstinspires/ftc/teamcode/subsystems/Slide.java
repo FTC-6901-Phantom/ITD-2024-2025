@@ -12,8 +12,10 @@ public class Slide {
 
     public static double POWER = 0.5;
 
-    public static int UP = 2400;
-    public static int DOWN = 0;
+    public static int HIGH = 2800;
+    public static int LOW = 870;
+    public static int MID = 1810 ;
+    public static int RESET = 0;
     private int position = 0;
 
     private final DcMotor leftSlide;
@@ -49,13 +51,17 @@ public class Slide {
     }
 
     public void teleOpCommand() {
-        if (gamepad2.dpad_down) moveMoters(DOWN);
+        if (gamepad2.dpad_down) moveMoters(RESET);
 
-        else if (gamepad2.dpad_up) moveMoters(UP);
+        if(gamepad2.dpad_left) moveMoters(LOW);
 
-        if (gamepad2.left_stick_y < -0.3) moveMoters(position + 1);
+        if(gamepad2.dpad_right) moveMoters(MID);
 
-        if (gamepad2.left_stick_y > 0.3) moveMoters(position - 1);
+        else if (gamepad2.dpad_up) moveMoters(HIGH);
+
+        if (gamepad2.right_stick_y < -0.3) moveMoters(position + 1);
+
+        if (gamepad2.right_stick_y > 0.3) moveMoters(position - 1);
 
         telemetry.addData("slide position", position);
 

@@ -9,8 +9,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Arm {
     //set positions
-    public static double UP = 0.55;
-    public static double DOWN = 1;
+    public static double HIGH = 0.55;
+    public static double MID = 0;
+    public static double LOW = 0;
+    public static double RESET = 1;
     public static double INITIAL_POSITION = 0;
     public static double CHANGE_POS = 0.0003;
 
@@ -43,18 +45,21 @@ public class Arm {
 
     public void teleOpCommand() {
         //up
-        if (gamepad2.a){
-            armLeft.setPosition(UP);
-            armRight.setPosition(UP);
-        }
-        //down
-        if (gamepad2.b){
-            armLeft.setPosition(DOWN);
-            armRight.setPosition(DOWN);
+        if (gamepad2.dpad_up){
+            armLeft.setPosition(HIGH);
+            armRight.setPosition(HIGH);
         }
         if (gamepad2.dpad_down){
-            armLeft.setPosition(DOWN);
-            armRight.setPosition(DOWN);
+            armLeft.setPosition(RESET);
+            armRight.setPosition(RESET);
+        }
+        if (gamepad2.dpad_left){
+            armLeft.setPosition(LOW);
+            armRight.setPosition(LOW);
+        }
+        if (gamepad2.dpad_right){
+            armLeft.setPosition(MID);
+            armLeft.setPosition(MID);
         }
     }
 

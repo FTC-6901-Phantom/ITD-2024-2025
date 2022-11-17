@@ -1,4 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmodes.autos;
 
-public class ParkinngAuto {
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
+@Autonomous
+public class ParkinngAuto{
+
 }
