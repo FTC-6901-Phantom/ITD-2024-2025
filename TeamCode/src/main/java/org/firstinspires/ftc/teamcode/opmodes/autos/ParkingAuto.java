@@ -22,10 +22,10 @@ public class ParkingAuto extends LinearOpMode {
 
     @Override
     public void runOpMode(){
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        TrajectorySequence myTrajectory = drive.trajectorySequenceBuilder(new Pose2d(-31, -61, Math.toRadians(-90)))
-                .forward(12)
-                .build();
+//        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+//        TrajectorySequence myTrajectory = drive.trajectorySequenceBuilder(new Pose2d(-31, -61, Math.toRadians(-90)))
+//                .forward(12)
+//                .build();
     }
 
 }
