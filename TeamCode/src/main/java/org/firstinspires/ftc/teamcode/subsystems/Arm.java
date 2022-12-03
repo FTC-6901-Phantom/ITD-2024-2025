@@ -83,4 +83,6 @@ public class Arm {
         telemetry.addData("right claw position", arm_rigth_position);
     }
 
+    public void init() {
+    }
 }

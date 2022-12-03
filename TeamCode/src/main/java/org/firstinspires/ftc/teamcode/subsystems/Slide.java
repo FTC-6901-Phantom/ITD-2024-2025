@@ -12,14 +12,13 @@ public class Slide {
 
     public static double POWER = 0.5;
 
-    public static int HIGH = 2800;
+    public static int HIGH = 2660;
     public static int LOW = 870;
     public static int MID = 1810 ;
     public static int RESET = 0;
     private int position = 0;
 
-    private final DcMotor leftSlide;
-    private final DcMotor rightSlide;
+    private final DcMotor slideMotor;
 
     private final HardwareMap hardwareMap;
     private final Gamepad gamepad2;
@@ -30,34 +29,28 @@ public class Slide {
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;
 
-        leftSlide = hardwareMap.get(DcMotor.class, "leftSlide");
-        rightSlide = hardwareMap.get(DcMotor.class, "rightSlide");
+        slideMotor = hardwareMap.get(DcMotor.class, "slide");
 
-        rightSlide.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftSlide.setDirection(DcMotorSimple.Direction.REVERSE);
+        slideMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftSlide.setTargetPosition(0);
-        rightSlide.setTargetPosition(0);
+        slideMotor.setTargetPosition(0);
 
-        leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
     }
 
     public void teleOpCommand() {
-        if (gamepad2.dpad_down) moveMoters(RESET);
+        if (gamepad2.dpad_down) moveReset();
 
-        if(gamepad2.dpad_left) moveMoters(LOW);
+        if(gamepad2.dpad_left) moveLow();
 
-        if(gamepad2.dpad_right) moveMoters(MID);
+        if(gamepad2.dpad_right) moveMid();
 
-        else if (gamepad2.dpad_up) moveMoters(HIGH);
+        else if (gamepad2.dpad_up) moveHigh();
 
         if (gamepad2.right_stick_y < -0.3) moveMoters(position + 1);
 
@@ -68,9 +61,20 @@ public class Slide {
     }
     public void moveMoters(int position){
         this.position = position;
-        leftSlide.setTargetPosition(position);
-        rightSlide.setTargetPosition(position);
-        leftSlide.setPower(POWER);
-        rightSlide.setPower(POWER);
+        slideMotor.setTargetPosition(position);
+        slideMotor.setPower(POWER);
+    }
+
+    public void moveHigh() {
+        moveMoters(HIGH);
+    }
+    public void moveMid(){
+        moveMoters(MID);
+    }
+    public void moveLow(){
+        moveMoters(LOW);
+    }
+    public void moveReset(){
+        moveMoters(RESET);
     }
 }

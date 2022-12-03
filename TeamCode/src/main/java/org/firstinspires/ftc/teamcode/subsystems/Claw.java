@@ -43,20 +43,20 @@ public class Claw {
 
     public void teleOpCommand() {
 
-        if (gamepad2.right_bumper){
-            clawLeft.setPosition(CLOSED_LEFT);
-            clawRight.setPosition(CLOSED_RIGHT);
-        }
-        if (gamepad2.left_bumper){
-            clawLeft.setPosition(OPEN_LEFT);
-            clawRight.setPosition(OPEN_RIGHT);
-        }
-        if (gamepad2.dpad_down){
-            clawLeft.setPosition(OPEN_LEFT);
-            clawRight.setPosition(OPEN_RIGHT);
-        }
+        if (gamepad2.right_bumper) closeClaw();
+        if (gamepad2.left_bumper) openClaw();
+        if (gamepad2.dpad_down) openClaw();
     }
 
+    public void closeClaw(){
+        clawLeft.setPosition(CLOSED_LEFT);
+        clawRight.setPosition(CLOSED_RIGHT);
+    }
+
+    public void openClaw(){
+        clawLeft.setPosition(OPEN_LEFT);
+        clawRight.setPosition(OPEN_RIGHT);
+    }
 
     public void testCommand(){
 
