@@ -21,68 +21,68 @@ public class Arm {
 
 
     //create hardware variables
-    private final Servo armLeft;
-    private final Servo armRight;
+//    private final Servo armLeft;
+//    private final Servo armRight;
+//
+//    private final HardwareMap hardwareMap;
+//    private final Gamepad gamepad2;
+//    private final Gamepad gamepad1;
+//    private final Telemetry telemetry;
 
-    private final HardwareMap hardwareMap;
-    private final Gamepad gamepad2;
-    private final Gamepad gamepad1;
-    private final Telemetry telemetry;
 
-
-    //Constructer
-    public Arm(OpMode opMode) {
-        hardwareMap = opMode.hardwareMap;
-        gamepad2 = opMode.gamepad2;
-        gamepad1 = opMode.gamepad1;
-        telemetry = opMode.telemetry;
-
-        armLeft = hardwareMap.get(Servo.class, "armLeft");
-        armRight = hardwareMap.get(Servo.class, "armRight");
-        armLeft.setDirection(Servo.Direction.FORWARD);
-        armRight.setDirection(Servo.Direction.REVERSE);
+//    //Constructer
+//    public Arm(OpMode opMode) {
+//        hardwareMap = opMode.hardwareMap;
+//        gamepad2 = opMode.gamepad2;
+//        gamepad1 = opMode.gamepad1;
+//        telemetry = opMode.telemetry;
+//
+//        armLeft = hardwareMap.get(Servo.class, "armLeft");
+//        armRight = hardwareMap.get(Servo.class, "armRight");
+//        armLeft.setDirection(Servo.Direction.FORWARD);
+//        armRight.setDirection(Servo.Direction.REVERSE);
+//    }
+//
+//    public void teleOpCommand() {
+//        //up
+//        if (gamepad2.dpad_up){
+//            armLeft.setPosition(HIGH);
+//            armRight.setPosition(HIGH);
+//        }
+//        if (gamepad2.dpad_down){
+//            armLeft.setPosition(RESET);
+//            armRight.setPosition(RESET);
+//        }
+//        if (gamepad2.dpad_left){
+//            armLeft.setPosition(LOW);
+//            armRight.setPosition(LOW);
+//        }
+//        if (gamepad2.dpad_right){
+//            armLeft.setPosition(MID);
+//            armLeft.setPosition(MID);
+//        }
+//    }
+//
+//    public void testCommand() {
+//
+//        if(gamepad1.a){
+//            arm_left_position += CHANGE_POS;
+//        }
+//        else if(gamepad1.b){
+//            arm_left_position -= CHANGE_POS;
+//        }
+//        if(gamepad1.x){
+//            arm_rigth_position += CHANGE_POS;
+//        }
+//        else if(gamepad1.y){
+//            arm_rigth_position -= CHANGE_POS;
+//        }
+//        armLeft.setPosition(arm_left_position);
+//        armRight.setPosition(arm_rigth_position);
+//        telemetry.addData("left claw position", arm_left_position);
+//        telemetry.addData("right claw position", arm_rigth_position);
+//    }
+//
+//    public void init() {
     }
 
-    public void teleOpCommand() {
-        //up
-        if (gamepad2.dpad_up){
-            armLeft.setPosition(HIGH);
-            armRight.setPosition(HIGH);
-        }
-        if (gamepad2.dpad_down){
-            armLeft.setPosition(RESET);
-            armRight.setPosition(RESET);
-        }
-        if (gamepad2.dpad_left){
-            armLeft.setPosition(LOW);
-            armRight.setPosition(LOW);
-        }
-        if (gamepad2.dpad_right){
-            armLeft.setPosition(MID);
-            armLeft.setPosition(MID);
-        }
-    }
-
-    public void testCommand() {
-
-        if(gamepad1.a){
-            arm_left_position += CHANGE_POS;
-        }
-        else if(gamepad1.b){
-            arm_left_position -= CHANGE_POS;
-        }
-        if(gamepad1.x){
-            arm_rigth_position += CHANGE_POS;
-        }
-        else if(gamepad1.y){
-            arm_rigth_position -= CHANGE_POS;
-        }
-        armLeft.setPosition(arm_left_position);
-        armRight.setPosition(arm_rigth_position);
-        telemetry.addData("left claw position", arm_left_position);
-        telemetry.addData("right claw position", arm_rigth_position);
-    }
-
-    public void init() {
-    }
-}

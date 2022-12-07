@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.acmerobotics.roadrunner.followers.HolonomicPIDVAFollower;
 import com.acmerobotics.roadrunner.followers.TrajectoryFollower;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
@@ -62,9 +63,15 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     public static double LATERAL_MULTIPLIER = 1;
 
-    public static double VX_WEIGHT = 1;
+    public static double VX_WEIGHT = 1.1;
     public static double VY_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
+
+    public static double NORMAL_SPEED = 0.6;
+    public static double FAST_SPEED = 1;
+    public static double SLOW_SPEED = 0.3;
+
+    public double speed;
 
     private TrajectorySequenceRunner trajectorySequenceRunner;
 
@@ -124,7 +131,7 @@ public class SampleMecanumDrive extends MecanumDrive {
         // and the placement of the dot/orientation from https://docs.revrobotics.com/rev-control-system/control-system-overview/dimensions#imu-location
         //
         // For example, if +Y in this diagram faces downwards, you would use AxisDirection.NEG_Y.
-         BNO055IMUUtil.remapZAxis(imu, AxisDirection.NEG_X);
+//         BNO055IMUUtil.remapZAxis(imu, AxisDirection.NEG_X);
 
         leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
         leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
@@ -312,7 +319,7 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     @Override
     public Double getExternalHeadingVelocity() {
-        return (double) imu.getAngularVelocity().zRotationRate;
+        return (double) imu.getAngularVelocity().yRotationRate;
     }
 
     public static TrajectoryVelocityConstraint getVelocityConstraint(double maxVel, double maxAngularVel, double trackWidth) {
@@ -325,28 +332,63 @@ public class SampleMecanumDrive extends MecanumDrive {
     public static TrajectoryAccelerationConstraint getAccelerationConstraint(double maxAccel) {
         return new ProfileAccelerationConstraint(maxAccel);
     }
-
-    public static double SLOW_SPEED = 0.3;
-    public static double NORMAL_SPEED = 0.8;
-
-    private double speed = NORMAL_SPEED;
-
-    public void teleOpInit(){
-        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    /**
+     * Square magnitude of number while keeping the sign.
+     */
+    private double squareInput(double input) {
+        return input * Math.abs(input);
+    }
+    public void resetImu(){
+        imu.initialize(new BNO055IMU.Parameters());
     }
 
-    public void teleOpCommand() {
-        if (gamepad1.right_bumper) {
-            speed = SLOW_SPEED;
-        } else {
-            speed = NORMAL_SPEED;
-        }
-        leftFront.setPower((-gamepad1.left_stick_y + gamepad1.right_stick_x + gamepad1.left_stick_x) * speed);
-        leftRear.setPower((-gamepad1.left_stick_y + gamepad1.right_stick_x - gamepad1.left_stick_x) * speed);
-        rightRear.setPower((-gamepad1.left_stick_y - gamepad1.right_stick_x + gamepad1.left_stick_x) * speed);
-        rightFront.setPower((-gamepad1.left_stick_y - gamepad1.right_stick_x - gamepad1.left_stick_x) * speed);
+    /**
+     *
+     *
+     * @param gyroAngle angle the bot is currently facing relative to start (radians)
+     */
+    public void driveFieldCentric(double strafeSpeed, double forwardSpeed, double turnSpeed, double gyroAngle) {
+        Vector2d input = new Vector2d(
+                strafeSpeed,
+                forwardSpeed
+        ).rotated(gyroAngle);
+
+        driveRobotCentric(
+                input.getX() * speed,
+                input.getY() * speed,
+                turnSpeed * speed
+        );
+    }
+
+    private void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turnSpeed) {
+        setWeightedDrivePower(
+                new Pose2d(
+                        forwardSpeed,
+                        -strafeSpeed,
+                        -turnSpeed
+                )
+        );
+    }
+
+    public void mechDrive() {
+        double strafeSpeed;
+        double forwardSpeed;
+        double turnSpeed;
+
+
+        strafeSpeed = squareInput(gamepad1.left_stick_x);
+        forwardSpeed = squareInput(-gamepad1.left_stick_y);
+        turnSpeed = squareInput(gamepad1.right_stick_x);
+
+        if (gamepad1.left_bumper) speed = SLOW_SPEED;
+        else if (gamepad1.right_bumper) speed = FAST_SPEED;
+        else speed = NORMAL_SPEED;
+
+        if (gamepad1.a) resetImu();
+
+
+        driveFieldCentric(strafeSpeed, forwardSpeed, turnSpeed, -getRawExternalHeading());
+//        driveRobotCentric(strafeSpeed, forwardSpeed, turnSpeed);
+
     }
 }

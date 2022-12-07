@@ -8,10 +8,10 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.util.PoseStorage;
 
 @Autonomous
-public class BlueParkingAuto extends LinearOpMode {
+public class ParkingAuto extends LinearOpMode {
 
     Pose2d startPose = new Pose2d(0, 0, (Math.toRadians(0)));
 
@@ -30,52 +30,34 @@ public class BlueParkingAuto extends LinearOpMode {
             telemetry.update();
         }
         waitForStart();
-        int tagNum = vision.getTag();
-
-        TrajectorySequence myTrajectory;
-        switch (tagNum) {
+        switch (vision.getTag()) {
             case 1: {
                 //
                 drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())
-                        .strafeRight(12)
-                        .turn(Math.toRadians(180))
-                        .addDisplacementMarker(slide::moveMid)
-                        .waitSeconds(1)
-                        .addDisplacementMarker(claw::openClaw)
-                        .waitSeconds(2)
-                        .strafeRight(4)
-                        .back(6)
+                        .forward(5)
+                        .addDisplacementMarker(claw::openExtra)
+                        .strafeLeft(6)
                         .build());
-                return;
+                break;
             }
             case 2: {
 
                 drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())
-                        .strafeRight(12)
-                        .turn(Math.toRadians(180))
-                        .addDisplacementMarker(slide::moveMid)
-                        .waitSeconds(1)
-                        .addDisplacementMarker(claw::openClaw)
-                        .waitSeconds(2)
-                        .strafeRight(4)
+                        .forward(5)
                         .build());
-                return;
+                break;
             }
             default: {
                 drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())
-                        .strafeRight(12)
-                        .turn(Math.toRadians(180))
-                        .addDisplacementMarker(slide::moveMid)
-                        .waitSeconds(1)
-                        .addDisplacementMarker(claw::openClaw)
-                        .waitSeconds(2)
-                        .strafeRight(4)
-                        .forward(6)
+                        .forward(5)
+                        .addDisplacementMarker(claw::openExtra)
+                        .strafeRight(6)
                         .build());
-                return;
+                break;
             }
 
         }
+        PoseStorage.currentPose = drive.getPoseEstimate();
     }
 
 }

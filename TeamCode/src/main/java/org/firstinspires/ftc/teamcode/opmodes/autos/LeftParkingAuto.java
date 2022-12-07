@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Vision;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous
-public class RedParkingAuto extends LinearOpMode {
+public class LeftParkingAuto extends LinearOpMode {
 
     Pose2d startPose = new Pose2d(0, 0, Math.toRadians(0));
 
@@ -38,37 +38,46 @@ public class RedParkingAuto extends LinearOpMode {
             case 1: {
                 //
                 drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())
-                        .strafeRight(12)
-                        .addDisplacementMarker(slide::moveMid)
+                        .addDisplacementMarker(claw::closeClaw)
                         .waitSeconds(1)
+                        .addDisplacementMarker(slide::moveUp)
+                        .strafeRight(7)
+                        .addDisplacementMarker(slide::moveHigh)
+                        .forward(5)
+                        .strafeRight(4)
                         .addDisplacementMarker(claw::openClaw)
-                        .waitSeconds(2)
-                        .strafeLeft(4)
-                        .forward(6)
+                        .waitSeconds(1)
+                        //parking
+                        .strafeLeft(15)
                         .build());
                 return;
             }
             case 2: {
 
                 drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())
-                        .strafeRight(12)
-                        .addDisplacementMarker(slide::moveMid)
-                        .waitSeconds(1)
+                        .addDisplacementMarker(claw::closeClaw)
+                        .addDisplacementMarker(slide::moveUp)
+                        .strafeRight(7)
+                        .forward(5)
+                        .addDisplacementMarker(slide::moveHigh)
+                        .strafeRight(4)
                         .addDisplacementMarker(claw::openClaw)
                         .waitSeconds(2)
-                        .strafeLeft(4)
+                        .strafeLeft(6)
                         .build());
                 return;
             }
             default: {
                 drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())
-                        .strafeRight(12)
-                        .addDisplacementMarker(slide::moveMid)
-                        .waitSeconds(1)
+                        .addDisplacementMarker(claw::closeClaw)
+                        .addDisplacementMarker(slide::moveUp)
+                        .strafeRight(7)
+                        .forward(5)
+                        .addDisplacementMarker(slide::moveHigh)
+                        .strafeRight(4)
                         .addDisplacementMarker(claw::openClaw)
                         .waitSeconds(2)
-                        .strafeLeft(4)
-                        .back(6)
+                                .strafeLeft(3)
                         .build());
                 return;
             }

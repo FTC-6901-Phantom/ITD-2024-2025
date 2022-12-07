@@ -10,12 +10,20 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Slide {
 
-    public static double POWER = 0.5;
+    public static double POWER = 0.8;
 
-    public static int HIGH = 2660;
-    public static int LOW = 870;
-    public static int MID = 1810 ;
+    //Junctions
+    public static int HIGH = 3373;
+    public static int MID = 2388 ;
+    public static int LOW = 1476;
     public static int RESET = 0;
+    public static int LIL_UP = 50;
+
+    //cone stack
+    public static int ONE = 612;
+    public static int TWO = 500;
+    public static int THREE = 355;
+
     private int position = 0;
 
     private final DcMotor slideMotor;
@@ -44,11 +52,19 @@ public class Slide {
     }
 
     public void teleOpCommand() {
-        if (gamepad2.dpad_down) moveReset();
+        //stack
+        if(gamepad2.y) moveOne();
 
-        if(gamepad2.dpad_left) moveLow();
+        if(gamepad2.x) moveTwo();
 
-        if(gamepad2.dpad_right) moveMid();
+        if(gamepad2.a) moveThree();
+
+        //junction
+        if(gamepad2.b) moveReset();
+
+        if(gamepad2.dpad_down) moveLow();
+
+        if(gamepad2.dpad_left) moveMid();
 
         else if (gamepad2.dpad_up) moveHigh();
 
@@ -64,7 +80,8 @@ public class Slide {
         slideMotor.setTargetPosition(position);
         slideMotor.setPower(POWER);
     }
-
+    //POSITIONS
+    //junctions
     public void moveHigh() {
         moveMoters(HIGH);
     }
@@ -76,5 +93,19 @@ public class Slide {
     }
     public void moveReset(){
         moveMoters(RESET);
+    }
+    public void moveUp(){
+        moveMoters(LIL_UP);
+    }
+
+    //cone stack
+    public void moveOne() {
+        moveMoters(ONE);
+    }
+    public void moveTwo(){
+        moveMoters(TWO);
+    }
+    public void moveThree(){
+        moveMoters(THREE);
     }
 }
