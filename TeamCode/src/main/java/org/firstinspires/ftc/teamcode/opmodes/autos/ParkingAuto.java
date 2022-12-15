@@ -30,7 +30,10 @@ public class ParkingAuto extends LinearOpMode {
             telemetry.update();
         }
         waitForStart();
-        switch (vision.getTag()) {
+        int tagNum = vision.getTag();
+
+
+        switch (tagNum) {
             case 1: {
                 //
                 drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())

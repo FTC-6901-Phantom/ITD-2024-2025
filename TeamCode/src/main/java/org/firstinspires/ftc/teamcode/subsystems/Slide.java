@@ -13,11 +13,12 @@ public class Slide {
     public static double POWER = 0.8;
 
     //Junctions
-    public static int HIGH = 3373;
+    public static int HIGH = 3250;
     public static int MID = 2388 ;
     public static int LOW = 1476;
     public static int RESET = 0;
     public static int LIL_UP = 50;
+    public static int LESS_HIGH = 2900;
 
     //cone stack
     public static int ONE = 612;
@@ -96,6 +97,9 @@ public class Slide {
     }
     public void moveUp(){
         moveMoters(LIL_UP);
+    }
+    public void moveHighLess(){
+        moveMoters(LESS_HIGH);
     }
 
     //cone stack
