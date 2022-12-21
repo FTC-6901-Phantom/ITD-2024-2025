@@ -13,17 +13,17 @@ public class Slide {
     public static double POWER = 0.8;
 
     //Junctions
-    public static int HIGH = 3250;
-    public static int MID = 2388 ;
-    public static int LOW = 1476;
+    public static int HIGH = 3270;
+    public static int MID = 2318 ;
+    public static int LOW = 1473;
     public static int RESET = 0;
-    public static int LIL_UP = 50;
+    public static int LIL_UP = 200;
     public static int LESS_HIGH = 2900;
 
     //cone stack
-    public static int ONE = 612;
-    public static int TWO = 500;
-    public static int THREE = 355;
+    public static int ONE = 520;
+    public static int TWO = 428;
+    public static int THREE = 276;
 
     private int position = 0;
 

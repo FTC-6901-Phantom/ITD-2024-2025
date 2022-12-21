@@ -39,7 +39,7 @@ public class LeftParkingAuto extends LinearOpMode {
         switch (tagNum) {
             case 1: {
                 //
-                drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())
+                drive.followTrajectorySequence(drive.trajectorySequenceBuilder(startPose)
                         .addDisplacementMarker(claw::closeClaw)
                         .addDisplacementMarker(slide::moveUp)
                         .waitSeconds(1)
@@ -63,7 +63,7 @@ public class LeftParkingAuto extends LinearOpMode {
             }
             case 2: {
 
-                drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())
+                drive.followTrajectorySequence(drive.trajectorySequenceBuilder(startPose)
                         .addDisplacementMarker(claw::closeClaw)
                         .addDisplacementMarker(slide::moveUp)
                         .waitSeconds(1)
@@ -84,7 +84,7 @@ public class LeftParkingAuto extends LinearOpMode {
                 break;
             }
             default: {
-                drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())
+                drive.followTrajectorySequence(drive.trajectorySequenceBuilder(startPose)
                         .addDisplacementMarker(claw::closeClaw)
                         .addDisplacementMarker(slide::moveUp)
                         .waitSeconds(1)

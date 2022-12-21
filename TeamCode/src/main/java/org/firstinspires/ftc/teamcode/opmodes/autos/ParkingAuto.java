@@ -36,25 +36,23 @@ public class ParkingAuto extends LinearOpMode {
         switch (tagNum) {
             case 1: {
                 //
-                drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())
-                        .forward(5)
-                        .addDisplacementMarker(claw::openExtra)
+                drive.followTrajectorySequence(drive.trajectorySequenceBuilder(startPose)
                         .strafeLeft(6)
+                        .forward(5)
                         .build());
                 break;
             }
             case 2: {
 
-                drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())
+                drive.followTrajectorySequence(drive.trajectorySequenceBuilder(startPose)
                         .forward(5)
                         .build());
                 break;
             }
             default: {
-                drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())
-                        .forward(5)
-                        .addDisplacementMarker(claw::openExtra)
+                drive.followTrajectorySequence(drive.trajectorySequenceBuilder(startPose)
                         .strafeRight(6)
+                        .forward(5)
                         .build());
                 break;
             }

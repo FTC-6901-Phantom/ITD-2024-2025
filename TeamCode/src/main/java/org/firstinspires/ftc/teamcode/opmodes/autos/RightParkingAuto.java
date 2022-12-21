@@ -1,6 +1,10 @@
 package org.firstinspires.ftc.teamcode.opmodes.autos;
 
+import androidx.annotation.NonNull;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -15,6 +19,8 @@ import org.firstinspires.ftc.teamcode.util.PoseStorage;
 public class RightParkingAuto extends LinearOpMode {
 
     Pose2d startPose = new Pose2d(0, -62, Math.toRadians(0));
+    TrajectoryVelocityConstraint vel = (v, pose2d, pose2d1, pose2d2) -> 20;
+    TrajectoryAccelerationConstraint accel = (v, pose2d, pose2d1, pose2d2) -> 25;
 
     @Override
     public void runOpMode() {
@@ -31,82 +37,53 @@ public class RightParkingAuto extends LinearOpMode {
             telemetry.update();
         }
 
-    waitForStart();
-    int tagNum = vision.getTag();
+        waitForStart();
 
-    TrajectorySequence myTrajectory;
-        switch (tagNum) {
+        TrajectorySequence start = drive.trajectorySequenceBuilder(startPose)
+                .addDisplacementMarker(claw::closeClaw)
+                .addDisplacementMarker(slide::moveUp)
+                .waitSeconds(1)
+                .strafeLeft(7.8)
+                .addDisplacementMarker(slide::moveHigh)
+                .forward(6.3)
+                .strafeLeft(4.2)
+                .waitSeconds(1)
+                .forward(0.8)
+                .addDisplacementMarker(slide::moveHighLess)
+                .waitSeconds(1)
+                .addDisplacementMarker(claw::openClaw)
+                .waitSeconds(2)
+                .back(2)
+                .addDisplacementMarker(slide::moveReset)
+                .addDisplacementMarker(claw::openExtra)
+                .build();
+
+        drive.followTrajectorySequence(start);
+
+        switch (vision.getTag()) {
         case 1: {
             //
-            drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())
-                    .addDisplacementMarker(claw::closeClaw)
-                    .addDisplacementMarker(slide::moveUp)
-                    .waitSeconds(1)
-                    .strafeLeft(8)
-                    .addDisplacementMarker(slide::moveHigh)
-                    .forward(5)
-                    .strafeLeft(4.1)
-                    .forward(0.5)
-                    .addDisplacementMarker(slide::moveHighLess)
-                    .waitSeconds(1)
-                    .addDisplacementMarker(claw::openClaw)
-                    .waitSeconds(2)
-                    .back(1)
-                    .addDisplacementMarker(slide::moveReset)
-                    .addDisplacementMarker(claw::openExtra)
-                    //parking
+            drive.followTrajectorySequence(drive.trajectorySequenceBuilder(start.end())
                     .strafeRight(4)
                     .build());
             break;
-        }
+            }
         case 2: {
 
-            drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())
-                    .addDisplacementMarker(claw::closeClaw)
-                    .addDisplacementMarker(slide::moveUp)
-                    .waitSeconds(1)
-                    .strafeLeft(8)
-                    .addDisplacementMarker(slide::moveHigh)
-                    .forward(5)
-                    .strafeLeft(4.1)
-                    .forward(0.5)
-                    .addDisplacementMarker(slide::moveHighLess)
-                    .waitSeconds(1)
-                    .addDisplacementMarker(claw::openClaw)
-                    .waitSeconds(2)
-                    .back(1)
-                    .addDisplacementMarker(slide::moveReset)
-                    .addDisplacementMarker(claw::openExtra)
-                    //parking
-                    .strafeRight(12)
+            drive.followTrajectorySequence(drive.trajectorySequenceBuilder(start.end())
+                    .strafeRight(10)
                     .build());
             break;
-        }
-        default: {
-            drive.followTrajectorySequence(drive.trajectorySequenceBuilder(new Pose2d())
-                    .addDisplacementMarker(claw::closeClaw)
-                    .addDisplacementMarker(slide::moveUp)
-                    .waitSeconds(1)
-                    .strafeLeft(8)
-                    .addDisplacementMarker(slide::moveHigh)
-                    .forward(5)
-                    .strafeLeft(4.1)
-                    .forward(0.5)
-                    .addDisplacementMarker(slide::moveHighLess)
-                    .waitSeconds(1)
-                    .addDisplacementMarker(claw::openClaw)
-                    .waitSeconds(2)
-                    .back(1)
-                    .addDisplacementMarker(slide::moveReset)
-                    .addDisplacementMarker(claw::openExtra)
-                    //parking
-                    .strafeRight(15)
+            }
+            case 3:
+            default: {
+            drive.followTrajectorySequence(drive.trajectorySequenceBuilder(start.end())
+                    .strafeRight(20, vel, accel)
                     .build());
             break;
-        }
+            }
 
+        }
+        PoseStorage.currentPose = drive.getPoseEstimate();
     }
-    PoseStorage.currentPose = drive.getPoseEstimate();
-
-}
 }
