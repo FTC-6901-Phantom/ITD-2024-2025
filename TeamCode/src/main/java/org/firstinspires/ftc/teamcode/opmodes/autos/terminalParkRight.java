@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmodes.autos;
 
-import androidx.annotation.NonNull;
-
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
@@ -16,7 +14,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 
 @Autonomous
-public class RightParkingAuto extends LinearOpMode {
+public class terminalParkRight extends LinearOpMode {
 
     Pose2d startPose = new Pose2d(0, -62, Math.toRadians(0));
     TrajectoryVelocityConstraint vel = (v, pose2d, pose2d1, pose2d2) -> 20;
@@ -40,21 +38,7 @@ public class RightParkingAuto extends LinearOpMode {
         waitForStart();
 
         TrajectorySequence start = drive.trajectorySequenceBuilder(startPose)
-                .addDisplacementMarker(claw::closeClaw)
-                .addDisplacementMarker(slide::moveUp)
-                .waitSeconds(1)
-                .strafeLeft(7.8)
-                .addDisplacementMarker(slide::moveHigh)
-                .forward(6.3)
-                .strafeLeft(4.2)
-                .waitSeconds(1)
-                .forward(0.8)
-                .addDisplacementMarker(slide::moveHighLess)
-                .waitSeconds(1)
-                .addDisplacementMarker(claw::openClaw)
-                .waitSeconds(2)
-                .back(2)
-                .addDisplacementMarker(slide::moveReset)
+                .strafeRight(5)
                 .build();
 
         drive.followTrajectorySequence(start);
@@ -63,21 +47,23 @@ public class RightParkingAuto extends LinearOpMode {
         case 1: {
             //
             drive.followTrajectorySequence(drive.trajectorySequenceBuilder(start.end())
-                    .strafeRight(4)
+                    .forward(4, vel, accel)
+                    .strafeLeft(10, vel, accel)
                     .build());
             break;
             }
         case 2: {
 
             drive.followTrajectorySequence(drive.trajectorySequenceBuilder(start.end())
-                    .strafeRight(10)
+                    .forward(4, vel, accel)
+                    .strafeRight(5, vel, accel)
                     .build());
             break;
             }
             case 3:
             default: {
             drive.followTrajectorySequence(drive.trajectorySequenceBuilder(start.end())
-                    .strafeRight(20, vel, accel)
+                    .forward(4, vel, accel)
                     .build());
             break;
             }

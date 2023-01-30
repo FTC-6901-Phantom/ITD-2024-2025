@@ -24,6 +24,7 @@ public class TeleOp6901 extends OpMode {
         claw = new Claw(this);
         drive = new SampleMecanumDrive(this);
         slide = new Slide(this);
+        arm = new Arm(this);
 
         drive.setPoseEstimate(PoseStorage.currentPose);
     }
@@ -34,5 +35,6 @@ public class TeleOp6901 extends OpMode {
         claw.teleOpCommand();
         drive.mechDrive();
         slide.teleOpCommand();
+        arm.testCommand();
     }
 }

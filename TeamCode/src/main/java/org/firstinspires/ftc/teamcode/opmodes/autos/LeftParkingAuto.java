@@ -53,7 +53,6 @@ public class LeftParkingAuto extends LinearOpMode {
                         .waitSeconds(2)
                         .back(1)
                         .addDisplacementMarker(slide::moveReset)
-                        .addDisplacementMarker(claw::openExtra)
                         //parking
                         .strafeLeft(10)
                         .forward(5)
@@ -77,7 +76,6 @@ public class LeftParkingAuto extends LinearOpMode {
                         .waitSeconds(2)
                         .back(1)
                         .addDisplacementMarker(slide::moveReset)
-                        .addDisplacementMarker(claw::openExtra)
                         //parking
                                 .strafeLeft(10)
                         .build());
@@ -98,7 +96,6 @@ public class LeftParkingAuto extends LinearOpMode {
                         .waitSeconds(2)
                         .back(1)
                         .addDisplacementMarker(slide::moveReset)
-                        .addDisplacementMarker(claw::openExtra)
                         //parking
                                 .strafeLeft(5)
                         .build());

@@ -15,7 +15,7 @@ public class Slide {
     //Junctions
     public static int HIGH = 3270;
     public static int MID = 2318 ;
-    public static int LOW = 1473;
+    public static int LOW = 582;
     public static int RESET = 0;
     public static int LIL_UP = 200;
     public static int LESS_HIGH = 2900;
@@ -27,7 +27,8 @@ public class Slide {
 
     private int position = 0;
 
-    private final DcMotor slideMotor;
+    private final DcMotor leftSlide;
+    private final DcMotor rightSlide;
 
     private final HardwareMap hardwareMap;
     private final Gamepad gamepad2;
@@ -38,17 +39,23 @@ public class Slide {
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;
 
-        slideMotor = hardwareMap.get(DcMotor.class, "slide");
+        leftSlide = hardwareMap.get(DcMotor.class, "leftSlide");
+        rightSlide = hardwareMap.get(DcMotor.class, "rightSlide");
 
-        slideMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftSlide.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightSlide.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        slideMotor.setTargetPosition(0);
+        leftSlide.setTargetPosition(0);
+        rightSlide.setTargetPosition(0);
 
-        slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
     }
 
@@ -73,13 +80,15 @@ public class Slide {
 
         if (gamepad2.right_stick_y > 0.3) moveMoters(position - 1);
 
-        telemetry.addData("slide position", position);
+        telemetry.addData("slides position", position);
 
     }
     public void moveMoters(int position){
         this.position = position;
-        slideMotor.setTargetPosition(position);
-        slideMotor.setPower(POWER);
+        leftSlide.setTargetPosition(position);
+        rightSlide.setTargetPosition(position);
+        leftSlide.setPower(POWER);
+        rightSlide.setPower(POWER);
     }
     //POSITIONS
     //junctions

@@ -8,15 +8,15 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Claw {
-    public static double INITIAL_POSITION = 0.5;
+    public static double INITIAL_POSITION = 0;
     public double CHANGE_AMOUNT = 0.0003;
-    public static double CLOSED = 0.50;
-    public static double OPEN = 0.79;
-    public static double OPEN_EXTRA = 0.86;
+    public static double CLOSED = 0.64;
+    public static double OPEN = 0.9;
+
 
     private double clawPosition = INITIAL_POSITION;
 
-    // create hardware variables
+//     create hardware variables
     private final Servo claw;
 
 
@@ -51,9 +51,6 @@ public class Claw {
         claw.setPosition(OPEN);
     }
 
-    public void openExtra(){
-        claw.setPosition(OPEN_EXTRA);
-    }
 
     public void testCommand(){
 
@@ -63,12 +60,6 @@ public class Claw {
         else if(gamepad1.b){
             clawPosition -= CHANGE_AMOUNT;
         }
-//        if(gamepad1.x){
-//            rightClawPosition += CHANGE_AMOUNT;
-//        }
-//        else if(gamepad1.y){
-//            rightClawPosition -= CHANGE_AMOUNT;
-//        }
         claw.setPosition(clawPosition);
         telemetry.addData("claw position", clawPosition);
     }
