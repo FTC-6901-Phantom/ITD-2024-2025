@@ -30,6 +30,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Axis;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
@@ -131,7 +132,8 @@ public class SampleMecanumDrive extends MecanumDrive {
         // and the placement of the dot/orientation from https://docs.revrobotics.com/rev-control-system/control-system-overview/dimensions#imu-location
         //
         // For example, if +Y in this diagram faces downwards, you would use AxisDirection.NEG_Y.
-         BNO055IMUUtil.remapZAxis(imu, AxisDirection.POS_Y);
+         BNO055IMUUtil.remapZAxis(imu, AxisDirection.POS_X);
+
 
         leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
         leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
@@ -157,9 +159,9 @@ public class SampleMecanumDrive extends MecanumDrive {
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
-        leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftRear.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
         rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // TODO: if desired, use setLocalizer() to change the localization method
@@ -397,16 +399,18 @@ public class SampleMecanumDrive extends MecanumDrive {
         if (gamepad1.left_bumper) power = -0.3;
         else power = 0.3;
 
-        if (gamepad1.a) leftFront.setPower(power);
-        else leftFront.setPower(0);
+
 
         if (gamepad1.b) leftRear.setPower(power);
         else leftFront.setPower(0);
 
         if (gamepad1.x) rightRear.setPower(power);
-        else leftFront.setPower(0);
+        //else leftFront.setPower(0);
 
         if (gamepad1.y) rightFront.setPower(power);
-        else leftFront.setPower(0);
+        //else leftFront.setPower(0);
+
+        if (gamepad1.a) leftFront.setPower(power);
+        //else leftFront.setPower(0);
     }
 }

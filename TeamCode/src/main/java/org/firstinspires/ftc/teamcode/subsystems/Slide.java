@@ -27,8 +27,7 @@ public class Slide {
 
     private int position = 0;
 
-    private final DcMotor leftSlide;
-    private final DcMotor rightSlide;
+    private final DcMotor slide;
 
     private final HardwareMap hardwareMap;
     private final Gamepad gamepad2;
@@ -39,23 +38,17 @@ public class Slide {
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;
 
-        leftSlide = hardwareMap.get(DcMotor.class, "leftSlide");
-        rightSlide = hardwareMap.get(DcMotor.class, "rightSlide");
+        slide = hardwareMap.get(DcMotor.class, "slide");
 
-        leftSlide.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightSlide.setDirection(DcMotorSimple.Direction.FORWARD);
+        slide.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftSlide.setTargetPosition(0);
-        rightSlide.setTargetPosition(0);
+        slide.setTargetPosition(0);
 
-        leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
     }
 
@@ -80,15 +73,13 @@ public class Slide {
 
         if (gamepad2.right_stick_y > 0.3) moveMoters(position - 1);
 
-        telemetry.addData("slides position", position);
+        telemetry.addData("slide position", position);
 
     }
     public void moveMoters(int position){
         this.position = position;
-        leftSlide.setTargetPosition(position);
-        rightSlide.setTargetPosition(position);
-        leftSlide.setPower(POWER);
-        rightSlide.setPower(POWER);
+        slide.setTargetPosition(position);
+        slide.setPower(POWER);
     }
     //POSITIONS
     //junctions

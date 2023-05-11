@@ -17,12 +17,13 @@ public class Arm {
     public static double CHANGE_POS = 0.0003;
 
     private double arm_left_position = INITIAL_POSITION;
+    
     private double arm_right_position = INITIAL_POSITION;
 
 
     //create hardware variables
-    private final Servo armLeft;
-    private final Servo armRight;
+//    private final Servo armLeft;
+//    private final Servo armRight;
 
     private final HardwareMap hardwareMap;
     private final Gamepad gamepad2;
@@ -37,10 +38,10 @@ public class Arm {
         gamepad1 = opMode.gamepad1;
         telemetry = opMode.telemetry;
 
-        armLeft = hardwareMap.get(Servo.class, "armLeft");
-        armRight = hardwareMap.get(Servo.class, "armRight");
-        armLeft.setDirection(Servo.Direction.FORWARD);
-        armRight.setDirection(Servo.Direction.REVERSE);
+//        armLeft = hardwareMap.get(Servo.class, "armLeft");
+//        armRight = hardwareMap.get(Servo.class, "armRight");
+//        armLeft.setDirection(Servo.Direction.FORWARD);
+//        armRight.setDirection(Servo.Direction.REVERSE);
     }
 
     //teleOp
@@ -49,25 +50,25 @@ public class Arm {
         if (gamepad2.dpad_up) armHigh();
         if (gamepad2.dpad_left) armLow();
         if (gamepad2.dpad_right) armMid();
-        if (gamepad2.dpad_down) armReset();
+//        if (gamepad2.dpad_down) armReset();
     }
 
     //positions
     public void armHigh(){
-        armLeft.setPosition(HIGH);
-        armRight.setPosition(HIGH);
+//        armLeft.setPosition(HIGH);
+//        armRight.setPosition(HIGH);
     }
     public void armMid(){
-        armLeft.setPosition(MID);
-        armRight.setPosition(MID);
+//        armLeft.setPosition(MID);
+//        armRight.setPosition(MID);
     }
     public void armLow(){
-        armLeft.setPosition(LOW);
-        armRight.setPosition(LOW);
+//        armLeft.setPosition(LOW);
+//        armRight.setPosition(LOW);
     }
-    public void armReset(){
-        armLeft.setPosition(RESET);
-    }
+//    public void armReset(){
+//        armLeft.setPosition(RESET);
+//    }
 
     public void testCommand() {
 
@@ -81,8 +82,8 @@ public class Arm {
         } else if (gamepad1.y) {
             arm_right_position -= CHANGE_POS;
         }
-        armLeft.setPosition(arm_left_position);
-        armRight.setPosition(arm_right_position);
+//        armLeft.setPosition(arm_left_position);
+//        armRight.setPosition(arm_right_position);
         telemetry.addData("left claw position", arm_left_position);
         telemetry.addData("right claw position", arm_right_position);
     }

@@ -10,8 +10,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Claw {
     public static double INITIAL_POSITION = 0;
     public double CHANGE_AMOUNT = 0.0003;
-    public static double CLOSED = 0.64;
-    public static double OPEN = 0.9;
+    public static double CLOSED = 0.38;
+    public static double OPEN = 0.69;
 
 
     private double clawPosition = INITIAL_POSITION;
