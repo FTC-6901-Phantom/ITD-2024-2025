@@ -13,12 +13,13 @@ public class Slide {
     public static double POWER = 0.8;
 
     //Junctions
-    public static int HIGH = 3270;
-    public static int MID = 2318 ;
-    public static int LOW = 582;
+    public static int HIGH = 980;
+    public static int MID = 780 ;
+    public static int LOW = 450;
     public static int RESET = 0;
     public static int LIL_UP = 200;
     public static int LESS_HIGH = 2900;
+    public static int MANUAL_MOVE_SPEED = 3;
 
     //cone stack
     public static int ONE = 520;
@@ -69,9 +70,9 @@ public class Slide {
 
         else if (gamepad2.dpad_up) moveHigh();
 
-        if (gamepad2.right_stick_y < -0.3) moveMoters(position + 1);
+        if (gamepad2.right_stick_y < -0.3) moveMoters(position + MANUAL_MOVE_SPEED);
 
-        if (gamepad2.right_stick_y > 0.3) moveMoters(position - 1);
+        if (gamepad2.right_stick_y > 0.3) moveMoters(position - MANUAL_MOVE_SPEED);
 
         telemetry.addData("slide position", position);
 

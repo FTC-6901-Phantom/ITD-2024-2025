@@ -36,5 +36,6 @@ public class TeleOp6901 extends OpMode {
         drive.mechDrive();
         slide.teleOpCommand();
         arm.testCommand();
+        telemetry.addData("IMU:", -drive.getRawExternalHeading());
     }
 }
