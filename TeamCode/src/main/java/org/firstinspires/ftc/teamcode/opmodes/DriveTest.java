@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
 
 @TeleOp
-public class driveTest extends OpMode {
+public class DriveTest extends OpMode {
 
     MecanumDrive mecanumDrive;
 
