@@ -13,9 +13,9 @@ public class Slide {
     public static double POWER = 0.8;
 
     //Junctions
-    public static int HIGH = 980;
-    public static int MID = 780 ;
-    public static int LOW = 450;
+    public static int HIGH = 1000;
+    public static int MID = 800 ;
+    public static int LOW = 470;
     public static int RESET = 0;
     public static int LIL_UP = 200;
     public static int LESS_HIGH = 2900;
@@ -62,13 +62,13 @@ public class Slide {
         if(gamepad2.a) moveThree();
 
         //junction
-        if(gamepad2.b) moveReset();
+        if(gamepad2.dpad_down) moveReset();
 
-        if(gamepad2.dpad_down) moveLow();
+        if(gamepad2.a) moveLow();
 
-        if(gamepad2.dpad_left) moveMid();
+        if(gamepad2.b) moveMid();
 
-        else if (gamepad2.dpad_up) moveHigh();
+        else if (gamepad2.y) moveHigh();
 
         if (gamepad2.right_stick_y < -0.3) moveMoters(position + MANUAL_MOVE_SPEED);
 

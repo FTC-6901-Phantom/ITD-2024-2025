@@ -40,7 +40,7 @@ public class Claw {
 
         if (gamepad2.right_bumper) closeClaw();
         if (gamepad2.left_bumper) openClaw();
-        if (gamepad2.b) openClaw();
+        if (gamepad2.dpad_down) openClaw();
     }
 
     public void closeClaw(){
