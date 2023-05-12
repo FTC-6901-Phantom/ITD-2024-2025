@@ -1,11 +1,10 @@
 package org.firstinspires.ftc.teamcode.opmodes.autos;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
@@ -19,7 +18,7 @@ public class LeftParkingAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        SampleMecanumDrive drive = new SampleMecanumDrive(this);
+        MecanumDrive drive = new MecanumDrive(this);
         Vision vision = new Vision(hardwareMap, "Webcam 1", telemetry);
 
         Slide slide = new Slide(this);

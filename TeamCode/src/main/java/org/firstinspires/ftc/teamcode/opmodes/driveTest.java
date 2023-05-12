@@ -3,20 +3,20 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 
 @TeleOp
 public class driveTest extends OpMode {
 
-    SampleMecanumDrive sampleMecanumDrive;
+    MecanumDrive mecanumDrive;
 
     @Override
     public void init() {
-        sampleMecanumDrive = new SampleMecanumDrive(this);
+        mecanumDrive = new MecanumDrive(this);
     }
 
     @Override
     public void loop() {
-        sampleMecanumDrive.buttonDrive();
+        mecanumDrive.buttonDrive();
     }
 }

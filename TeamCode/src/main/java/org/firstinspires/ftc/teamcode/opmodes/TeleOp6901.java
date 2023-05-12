@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
@@ -15,14 +15,14 @@ public class TeleOp6901 extends OpMode {
     //declare subsystems
     Arm arm;
     Claw claw;
-    SampleMecanumDrive drive;
+    MecanumDrive drive;
     Slide slide;
 
     @Override
     public void init() {
         // create hardwares subsystems using their constructors and initalize motors and servos
         claw = new Claw(this);
-        drive = new SampleMecanumDrive(this);
+        drive = new MecanumDrive(this);
         slide = new Slide(this);
         arm = new Arm(this);
 
