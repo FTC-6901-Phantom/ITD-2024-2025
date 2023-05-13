@@ -38,8 +38,8 @@ public class Claw {
 
     public void teleOpCommand() {
 
-        if (gamepad2.right_bumper) closeClaw();
-        if (gamepad2.left_bumper) openClaw();
+        if (gamepad1.right_bumper) closeClaw();
+        if (gamepad1.left_bumper) openClaw();
         if (gamepad2.dpad_down) openClaw();
     }
 

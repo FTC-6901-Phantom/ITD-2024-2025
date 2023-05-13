@@ -13,9 +13,9 @@ public class Slide {
     public static double POWER = 0.8;
 
     //Junctions
-    public static int HIGH = 1000;
-    public static int MID = 800 ;
-    public static int LOW = 470;
+    public static int HIGH = 1300;
+    public static int MID = 1000 ;
+    public static int LOW = 670;
     public static int RESET = 0;
     public static int LIL_UP = 200;
     public static int LESS_HIGH = 2900;
