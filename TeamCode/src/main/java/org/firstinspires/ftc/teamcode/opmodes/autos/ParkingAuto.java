@@ -37,22 +37,22 @@ public class ParkingAuto extends LinearOpMode {
             case 1: {
                 //
                 drive.followTrajectorySequence(drive.trajectorySequenceBuilder(startPose)
-                        .strafeLeft(6)
-                        .forward(5)
+                        .forward(6)
+                        .strafeLeft(10)
                         .build());
                 break;
             }
             case 2: {
 
                 drive.followTrajectorySequence(drive.trajectorySequenceBuilder(startPose)
-                        .forward(5)
+                        .forward(6)
                         .build());
                 break;
             }
             default: {
                 drive.followTrajectorySequence(drive.trajectorySequenceBuilder(startPose)
-                        .strafeRight(6)
-                        .forward(5)
+                        .forward(6)
+                        .strafeRight(4)
                         .build());
                 break;
             }
