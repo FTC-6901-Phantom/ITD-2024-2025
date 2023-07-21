@@ -26,6 +26,7 @@ public class Slide {
     public static int TWO = 428;
     public static int THREE = 276;
 
+
     private int position = 0;
 
     private final DcMotor slide;

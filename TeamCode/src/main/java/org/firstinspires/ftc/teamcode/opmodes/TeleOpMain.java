@@ -16,7 +16,6 @@ public class TeleOpMain extends LinearOpMode {
         Claw claw = new Claw(this);
         MecanumDrive drive = new MecanumDrive(this);
         Slide slide = new Slide(this);
-        Arm arm = new Arm(this);
 
         drive.setPoseEstimate(PoseStorage.currentPose);
 
@@ -25,7 +24,6 @@ public class TeleOpMain extends LinearOpMode {
             claw.teleOpCommand();
             drive.mechDrive();
             slide.teleOpCommand();
-            arm.testCommand();
             telemetry.addData("IMU:", -drive.getRawExternalHeading());
         }
     }

@@ -38,21 +38,7 @@ public class RightParkingAuto extends LinearOpMode {
         waitForStart();
 
         TrajectorySequence start = drive.trajectorySequenceBuilder(startPose)
-                .addDisplacementMarker(claw::closeClaw)
-                .addDisplacementMarker(slide::moveUp)
-                .waitSeconds(1)
-                .strafeLeft(7.8)
-                .addDisplacementMarker(slide::moveHigh)
-                .forward(6.3)
-                .strafeLeft(4.2)
-                .waitSeconds(1)
-                .forward(0.8)
-                .addDisplacementMarker(slide::moveHighLess)
-                .waitSeconds(1)
-                .addDisplacementMarker(claw::openClaw)
-                .waitSeconds(2)
-                .back(2)
-                .addDisplacementMarker(slide::moveReset)
+                .forward(5)
                 .build();
 
         drive.followTrajectorySequence(start);
@@ -61,7 +47,9 @@ public class RightParkingAuto extends LinearOpMode {
         case 1: {
             //
             drive.followTrajectorySequence(drive.trajectorySequenceBuilder(start.end())
-                    .strafeRight(4)
+                            .strafeRight(5)
+                            .back(5)
+                            .strafeLeft(5)
                     .build());
             break;
             }
