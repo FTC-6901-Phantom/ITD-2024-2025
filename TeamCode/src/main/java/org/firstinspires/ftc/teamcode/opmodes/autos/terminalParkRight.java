@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
-import org.firstinspires.ftc.teamcode.subsystems.Slide;
+import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
 import org.firstinspires.ftc.teamcode.util.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
@@ -25,7 +25,7 @@ public class terminalParkRight extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(this);
         Vision vision = new Vision(hardwareMap, "Webcam 1", telemetry);
 
-        Slide slide = new Slide(this);
+        Arm slide = new Arm(this);
         Claw claw = new Claw(this);
 
         drive.setPoseEstimate(startPose);

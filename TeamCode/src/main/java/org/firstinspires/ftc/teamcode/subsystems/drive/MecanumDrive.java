@@ -370,6 +370,11 @@ public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive
 
     }
 
+    public void tankDrive(){
+        double power;
+
+    }
+
     public void buttonDrive() {
         double power;
         if (gamepad1.left_bumper) power = -0.3;

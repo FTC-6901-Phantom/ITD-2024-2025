@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
-import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 
@@ -15,7 +14,7 @@ public class TeleOpMain extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Claw claw = new Claw(this);
         MecanumDrive drive = new MecanumDrive(this);
-        Slide slide = new Slide(this);
+        Arm arm = new Arm(this);
 
         drive.setPoseEstimate(PoseStorage.currentPose);
 
@@ -23,7 +22,7 @@ public class TeleOpMain extends LinearOpMode {
         while (opModeIsActive()) {
             claw.teleOpCommand();
             drive.mechDrive();
-            slide.teleOpCommand();
+            arm.teleOpCommand();
             telemetry.addData("IMU:", -drive.getRawExternalHeading());
         }
     }
