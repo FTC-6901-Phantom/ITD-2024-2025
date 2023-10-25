@@ -5,32 +5,28 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.drive.DriveSignal;
-import com.acmerobotics.roadrunner.followers.HolonomicPIDVAFollower;
+import com.acmerobotics.roadrunner.followers.TankPIDVAFollower;
 import com.acmerobotics.roadrunner.followers.TrajectoryFollower;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
-import com.acmerobotics.roadrunner.trajectory.constraints.MecanumVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.TankVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
-import org.firstinspires.ftc.ftccommon.internal.manualcontrol.commands.AnalogCommands;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.util.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.util.trajectorysequence.TrajectorySequenceBuilder;
@@ -54,48 +50,33 @@ import static org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants.kSt
 import static org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants.kV;
 
 /*
- * Simple mecanum drive hardware implementation for REV hardware.
+ * Simple tank drive hardware implementation for REV hardware.
  */
 @Config
-public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive {
-    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(0, 0, 0);
+public class TankDrive extends com.acmerobotics.roadrunner.drive.TankDrive {
+    public static PIDCoefficients AXIAL_PID = new PIDCoefficients(0, 0, 0);
+    public static PIDCoefficients CROSS_TRACK_PID = new PIDCoefficients(0, 0, 0);
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(0, 0, 0);
 
-    public static double LATERAL_MULTIPLIER = 1;
-
-    public static double VX_WEIGHT = 1.1;
-    public static double VY_WEIGHT = 1;
+    public static double VX_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
-
-    public static double NORMAL_SPEED = 0.6;
-    public static double FAST_SPEED = 1;
-    public static double SLOW_SPEED = 0.3;
-
-    public double speed;
 
     private TrajectorySequenceRunner trajectorySequenceRunner;
 
     private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(MAX_VEL, MAX_ANG_VEL, TRACK_WIDTH);
-    private static final TrajectoryAccelerationConstraint ACCEL_CONSTRAINT = getAccelerationConstraint(MAX_ACCEL);
+    private static final TrajectoryAccelerationConstraint accelConstraint = getAccelerationConstraint(MAX_ACCEL);
 
     private TrajectoryFollower follower;
 
-    private DcMotorEx leftFront, leftRear, rightRear, rightFront;
-    private List<DcMotorEx> motors;
-
+    private List<DcMotorEx> motors, leftMotors, rightMotors;
     private IMU imu;
-//    private IM imu;
+
     private VoltageSensor batteryVoltageSensor;
 
-    private final HardwareMap hardwareMap;
-    private final Gamepad gamepad1;
+    public TankDrive(HardwareMap hardwareMap) {
+        super(kV, kA, kStatic, TRACK_WIDTH);
 
-    public MecanumDrive(OpMode opMode) {
-        super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
-        hardwareMap = opMode.hardwareMap;
-        gamepad1 = opMode.gamepad1;
-
-        follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
+        follower = new TankPIDVAFollower(AXIAL_PID, CROSS_TRACK_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
 
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
@@ -106,19 +87,24 @@ public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
+        // TODO: adjust the names of the following hardware devices to match your configuration
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                DriveConstants.LOGO_FACING_DIR, DriveConstants.USB_FACING_DIR
-        ));
+                DriveConstants.LOGO_FACING_DIR, DriveConstants.USB_FACING_DIR));
         imu.initialize(parameters);
 
+        // add/remove motors depending on your robot (e.g., 6WD)
+        DcMotorEx leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
+        DcMotorEx leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
+        DcMotorEx rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
+        DcMotorEx rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
 
-        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-        leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-        rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
-        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        DcMotorEx leftDrive = hardwareMap.get(DcMotorEx.class, "leftDrive");
+        DcMotorEx rightDrive = hardwareMap.get(DcMotorEx.class, "rightDrive");
 
-        motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
+        motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront, leftDrive, rightDrive);
+        leftMotors = Arrays.asList(leftFront, leftRear, leftDrive);
+        rightMotors = Arrays.asList(rightFront, rightRear, rightDrive);
 
         for (DcMotorEx motor : motors) {
             MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
@@ -137,33 +123,34 @@ public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
-        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftRear.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
 
-        trajectorySequenceRunner = new TrajectorySequenceRunner(follower, HEADING_PID);
+        trajectorySequenceRunner = new TrajectorySequenceRunner(
+                follower, HEADING_PID, batteryVoltageSensor,
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()
+        );
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
-        return new TrajectoryBuilder(startPose, VEL_CONSTRAINT, ACCEL_CONSTRAINT);
+        return new TrajectoryBuilder(startPose, VEL_CONSTRAINT, accelConstraint);
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose, boolean reversed) {
-        return new TrajectoryBuilder(startPose, reversed, VEL_CONSTRAINT, ACCEL_CONSTRAINT);
+        return new TrajectoryBuilder(startPose, reversed, VEL_CONSTRAINT, accelConstraint);
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose, double startHeading) {
-        return new TrajectoryBuilder(startPose, startHeading, VEL_CONSTRAINT, ACCEL_CONSTRAINT);
+        return new TrajectoryBuilder(startPose, startHeading, VEL_CONSTRAINT, accelConstraint);
     }
 
     public TrajectorySequenceBuilder trajectorySequenceBuilder(Pose2d startPose) {
         return new TrajectorySequenceBuilder(
                 startPose,
-                VEL_CONSTRAINT, ACCEL_CONSTRAINT,
+                VEL_CONSTRAINT, accelConstraint,
                 MAX_ANG_VEL, MAX_ANG_ACCEL
         );
     }
@@ -207,6 +194,7 @@ public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive
         return trajectorySequenceRunner.getLastPoseError();
     }
 
+
     public void update() {
         updatePoseEstimate();
         DriveSignal signal = trajectorySequenceRunner.update(getPoseEstimate(), getPoseVelocity());
@@ -239,7 +227,6 @@ public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive
                 coefficients.p, coefficients.i, coefficients.d,
                 coefficients.f * 12 / batteryVoltageSensor.getVoltage()
         );
-
         for (DcMotorEx motor : motors) {
             motor.setPIDFCoefficients(runMode, compensatedCoefficients);
         }
@@ -248,18 +235,19 @@ public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive
     public void setWeightedDrivePower(Pose2d drivePower) {
         Pose2d vel = drivePower;
 
-        if (Math.abs(drivePower.getX()) + Math.abs(drivePower.getY())
-                + Math.abs(drivePower.getHeading()) > 1) {
+        if (Math.abs(drivePower.getX()) + Math.abs(drivePower.getHeading()) > 1) {
             // re-normalize the powers according to the weights
             double denom = VX_WEIGHT * Math.abs(drivePower.getX())
-                    + VY_WEIGHT * Math.abs(drivePower.getY())
                     + OMEGA_WEIGHT * Math.abs(drivePower.getHeading());
 
             vel = new Pose2d(
                     VX_WEIGHT * drivePower.getX(),
-                    VY_WEIGHT * drivePower.getY(),
+                    0,
                     OMEGA_WEIGHT * drivePower.getHeading()
             ).div(denom);
+        } else {
+            // Ensure the y axis is zeroed out.
+            vel = new Pose2d(drivePower.getX(), 0, drivePower.getHeading());
         }
 
         setDrivePower(vel);
@@ -268,28 +256,35 @@ public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive
     @NonNull
     @Override
     public List<Double> getWheelPositions() {
-        List<Double> wheelPositions = new ArrayList<>();
-        for (DcMotorEx motor : motors) {
-            wheelPositions.add(encoderTicksToInches(motor.getCurrentPosition()));
+        double leftSum = 0, rightSum = 0;
+        for (DcMotorEx leftMotor : leftMotors) {
+            leftSum += encoderTicksToInches(leftMotor.getCurrentPosition());
         }
-        return wheelPositions;
+        for (DcMotorEx rightMotor : rightMotors) {
+            rightSum += encoderTicksToInches(rightMotor.getCurrentPosition());
+        }
+        return Arrays.asList(leftSum / leftMotors.size(), rightSum / rightMotors.size());
     }
 
-    @Override
     public List<Double> getWheelVelocities() {
-        List<Double> wheelVelocities = new ArrayList<>();
-        for (DcMotorEx motor : motors) {
-            wheelVelocities.add(encoderTicksToInches(motor.getVelocity()));
+        double leftSum = 0, rightSum = 0;
+        for (DcMotorEx leftMotor : leftMotors) {
+            leftSum += encoderTicksToInches(leftMotor.getVelocity());
         }
-        return wheelVelocities;
+        for (DcMotorEx rightMotor : rightMotors) {
+            rightSum += encoderTicksToInches(rightMotor.getVelocity());
+        }
+        return Arrays.asList(leftSum / leftMotors.size(), rightSum / rightMotors.size());
     }
 
     @Override
-    public void setMotorPowers(double v, double v1, double v2, double v3) {
-        leftFront.setPower(v);
-        leftRear.setPower(v1);
-        rightRear.setPower(v2);
-        rightFront.setPower(v3);
+    public void setMotorPowers(double v, double v1) {
+        for (DcMotorEx leftMotor : leftMotors) {
+            leftMotor.setPower(v);
+        }
+        for (DcMotorEx rightMotor : rightMotors) {
+            rightMotor.setPower(v1);
+        }
     }
 
     @Override
@@ -302,93 +297,14 @@ public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive
         return (double) imu.getRobotAngularVelocity(AngleUnit.RADIANS).zRotationRate;
     }
 
-    public void resetImu(){
-        imu.resetYaw();
-    }
     public static TrajectoryVelocityConstraint getVelocityConstraint(double maxVel, double maxAngularVel, double trackWidth) {
         return new MinVelocityConstraint(Arrays.asList(
                 new AngularVelocityConstraint(maxAngularVel),
-                new MecanumVelocityConstraint(maxVel, trackWidth)
+                new TankVelocityConstraint(maxVel, trackWidth)
         ));
     }
 
     public static TrajectoryAccelerationConstraint getAccelerationConstraint(double maxAccel) {
         return new ProfileAccelerationConstraint(maxAccel);
-    }
-    /**
-     * Square magnitude of number while keeping the sign.
-     */
-    private double squareInput(double input) {
-        return input * Math.abs(input);
-    }
-
-    /**
-     *
-     *
-     * @param gyroAngle angle the bot is currently facing relative to start (radians)
-     */
-    public void driveFieldCentric(double strafeSpeed, double forwardSpeed, double turnSpeed, double gyroAngle) {
-        Vector2d input = new Vector2d(
-                strafeSpeed,
-                forwardSpeed
-        ).rotated(gyroAngle);
-
-        driveRobotCentric(
-                input.getX() * speed,
-                input.getY() * speed,
-                turnSpeed * speed
-        );
-    }
-
-    public void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turnSpeed) {
-        setWeightedDrivePower(
-                new Pose2d(
-                        forwardSpeed,
-                        -strafeSpeed,
-                        -turnSpeed
-                )
-        );
-    }
-
-    public void mechDrive() {
-        double strafeSpeed;
-        double forwardSpeed;
-        double turnSpeed;
-
-
-        strafeSpeed = squareInput(gamepad1.left_stick_x);
-        forwardSpeed = squareInput(-gamepad1.left_stick_y);
-        turnSpeed = squareInput(gamepad1.right_stick_x);
-
-        if (gamepad1.left_bumper) speed = SLOW_SPEED;
-        else if (gamepad1.right_bumper) speed = FAST_SPEED;
-        else speed = NORMAL_SPEED;
-
-        if (gamepad1.a) resetImu();
-
-
-        driveFieldCentric(strafeSpeed, forwardSpeed, turnSpeed, -getRawExternalHeading());
-
-    }
-
-
-    public void buttonDrive() {
-        double power;
-        if (gamepad1.left_bumper) power = -0.3;
-        else power = 0.3;
-
-
-
-        if (gamepad1.b) leftRear.setPower(power);
-        else leftFront.setPower(0);
-
-        if (gamepad1.x) rightRear.setPower(power);
-        //else leftFront.setPower(0);
-
-        if (gamepad1.y) rightFront.setPower(power);
-        //else leftFront.setPower(0);
-
-        if (gamepad1.a) leftFront.setPower(power);
-        //else leftFront.setPower(0);
     }
 }
