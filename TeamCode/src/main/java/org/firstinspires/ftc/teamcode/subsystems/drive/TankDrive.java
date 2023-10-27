@@ -21,6 +21,7 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
@@ -71,10 +72,13 @@ public class TankDrive extends com.acmerobotics.roadrunner.drive.TankDrive {
     private List<DcMotorEx> motors, leftMotors, rightMotors;
     private IMU imu;
 
+    private final Gamepad gamepad1;
+
     private VoltageSensor batteryVoltageSensor;
 
-    public TankDrive(HardwareMap hardwareMap) {
+    public TankDrive(Gamepad gamepad1, HardwareMap hardwareMap) {
         super(kV, kA, kStatic, TRACK_WIDTH);
+        this.gamepad1 = gamepad1;
 
         follower = new TankPIDVAFollower(AXIAL_PID, CROSS_TRACK_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
@@ -307,4 +311,39 @@ public class TankDrive extends com.acmerobotics.roadrunner.drive.TankDrive {
     public static TrajectoryAccelerationConstraint getAccelerationConstraint(double maxAccel) {
         return new ProfileAccelerationConstraint(maxAccel);
     }
+
+    double drive;
+    double turn;
+    double leftPower;
+    double rightPower;
+
+    public void robotDrive(){
+
+        double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
+        double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
+        double rx = gamepad1.right_stick_x;
+
+        // Denominator is the largest motor power (absolute value) or 1
+        // This ensures all the powers maintain the same ratio,
+        // but only if at least one is out of the range [-1, 1]
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+        double leftPower = (y + x + rx) / denominator;
+        double backLeftPower = (y - x + rx) / denominator;
+        double rightPower = (y - x - rx) / denominator;
+        double backRightPower = (y + x - rx) / denominator;
+
+        for (DcMotorEx leftMotor : leftMotors){
+            leftMotor.setPower(leftPower);
+        }
+
+        for (DcMotorEx rightMotor : rightMotors){
+            rightMotor.setPower(rightPower);
+        }
+
+        drive = gamepad1.left_stick_y * -1;
+        turn = gamepad1.right_stick_x;
+
+
+    }
 }
+
