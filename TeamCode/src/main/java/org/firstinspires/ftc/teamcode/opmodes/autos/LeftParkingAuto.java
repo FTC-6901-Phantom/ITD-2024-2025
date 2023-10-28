@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
+import org.firstinspires.ftc.teamcode.subsystems.drive.TankDrive;
 import org.firstinspires.ftc.teamcode.util.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 
@@ -17,7 +18,7 @@ public class LeftParkingAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        MecanumDrive drive = new MecanumDrive(this);
+        TankDrive drive = new TankDrive(gamepad1,hardwareMap);
         Vision vision = new Vision(hardwareMap, "Webcam 1", telemetry);
 
         Arm slide = new Arm(this);
@@ -38,34 +39,20 @@ public class LeftParkingAuto extends LinearOpMode {
             case 1: {
                 //
                 drive.followTrajectorySequence(drive.trajectorySequenceBuilder(startPose)
-                        .addDisplacementMarker(claw::closeClaw)
                         .waitSeconds(1)
                         .strafeRight(8)
-                        .addDisplacementMarker(slide::moveHigh)
-                        .forward(4)
-                        .strafeRight(4.5)
-                        .forward(0.5)
-                        .addDisplacementMarker(claw::openClaw)
-                        .waitSeconds(2)
-                        .back(1)
-                        //parking
-                        .strafeLeft(10)
-                        .forward(5)
-                        .strafeLeft(5)
                         .build());
                 break;
             }
             case 2: {
 
                 drive.followTrajectorySequence(drive.trajectorySequenceBuilder(startPose)
-                        .addDisplacementMarker(claw::closeClaw)
                         .waitSeconds(1)
                         .strafeRight(8)
                         .addDisplacementMarker(slide::moveHigh)
                         .forward(4)
                         .strafeRight(4.5)
                         .forward(0.5)
-                        .addDisplacementMarker(claw::openClaw)
                         .waitSeconds(2)
                         .back(1)
                         //parking
@@ -75,18 +62,15 @@ public class LeftParkingAuto extends LinearOpMode {
             }
             default: {
                 drive.followTrajectorySequence(drive.trajectorySequenceBuilder(startPose)
-                        .addDisplacementMarker(claw::closeClaw)
                         .waitSeconds(1)
                         .strafeRight(8)
                         .addDisplacementMarker(slide::moveHigh)
                         .forward(4)
                         .strafeRight(4.5)
                         .forward(0.5)
-                        .addDisplacementMarker(claw::openClaw)
-                        .waitSeconds(2)
+                       .waitSeconds(2)
                         .back(1)
                         //parking
-                                .strafeLeft(5)
                         .build());
                 break;
             }

@@ -10,10 +10,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Arm {
 
-    public static double POWER = 0.5;
+    public static double POWER = 0.3;
 
     //Junctions
-    public static int HIGH = 1300;
+    public static int HIGH = 500;
 
     public static int MANUAL_MOVE_SPEED = 3;
 
@@ -23,10 +23,11 @@ public class Arm {
     private final DcMotor arm;
 
     private final HardwareMap hardwareMap;
-    private final Gamepad gamepad2;
+    private final Gamepad gamepad2, gamepad1;
     private final Telemetry telemetry;
 
     public Arm(OpMode opMode) {
+        gamepad1 = opMode.gamepad1;
         gamepad2 = opMode.gamepad2;
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;
@@ -50,9 +51,9 @@ public class Arm {
         if (gamepad2.y) moveHigh();
 
         //manual control
-        if (gamepad2.right_stick_y < -0.3) moveMoters(position + MANUAL_MOVE_SPEED);
+        if (gamepad1.right_stick_y < -0.3) moveMoters(position + MANUAL_MOVE_SPEED);
 
-        if (gamepad2.right_stick_y > 0.3) moveMoters(position - MANUAL_MOVE_SPEED);
+        if (gamepad1.right_stick_y > 0.3) moveMoters(position - MANUAL_MOVE_SPEED);
 
         telemetry.addData("arm position", position);
 

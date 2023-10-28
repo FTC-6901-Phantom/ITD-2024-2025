@@ -27,6 +27,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.util.trajectorysequence.TrajectorySequence;
@@ -61,6 +62,11 @@ public class TankDrive extends com.acmerobotics.roadrunner.drive.TankDrive {
 
     public static double VX_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
+
+    public static double NORMAL_SPEED = 0.6;
+    public static double FAST_SPEED = 1;
+    public static double SLOW_SPEED = 0.3;
+    public double speed;
 
     private TrajectorySequenceRunner trajectorySequenceRunner;
 
@@ -98,17 +104,13 @@ public class TankDrive extends com.acmerobotics.roadrunner.drive.TankDrive {
         imu.initialize(parameters);
 
         // add/remove motors depending on your robot (e.g., 6WD)
-        DcMotorEx leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-        DcMotorEx leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-        DcMotorEx rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
-        DcMotorEx rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
 
-        DcMotorEx leftDrive = hardwareMap.get(DcMotorEx.class, "leftDrive");
-        DcMotorEx rightDrive = hardwareMap.get(DcMotorEx.class, "rightDrive");
+        DcMotorEx leftMotor = hardwareMap.get(DcMotorEx.class, "leftMotor");
+        DcMotorEx rightMotor = hardwareMap.get(DcMotorEx.class, "rightMotor");
 
-        motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront, leftDrive, rightDrive);
-        leftMotors = Arrays.asList(leftFront, leftRear, leftDrive);
-        rightMotors = Arrays.asList(rightFront, rightRear, rightDrive);
+        motors = Arrays.asList(leftMotor, rightMotor);
+        leftMotors = Arrays.asList(leftMotor);
+        rightMotors = Arrays.asList(rightMotor);
 
         for (DcMotorEx motor : motors) {
             MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
@@ -127,8 +129,8 @@ public class TankDrive extends com.acmerobotics.roadrunner.drive.TankDrive {
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
-        leftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
@@ -312,36 +314,22 @@ public class TankDrive extends com.acmerobotics.roadrunner.drive.TankDrive {
         return new ProfileAccelerationConstraint(maxAccel);
     }
 
-    double drive;
-    double turn;
-    double leftPower;
-    double rightPower;
 
     public void robotDrive(){
+        double leftPower;
+        double rightPower;
 
-        double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-        double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-        double rx = gamepad1.right_stick_x;
+        double drive = -gamepad1.left_stick_y;
+        double turn  =  gamepad1.left_stick_x;
+        leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
+        rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
 
-        // Denominator is the largest motor power (absolute value) or 1
-        // This ensures all the powers maintain the same ratio,
-        // but only if at least one is out of the range [-1, 1]
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double leftPower = (y + x + rx) / denominator;
-        double backLeftPower = (y - x + rx) / denominator;
-        double rightPower = (y - x - rx) / denominator;
-        double backRightPower = (y + x - rx) / denominator;
-
-        for (DcMotorEx leftMotor : leftMotors){
+        for (DcMotorEx leftMotor : leftMotors) {
             leftMotor.setPower(leftPower);
         }
-
-        for (DcMotorEx rightMotor : rightMotors){
+        for (DcMotorEx rightMotor : rightMotors) {
             rightMotor.setPower(rightPower);
         }
-
-        drive = gamepad1.left_stick_y * -1;
-        turn = gamepad1.right_stick_x;
 
 
     }

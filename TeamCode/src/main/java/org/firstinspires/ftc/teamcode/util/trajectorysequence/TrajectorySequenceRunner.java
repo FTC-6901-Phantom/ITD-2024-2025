@@ -17,13 +17,11 @@ import com.acmerobotics.roadrunner.trajectory.TrajectoryMarker;
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
-import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.util.trajectorysequence.sequencesegment.SequenceSegment;
 import org.firstinspires.ftc.teamcode.util.trajectorysequence.sequencesegment.TrajectorySegment;
 import org.firstinspires.ftc.teamcode.util.trajectorysequence.sequencesegment.TurnSegment;
 import org.firstinspires.ftc.teamcode.util.trajectorysequence.sequencesegment.WaitSegment;
 import org.firstinspires.ftc.teamcode.util.DashboardUtil;
-import org.firstinspires.ftc.teamcode.util.LogFiles;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -203,19 +201,19 @@ public class TrajectorySequenceRunner {
 
         final double NOMINAL_VOLTAGE = 12.0;
         double voltage = voltageSensor.getVoltage();
-        if (driveSignal != null && !DriveConstants.RUN_USING_ENCODER) {
-            driveSignal = new DriveSignal(
-                    driveSignal.getVel().times(NOMINAL_VOLTAGE / voltage),
-                    driveSignal.getAccel().times(NOMINAL_VOLTAGE / voltage)
-            );
-        }
+//        if (driveSignal != null && !DriveConstants.RUN_USING_ENCODER) {
+//            driveSignal = new DriveSignal(
+//                    driveSignal.getVel().times(NOMINAL_VOLTAGE / voltage),
+//                    driveSignal.getAccel().times(NOMINAL_VOLTAGE / voltage)
+//            );
+//        }
 
-        if (targetPose != null) {
-            LogFiles.record(
-                    targetPose, poseEstimate, voltage,
-                    lastDriveEncPositions, lastDriveEncVels, lastTrackingEncPositions, lastTrackingEncVels
-            );
-        }
+//        if (targetPose != null) {
+//            LogFiles.record(
+//                    targetPose, poseEstimate, voltage,
+//                    lastDriveEncPositions, lastDriveEncVels, lastTrackingEncPositions, lastTrackingEncVels
+//            );
+//        }
 
         packet.put("x", poseEstimate.getX());
         packet.put("y", poseEstimate.getY());
