@@ -10,12 +10,12 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Arm {
 
-    public static double POWER = 0.3;
+    public static double POWER = 1;
 
     //Junctions
     public static int HIGH = 500;
 
-    public static int MANUAL_MOVE_SPEED = 3;
+    public static int MANUAL_MOVE_SPEED = 7;
 
 
     private int position = 0;
