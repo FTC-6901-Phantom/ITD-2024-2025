@@ -19,7 +19,6 @@ public class ParkingAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
         TankDrive drive = new TankDrive(gamepad1, hardwareMap);
-
         drive.setPoseEstimate(startPose);
         while (!isStarted() && !isStopRequested()) {
             telemetry.update();
@@ -27,6 +26,8 @@ public class ParkingAuto extends LinearOpMode {
         waitForStart();
         TrajectorySequence start = drive.trajectorySequenceBuilder(startPose)
                 .forward(10)
+                .turn(90)
+                .turn(Math.toRadians(180))
                 .build();
 
         drive.followTrajectorySequence(start);

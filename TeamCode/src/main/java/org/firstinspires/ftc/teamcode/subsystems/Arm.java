@@ -47,24 +47,25 @@ public class Arm {
     }
 
     public void teleOpCommand() {
-
-        if (gamepad2.y) moveHigh();
+        if (gamepad1.dpad_up) arm.setPower(1);
+        if (gamepad1.dpad_down) arm.setPower(-1);
+        else arm.setPower(0);
 
         //manual control
-        if (gamepad1.right_stick_y < -0.3) moveMoters(position + MANUAL_MOVE_SPEED);
+        if (gamepad2.right_stick_y < -0.3) moveMotors(position + MANUAL_MOVE_SPEED);
 
-        if (gamepad1.right_stick_y > 0.3) moveMoters(position - MANUAL_MOVE_SPEED);
+        if (gamepad2.right_stick_y > 0.3) moveMotors(position - MANUAL_MOVE_SPEED);
 
         telemetry.addData("arm position", position);
 
     }
-    public void moveMoters(int position){
+    public void moveMotors(int position){
         this.position = position;
         arm.setTargetPosition(position);
         arm.setPower(POWER);
     }
     //POSITIONS
     public void moveHigh() {
-        moveMoters(HIGH);
+        moveMotors(HIGH);
     }
 }

@@ -319,18 +319,17 @@ public class TankDrive extends com.acmerobotics.roadrunner.drive.TankDrive {
         double leftPower;
         double rightPower;
 
-        double drive = -gamepad1.left_stick_y;
-        double turn  =  gamepad1.left_stick_x;
-        leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-        rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+//        double drive = -gamepad1.left_stick_y;
+//        double turn  =  gamepad1.left_stick_x;
+//        leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
+//        rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
 
-        for (DcMotorEx leftMotor : leftMotors) {
-            leftMotor.setPower(leftPower);
-        }
-        for (DcMotorEx rightMotor : rightMotors) {
-            rightMotor.setPower(rightPower);
-        }
-
+//        for (DcMotorEx leftMotor : leftMotors) {
+//            leftMotor.setPower(leftPower);
+//        }
+//        for (DcMotorEx rightMotor : rightMotors) {
+//            rightMotor.setPower(rightPower);
+//        }
 
     }
 }
