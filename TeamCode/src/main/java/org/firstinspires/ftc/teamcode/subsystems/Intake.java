@@ -11,11 +11,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Intake {
 
     public static double POWER = 1;
-
     public static int MANUAL_MOVE_SPEED = 7;
-
     private int position = 0;
-
     private final DcMotor intakeMotor;
 
     private final HardwareMap hardwareMap;
@@ -28,13 +25,14 @@ public class Intake {
         telemetry = opMode.telemetry;
 
         intakeMotor = hardwareMap.get(DcMotor.class, "intake");
-        intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
 
     public void teleOpCommand() {
-        if(gamepad1.a) intakeMotor.setPower(1);
+        if(gamepad1.right_bumper) intakeMotor.setPower(1);
+        if(gamepad1.left_bumper) intakeMotor.setPower(-1);
         else intakeMotor.setPower(0);
 
     }
