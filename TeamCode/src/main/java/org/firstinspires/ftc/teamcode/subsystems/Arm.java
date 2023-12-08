@@ -1,54 +1,68 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Arm {
+    //arm positions
+    public static double ARM_RESET = 0;
+    public static double ARM_DROP = 0;
+    public static double CHANGE_AMOUNT = 0.0003;
 
-    public static double POWER = 1;
-    public static int HIGH = 500;
-    public static int MANUAL_MOVE_SPEED = 7;
-    private int position = 0;
-    private final DcMotor arm;
+    public double armPosition = 0;
 
+    private final Telemetry telemetry;
     private final HardwareMap hardwareMap;
     private final Gamepad gamepad1;
-    private final Telemetry telemetry;
+    private final Gamepad gamepad2;
 
-    public Arm(OpMode opMode) {
-        gamepad1 = opMode.gamepad1;
+    private final Servo arm1;
+    private final Servo arm2;
+
+    public Arm(OpMode opMode){
         hardwareMap = opMode.hardwareMap;
+        gamepad1 = opMode.gamepad1;
+        gamepad2 = opMode.gamepad2;
         telemetry = opMode.telemetry;
 
-        arm = hardwareMap.get(DcMotor.class, "arm");
-        arm.setDirection(DcMotorSimple.Direction.FORWARD);
-        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        //arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //arm.setTargetPosition(0);
-
-        //arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+        arm1 = hardwareMap.get(Servo.class, "arm1");
+        arm2 = hardwareMap.get(Servo.class, "arm2");
+        arm1.setDirection(Servo.Direction.FORWARD);
+        arm2.setDirection(Servo.Direction.REVERSE);
     }
 
-    public void teleOpCommand() {
-        if (gamepad1.dpad_up) arm.setPower(0.6);
-        if (gamepad1.dpad_down) arm.setPower(-0.4);
-        else arm.setPower(0);
-        //telemetry.addData("arm position", position);
+    public void teleOpCommand(){
+        if(gamepad2.a) armReset();
+        if(gamepad2.a) armReset();
 
+        if (gamepad2.b) armDrop();
+        if (gamepad2.b) armDrop();
     }
-    /*
-    public void moveMotors(int position){
-        this.position = position;
-        arm.setTargetPosition(position);
-        arm.setPower(POWER);
+
+    public void armReset(){
+        arm1.setPosition(ARM_RESET);
+        arm2.setPosition(ARM_RESET);
+    }
+
+    public void armDrop(){
+        arm1.setPosition(ARM_DROP);
+        arm2.setPosition(ARM_DROP);
+    }
+
+    public void testCommand(){
+        if(gamepad1.a){
+            armPosition += CHANGE_AMOUNT;
         }
-     */
+        else if(gamepad1.b){
+            armPosition -= CHANGE_AMOUNT;
+        }
+        //arm1.setPosition(armPosition);
+        telemetry.addData("arm position", armPosition);
+    }
 }

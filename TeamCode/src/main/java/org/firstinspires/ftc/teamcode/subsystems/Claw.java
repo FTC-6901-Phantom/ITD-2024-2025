@@ -19,40 +19,39 @@ public class Claw {
     private double clawPosition = INITIAL_POSITION;
 
     //create hardware variables
- //  private final Servo claw;
+    private final Servo claw;
 
 
     private final HardwareMap hardwareMap;
-    private final Gamepad gamepad2;
     private final Gamepad gamepad1;
+    private final Gamepad gamepad2;
     private final Telemetry telemetry;
 
     //Constructer
     public Claw(OpMode opMode) {
         hardwareMap = opMode.hardwareMap;
-        gamepad2 = opMode.gamepad2;
         gamepad1 = opMode.gamepad1;
+        gamepad2 = opMode.gamepad2;
         telemetry = opMode.telemetry;
 
-//        claw = hardwareMap.get(Servo.class, "claw");
-//        claw.setDirection(Servo.Direction.FORWARD);
+        claw = hardwareMap.get(Servo.class, "claw");
     }
 
     public void teleOpCommand() {
-        if(gamepad1.left_bumper) clawPosition += CHANGE_AMOUNT;
 
-        else if(gamepad1.right_bumper) clawPosition -= CHANGE_AMOUNT;
-
-//        claw.setPosition(clawPosition);
+        if(gamepad2.left_bumper) openClaw();
+        if(gamepad2.right_bumper) closeClaw();
     }
 
     public void openClaw(){
-  //      claw.setPosition(OPEN);
+        claw.setPosition(OPEN);
     }
-    //comment
+
+    public void closeClaw(){
+        claw.setPosition(CLOSED);
+    }
 
     public void testCommand(){
-
         if(gamepad1.a){
             clawPosition += CHANGE_AMOUNT;
         }

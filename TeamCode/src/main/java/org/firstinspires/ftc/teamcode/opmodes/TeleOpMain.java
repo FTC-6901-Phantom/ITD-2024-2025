@@ -4,11 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
-import org.firstinspires.ftc.teamcode.subsystems.drive.TankDrive;
-import org.firstinspires.ftc.teamcode.util.PoseStorage;
 
 @TeleOp
 public class TeleOpMain extends LinearOpMode {
@@ -16,8 +15,10 @@ public class TeleOpMain extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Claw claw = new Claw(this);
         Arm arm = new Arm(this);
+        Slide slide = new Slide(this);
         Intake intake = new Intake(this);
         MecanumDrive mech = new MecanumDrive(this);
+
 
 
         waitForStart();
@@ -25,6 +26,7 @@ public class TeleOpMain extends LinearOpMode {
             mech.mechDrive();
             claw.teleOpCommand();
             arm.teleOpCommand();
+            slide.teleOpCommand();
             intake.teleOpCommand();
         }
     }

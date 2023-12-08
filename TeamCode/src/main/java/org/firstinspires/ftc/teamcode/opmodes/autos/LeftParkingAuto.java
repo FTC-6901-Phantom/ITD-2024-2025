@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
-import org.firstinspires.ftc.teamcode.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
 import org.firstinspires.ftc.teamcode.subsystems.drive.TankDrive;
 import org.firstinspires.ftc.teamcode.util.trajectorysequence.TrajectorySequence;
@@ -21,7 +21,7 @@ public class LeftParkingAuto extends LinearOpMode {
         TankDrive drive = new TankDrive(gamepad1,hardwareMap);
         Vision vision = new Vision(hardwareMap, "Webcam 1", telemetry);
 
-        Arm slide = new Arm(this);
+        Slide slide = new Slide(this);
         Claw claw = new Claw(this);
 
         drive.setPoseEstimate(startPose);
