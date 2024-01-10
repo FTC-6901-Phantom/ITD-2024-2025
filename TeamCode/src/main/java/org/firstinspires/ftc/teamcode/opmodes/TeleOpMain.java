@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.subsystems.DroneLaunch;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
@@ -18,8 +19,7 @@ public class TeleOpMain extends LinearOpMode {
         Slide slide = new Slide(this);
         Intake intake = new Intake(this);
         MecanumDrive mech = new MecanumDrive(this);
-
-
+        DroneLaunch drone = new DroneLaunch(this);
 
         waitForStart();
         while (opModeIsActive()) {
@@ -28,6 +28,7 @@ public class TeleOpMain extends LinearOpMode {
             arm.teleOpCommand();
             slide.teleOpCommand();
             intake.teleOpCommand();
+            drone.teleOpCommand();
         }
     }
 }

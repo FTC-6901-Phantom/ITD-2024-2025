@@ -16,8 +16,8 @@ public class Slide {
     public static int MANUAL_MOVE_SPEED = 7;
     private int position = 0;
 
-    private final DcMotor slideOne;
-    private final DcMotor slideTwo;
+    private final DcMotor slideLeft;
+    private final DcMotor slideRight;
 
     private final HardwareMap hardwareMap;
     private final Gamepad gamepad1;
@@ -30,22 +30,22 @@ public class Slide {
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;
 
-        slideOne = hardwareMap.get(DcMotor.class,"slideOne");
-        slideOne.setDirection(DcMotorSimple.Direction.FORWARD);
-        slideOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slideLeft = hardwareMap.get(DcMotor.class,"leftSlide");
+        slideLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        slideLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        slideTwo = hardwareMap.get(DcMotor.class, "slideTwo");
-        slideTwo.setDirection(DcMotorSimple.Direction.FORWARD);
-        slideTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slideRight = hardwareMap.get(DcMotor.class, "rightSlide");
+        slideRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        slideRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        slideOne.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slideTwo.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        slideOne.setTargetPosition(0);
-        slideTwo.setTargetPosition(0);
+        slideLeft.setTargetPosition(0);
+        slideRight.setTargetPosition(0);
 
-        slideOne.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slideTwo.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
     }
@@ -54,29 +54,41 @@ public class Slide {
         if(gamepad2.x) Score();
 
         if(gamepad2.y) Reset();
+
+        if (gamepad1.dpad_up) moveMotors(position + MANUAL_MOVE_SPEED);
+        if (gamepad1.dpad_down) moveMotors(position - MANUAL_MOVE_SPEED);
+
     }
 
     public void Score(){
-        slideOne.setPower(1);
-        slideOne.setTargetPosition(SCORE);
+        slideLeft.setPower(1);
+        slideLeft.setTargetPosition(SCORE);
 
-        slideTwo.setPower(1);
-        slideTwo.setTargetPosition(SCORE);
+        slideRight.setPower(1);
+        slideRight.setTargetPosition(SCORE);
     }
 
     public void Reset(){
-        slideOne.setPower(1);
-        slideOne.setTargetPosition(RESET);
+        slideLeft.setPower(1);
+        slideLeft.setTargetPosition(RESET);
 
-        slideTwo.setPower(1);
-        slideTwo.setTargetPosition(RESET);
+        slideRight.setPower(1);
+        slideRight.setTargetPosition(RESET);
     }
     public void moveMotors(int position){
         this.position = position;
-        slideOne.setTargetPosition(position);
-        slideTwo.setTargetPosition(position);
-        slideOne.setPower(POWER);
-        slideTwo.setPower(POWER);
-        }
+        slideLeft.setTargetPosition(position);
+        slideRight.setTargetPosition(position);
+        slideLeft.setPower(POWER);
+        slideRight.setPower(POWER);
+    }
+
+    public void testCommand(){
+        if (gamepad1.right_stick_y < -0.3) moveMotors(position + MANUAL_MOVE_SPEED);
+        if (gamepad1.right_stick_y > 0.3) moveMotors(position - MANUAL_MOVE_SPEED);
+
+        telemetry.addData("slide position", position);
+    }
+
 
 }

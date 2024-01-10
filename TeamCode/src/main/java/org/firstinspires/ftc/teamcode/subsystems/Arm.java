@@ -22,8 +22,8 @@ public class Arm {
     private final Gamepad gamepad1;
     private final Gamepad gamepad2;
 
-    private final Servo arm1;
-    private final Servo arm2;
+//    private final Servo arm1;
+//    private final Servo arm2;
 
     public Arm(OpMode opMode){
         hardwareMap = opMode.hardwareMap;
@@ -31,10 +31,10 @@ public class Arm {
         gamepad2 = opMode.gamepad2;
         telemetry = opMode.telemetry;
 
-        arm1 = hardwareMap.get(Servo.class, "arm1");
-        arm2 = hardwareMap.get(Servo.class, "arm2");
-        arm1.setDirection(Servo.Direction.FORWARD);
-        arm2.setDirection(Servo.Direction.REVERSE);
+//        arm1 = hardwareMap.get(Servo.class, "arm1");
+//        arm2 = hardwareMap.get(Servo.class, "arm2");
+//        arm1.setDirection(Servo.Direction.FORWARD);
+//        arm2.setDirection(Servo.Direction.REVERSE);
     }
 
     public void teleOpCommand(){
@@ -46,13 +46,13 @@ public class Arm {
     }
 
     public void armReset(){
-        arm1.setPosition(ARM_RESET);
-        arm2.setPosition(ARM_RESET);
+//        arm1.setPosition(ARM_RESET);
+//        arm2.setPosition(ARM_RESET);
     }
 
     public void armDrop(){
-        arm1.setPosition(ARM_DROP);
-        arm2.setPosition(ARM_DROP);
+//        arm1.setPosition(ARM_DROP);
+//        arm2.setPosition(ARM_DROP);
     }
 
     public void testCommand(){

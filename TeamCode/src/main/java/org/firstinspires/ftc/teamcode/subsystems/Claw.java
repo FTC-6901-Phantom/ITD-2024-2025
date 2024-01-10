@@ -14,12 +14,15 @@ public class Claw {
     public static double CHANGE_AMOUNT = 0.0003;
     public static double CLOSED = 0.07;
     public static double OPEN = 0;
-
+    public static double UP;
+    public static double DOWN;
 
     private double clawPosition = INITIAL_POSITION;
 
     //create hardware variables
-    private final Servo claw;
+//    private final Servo box;
+//    private final Servo claw1;
+//    private final Servo claw2;
 
 
     private final HardwareMap hardwareMap;
@@ -34,7 +37,9 @@ public class Claw {
         gamepad2 = opMode.gamepad2;
         telemetry = opMode.telemetry;
 
-        claw = hardwareMap.get(Servo.class, "claw");
+//        claw1 = hardwareMap.get(Servo.class, "claw1");
+//        claw2 = hardwareMap.get(Servo.class, "claw2");
+//        box = hardwareMap.get(Servo.class, "box");
     }
 
     public void teleOpCommand() {
@@ -44,11 +49,21 @@ public class Claw {
     }
 
     public void openClaw(){
-        claw.setPosition(OPEN);
+//        claw1.setPosition(OPEN);
+//        claw2.setPosition(OPEN);
     }
 
     public void closeClaw(){
-        claw.setPosition(CLOSED);
+//        claw1.setPosition(CLOSED);
+//        claw2.setPosition(CLOSED);
+    }
+
+    public void boxUp(){
+//        box.setPosition(UP);
+    }
+
+    public void boxDown(){
+//        box.setPosition(DOWN);
     }
 
     public void testCommand(){

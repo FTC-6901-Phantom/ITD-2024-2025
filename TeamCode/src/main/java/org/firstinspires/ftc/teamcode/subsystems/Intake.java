@@ -29,11 +29,12 @@ public class Intake {
 
         intake = hardwareMap.get(CRServo.class, "intake");
         intake.setDirection(DcMotorSimple.Direction.FORWARD);
-    }
+      }
 
-    public void teleOpCommand() {
-        if(gamepad1.left_bumper) intake.setPower(1);
-        if(gamepad1.right_bumper) intake.setPower(-1);
-        else intake.setPower(0);
+        public void teleOpCommand(){
+            if (gamepad1.left_bumper) intake.setPower(2);
+            if (gamepad1.right_bumper) intake.setPower(-1);
+            else intake.setPower(0);
+        }
+
     }
-}
