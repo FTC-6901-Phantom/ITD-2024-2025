@@ -12,7 +12,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 
-public class Vision {
+public class
+Vision {
     OpenCvCamera camera;
     private Telemetry telemetry;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;

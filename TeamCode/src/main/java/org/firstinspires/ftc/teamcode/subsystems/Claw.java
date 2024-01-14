@@ -1,79 +1,59 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import android.graphics.Color;
+
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com .qualcomm.robotcore.hardware.ColorRangeSensor;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+@Config
 public class Claw {
-    public static double INITIAL_POSITION = 0;
-    public static double CHANGE_AMOUNT = 0.0003;
-    public static double CLOSED = 0.07;
-    public static double OPEN = 0;
-    public static double UP;
-    public static double DOWN;
+    private static double rightcloseclaw = 0.169;
+    private static double leftcloseclaw = 0.19;
+    private static double openClaw = 0;
+    private static double distanceThreshold = 3;
+    private static Servo LeftClaw;
+    private static Servo RightClaw;
+    private static ColorRangeSensor leftSensor;
+    private static ColorRangeSensor rightSensor;
+    private final Gamepad Driver2;
+    private static Gamepad Driver1;
 
-    private double clawPosition = INITIAL_POSITION;
-
-    //create hardware variables
-//    private final Servo box;
-//    private final Servo claw1;
-//    private final Servo claw2;
-
-
-    private final HardwareMap hardwareMap;
-    private final Gamepad gamepad1;
-    private final Gamepad gamepad2;
-    private final Telemetry telemetry;
-
-    //Constructer
     public Claw(OpMode opMode) {
-        hardwareMap = opMode.hardwareMap;
-        gamepad1 = opMode.gamepad1;
-        gamepad2 = opMode.gamepad2;
-        telemetry = opMode.telemetry;
-
-//        claw1 = hardwareMap.get(Servo.class, "claw1");
-//        claw2 = hardwareMap.get(Servo.class, "claw2");
-//        box = hardwareMap.get(Servo.class, "box");
+        Driver2 = opMode.gamepad2;
+        Driver1 = opMode.gamepad1;
+        LeftClaw = (Servo) opMode.hardwareMap.get("LeftClaw");
+        RightClaw = (Servo) opMode.hardwareMap.get("RightClaw");
+        leftSensor = (ColorRangeSensor) opMode.hardwareMap.get("LeftSensor");
+        rightSensor = (ColorRangeSensor) opMode.hardwareMap.get("rightSensor");
+        LeftClaw.setDirection(Servo.Direction.REVERSE);
+        RightClaw.setDirection(Servo.Direction.FORWARD);
+        clawServo(openClaw, openClaw);
     }
 
-    public void teleOpCommand() {
+    public static void teleOp() {
+        if (Driver1.right_trigger >= 0.1){ clawServo(rightcloseclaw, leftcloseclaw);}
+        else if (Driver1.left_trigger >= 0.1) clawServo(openClaw, openClaw);
 
-        if(gamepad2.left_bumper) openClaw();
-        if(gamepad2.right_bumper) closeClaw();
-    }
-
-    public void openClaw(){
-//        claw1.setPosition(OPEN);
-//        claw2.setPosition(OPEN);
-    }
-
-    public void closeClaw(){
-//        claw1.setPosition(CLOSED);
-//        claw2.setPosition(CLOSED);
-    }
-
-    public void boxUp(){
-//        box.setPosition(UP);
-    }
-
-    public void boxDown(){
-//        box.setPosition(DOWN);
-    }
-
-    public void testCommand(){
-        if(gamepad1.a){
-            clawPosition += CHANGE_AMOUNT;
+        if (leftSensor.getDistance(DistanceUnit.MM) < distanceThreshold) {
+            LeftClaw.setPosition(leftcloseclaw);
+        } else {
+            LeftClaw.setPosition(openClaw);
         }
-        else if(gamepad1.b){
-            clawPosition -= CHANGE_AMOUNT;
+
+        if (rightSensor.getDistance(DistanceUnit.MM) < distanceThreshold) {
+            RightClaw.setPosition(rightcloseclaw);
+        } else {
+            RightClaw.setPosition(openClaw);
         }
-     //   claw.setPosition(clawPosition);
-        telemetry.addData("claw position", clawPosition);
+    }
+
+    public static void clawServo(double setPositionRight, double setPositionLeft) {
+        RightClaw.setPosition(setPositionRight);
+        LeftClaw.setPosition(setPositionLeft);
     }
 }
