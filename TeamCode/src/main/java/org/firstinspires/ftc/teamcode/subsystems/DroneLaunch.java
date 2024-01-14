@@ -10,7 +10,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class DroneLaunch {
     public static double LAUNCH = 0.5;
     public static double RESET = 0;
-
     private double dronePosition = 0.5;
     public static double CHANGE_AMOUNT = 0.0003;
 
@@ -28,10 +27,10 @@ public class DroneLaunch {
     }
 
     public void teleOpCommand(){
-        if(gamepad1.a){
+        if(gamepad1.x){
 //            drone.setPosition(LAUNCH);
         }
-        if(gamepad1.b){
+        if(gamepad1.y){
 //            drone.setPosition(RESET);
         }
     }
@@ -42,7 +41,7 @@ public class DroneLaunch {
         else if(gamepad1.b){
             dronePosition -= CHANGE_AMOUNT;
         }
-        //   claw.setPosition(clawPosition);
+//        drone.setPosition(dronePosition);
         telemetry.addData("drone position", dronePosition);
     }
 }

@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -10,19 +8,16 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Claw {
-    public static double INITIAL_POSITION = 0;
+    public static double INITIAL_POSITION = 0.5;
     public static double CHANGE_AMOUNT = 0.0003;
-    public static double CLOSED = 0.07;
-    public static double OPEN = 0;
-    public static double UP;
-    public static double DOWN;
+    public static double CLOSED = 0.6;
+    public static double OPEN = 0.431;
+
 
     private double clawPosition = INITIAL_POSITION;
 
     //create hardware variables
-//    private final Servo box;
-//    private final Servo claw1;
-//    private final Servo claw2;
+//    private final Servo claw;
 
 
     private final HardwareMap hardwareMap;
@@ -37,9 +32,10 @@ public class Claw {
         gamepad2 = opMode.gamepad2;
         telemetry = opMode.telemetry;
 
-//        claw1 = hardwareMap.get(Servo.class, "claw1");
-//        claw2 = hardwareMap.get(Servo.class, "claw2");
-//        box = hardwareMap.get(Servo.class, "box");
+//        claw = hardwareMap.get(Servo.class, "claw");
+//        claw.setDirection(Servo.Direction.FORWARD);
+
+
     }
 
     public void teleOpCommand() {
@@ -49,22 +45,13 @@ public class Claw {
     }
 
     public void openClaw(){
-//        claw1.setPosition(OPEN);
-//        claw2.setPosition(OPEN);
+//        claw.setPosition(OPEN);
     }
 
     public void closeClaw(){
-//        claw1.setPosition(CLOSED);
-//        claw2.setPosition(CLOSED);
+//        claw.setPosition(CLOSED);
     }
 
-    public void boxUp(){
-//        box.setPosition(UP);
-    }
-
-    public void boxDown(){
-//        box.setPosition(DOWN);
-    }
 
     public void testCommand(){
         if(gamepad1.a){
@@ -73,7 +60,10 @@ public class Claw {
         else if(gamepad1.b){
             clawPosition -= CHANGE_AMOUNT;
         }
-     //   claw.setPosition(clawPosition);
+//        claw.setPosition(clawPosition);
         telemetry.addData("claw position", clawPosition);
+
+
+
     }
 }

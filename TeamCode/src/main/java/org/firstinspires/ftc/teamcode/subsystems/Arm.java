@@ -11,19 +11,26 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Arm {
     //arm positions
-    public static double ARM_RESET = 0;
-    public static double ARM_DROP = 0;
-    public static double CHANGE_AMOUNT = 0.0003;
+    public static double ARM_RESET = 0.04;
+    public static double ARM_MID = 0.636;
+    public static double BOX_MID = 0.19;
+    public static double ARM_HIGH = 0.797;
+    public static double BOX_HIGH = 0;
+    public static double BOX_FIT = 0;
+    public static double CHANGE_AMOUNT = 0.0006;
+
 
     public double armPosition = 0;
+    public double boxPosition = 0;
 
     private final Telemetry telemetry;
     private final HardwareMap hardwareMap;
     private final Gamepad gamepad1;
     private final Gamepad gamepad2;
 
-//    private final Servo arm1;
-//    private final Servo arm2;
+    private final Servo arm1;
+    private final Servo arm2;
+//    private final Servo box;
 
     public Arm(OpMode opMode){
         hardwareMap = opMode.hardwareMap;
@@ -31,30 +38,53 @@ public class Arm {
         gamepad2 = opMode.gamepad2;
         telemetry = opMode.telemetry;
 
-//        arm1 = hardwareMap.get(Servo.class, "arm1");
-//        arm2 = hardwareMap.get(Servo.class, "arm2");
-//        arm1.setDirection(Servo.Direction.FORWARD);
-//        arm2.setDirection(Servo.Direction.REVERSE);
+        arm1 = hardwareMap.get(Servo.class, "arm1");
+        arm2 = hardwareMap.get(Servo.class, "arm2");
+        arm1.setDirection(Servo.Direction.FORWARD);
+        arm2.setDirection(Servo.Direction.REVERSE);
+
+//        box = hardwareMap.get(Servo.class, "box");
+//        box.setDirection(Servo.Direction.REVERSE);
     }
 
     public void teleOpCommand(){
         if(gamepad2.a) armReset();
-        if(gamepad2.a) armReset();
 
-        if (gamepad2.b) armDrop();
-        if (gamepad2.b) armDrop();
+        if (gamepad2.b) armMid();
+
+        if (gamepad2.y) armHigh();
+
+        if (gamepad2.x) armFit();
     }
+
 
     public void armReset(){
-//        arm1.setPosition(ARM_RESET);
-//        arm2.setPosition(ARM_RESET);
+        arm1.setPosition(ARM_RESET);
+        arm2.setPosition(ARM_RESET);
+
+//        box.setPosition(0.45);
     }
 
-    public void armDrop(){
-//        arm1.setPosition(ARM_DROP);
-//        arm2.setPosition(ARM_DROP);
+    public void armMid(){
+        arm1.setPosition(ARM_MID);
+        arm2.setPosition(ARM_MID);
+
+//        box.setPosition(BOX_MID);
     }
 
+    public void armHigh(){
+        arm1.setPosition(ARM_HIGH);
+        arm2.setPosition(ARM_HIGH);
+
+//        box.setPosition(BOX_HIGH);
+    }
+
+    public void armFit(){
+        arm1.setPosition(ARM_RESET);
+        arm2.setPosition(ARM_RESET);
+
+//        box.setPosition(BOX_FIT);
+    }
     public void testCommand(){
         if(gamepad1.a){
             armPosition += CHANGE_AMOUNT;
@@ -62,7 +92,18 @@ public class Arm {
         else if(gamepad1.b){
             armPosition -= CHANGE_AMOUNT;
         }
-        //arm1.setPosition(armPosition);
+        arm1.setPosition(armPosition);
+        arm2.setPosition(armPosition);
         telemetry.addData("arm position", armPosition);
+
+        //box stuff
+        if(gamepad1.x){
+            boxPosition += CHANGE_AMOUNT;
+        }
+        else if(gamepad1.y){
+            boxPosition -= CHANGE_AMOUNT;
+        }
+//        box.setPosition(boxPosition);
+        telemetry.addData("box position", boxPosition);
     }
 }

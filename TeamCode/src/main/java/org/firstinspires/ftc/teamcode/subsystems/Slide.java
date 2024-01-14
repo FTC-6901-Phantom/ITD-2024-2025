@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Slide {
 
     public static double POWER = 1;
-    public static int SCORE = 500;
+    public static int SCORE = 1778;
     public static int RESET = 0;
     public static int MANUAL_MOVE_SPEED = 7;
     private int position = 0;
@@ -31,11 +31,11 @@ public class Slide {
         telemetry = opMode.telemetry;
 
         slideLeft = hardwareMap.get(DcMotor.class,"leftSlide");
-        slideLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        slideLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         slideLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         slideRight = hardwareMap.get(DcMotor.class, "rightSlide");
-        slideRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        slideRight.setDirection(DcMotorSimple.Direction.FORWARD);
         slideRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         slideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -51,12 +51,18 @@ public class Slide {
     }
 
     public void teleOpCommand() {
-        if(gamepad2.x) Score();
+        if(gamepad2.dpad_up) Score();
 
-        if(gamepad2.y) Reset();
+        if(gamepad2.dpad_down) Reset();
 
-        if (gamepad1.dpad_up) moveMotors(position + MANUAL_MOVE_SPEED);
-        if (gamepad1.dpad_down) moveMotors(position - MANUAL_MOVE_SPEED);
+//        if (gamepad2.y) moveMotors(position + MANUAL_MOVE_SPEED);
+//        if (gamepad1.a) moveMotors(position - MANUAL_MOVE_SPEED);
+
+        if (gamepad2.right_stick_y < -0.3) moveMotors(position + MANUAL_MOVE_SPEED);
+
+        if (gamepad2.right_stick_y > 0.3) moveMotors(position - MANUAL_MOVE_SPEED);
+
+        telemetry.addData("slide position", position);
 
     }
 
@@ -84,9 +90,9 @@ public class Slide {
     }
 
     public void testCommand(){
-        if (gamepad1.right_stick_y < -0.3) moveMotors(position + MANUAL_MOVE_SPEED);
-        if (gamepad1.right_stick_y > 0.3) moveMotors(position - MANUAL_MOVE_SPEED);
+        if (gamepad2.right_stick_y < -0.3) moveMotors(position + MANUAL_MOVE_SPEED);
 
+        if (gamepad2.right_stick_y > 0.3) moveMotors(position - MANUAL_MOVE_SPEED);
         telemetry.addData("slide position", position);
     }
 

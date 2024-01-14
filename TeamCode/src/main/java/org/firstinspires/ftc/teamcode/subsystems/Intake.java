@@ -32,7 +32,7 @@ public class Intake {
       }
 
         public void teleOpCommand(){
-            if (gamepad1.left_bumper) intake.setPower(2);
+            if (gamepad1.left_bumper) intake.setPower(1);
             if (gamepad1.right_bumper) intake.setPower(-1);
             else intake.setPower(0);
         }

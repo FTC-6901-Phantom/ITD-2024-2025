@@ -23,12 +23,22 @@ public class TeleOpMain extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive()) {
-            mech.mechDrive();
+            mech.fieldCentric();
             claw.teleOpCommand();
             arm.teleOpCommand();
             slide.teleOpCommand();
             intake.teleOpCommand();
             drone.teleOpCommand();
         }
+
+        /* For me :3
+        Subsystems:
+        Drive Train
+        Slides 2M
+        Intake 1CRS
+        Arm 2S
+        Claw 1S
+        Drone Launcher 1S
+         */
     }
 }
