@@ -53,12 +53,12 @@ public class Slide {
     }
 
     public void teleOp() {
-        if(Driver1.dpad_up) moveHigh();
-        else if (Driver1.dpad_left) moveMid();
-        else if (Driver1.dpad_right) moveLow();
-        else if(Driver1.dpad_down) Reset();
-        else if (Driver1.right_stick_y < -0.3) moveMotors(position + MANUAL_MOVE_SPEED);
-        else if (Driver1.right_stick_y > 0.3) moveMotors(position - MANUAL_MOVE_SPEED);
+        if(Driver2.dpad_up) moveHigh();
+        else if (Driver2.dpad_left) moveMid();
+        else if (Driver2.dpad_right) moveLow();
+        else if(Driver2.dpad_down) Reset();
+        else if (Driver2.right_stick_y < -0.3) moveMotors(position + MANUAL_MOVE_SPEED);
+        else if (Driver2.right_stick_y > 0.3) moveMotors(position - MANUAL_MOVE_SPEED);
 
         telemetry.addData("slide position", position);
 

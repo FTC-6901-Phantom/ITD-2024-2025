@@ -16,6 +16,7 @@ public class FieldCentricDrive {
     private final HardwareMap hardwareMap;
     private final Gamepad Driver1;
     private final IMU imu;
+    double speed=.75;
 
     public FieldCentricDrive(OpMode opMode) {
         Driver1 = opMode.gamepad1;
@@ -52,6 +53,11 @@ public class FieldCentricDrive {
     }
 
     public void fieldCentric() {
+        if(Driver1.right_bumper){
+            speed=.5;
+        } else{
+            speed=.75;
+        }
         double y = -Driver1.left_stick_y;
         double x = Driver1.left_stick_x;
         double rx = Driver1.right_stick_x;
@@ -68,10 +74,10 @@ public class FieldCentricDrive {
         rotX = rotX * 1.1; //counteract imperfect strafing
 
         double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-        double frontLeftPower = (rotY + rotX + rx) / denominator;
-        double backLeftPower = (rotY - rotX + rx) / denominator;
-        double frontRightPower = (rotY - rotX - rx) / denominator;
-        double backRightPower = (rotY + rotX - rx) / denominator;
+        double frontLeftPower = (rotY + rotX + rx) / denominator * speed;
+        double backLeftPower = (rotY - rotX + rx) / denominator* speed;
+        double frontRightPower = (rotY - rotX - rx) / denominator* speed;
+        double backRightPower = (rotY + rotX - rx) / denominator* speed;
 
         leftFront.setPower(frontLeftPower);
         leftBack.setPower(backLeftPower);

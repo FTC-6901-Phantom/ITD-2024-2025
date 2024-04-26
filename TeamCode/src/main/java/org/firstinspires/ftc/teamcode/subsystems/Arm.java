@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Arm {
     private static Servo leftServo;
     private static Servo rightServo;
-    private final Gamepad Driver2;
-    private static Gamepad Driver1 = null;
+    private static Gamepad Driver2;
+    private static Gamepad Driver1;
     private static double scorePosition = 0;
     private static double intakePosition = 0.36;
 
@@ -25,10 +25,10 @@ public class Arm {
     }
 
     public static void teleOp() throws InterruptedException {
-        if (Driver1.dpad_up) armServo(scorePosition, scorePosition);
-        else if (Driver1.dpad_left) armServo(scorePosition, scorePosition);
-        else if (Driver1.dpad_right) armServo(scorePosition, scorePosition);
-        else if (Driver1.dpad_down) armServo(intakePosition, intakePosition);
+        if (Driver2.dpad_up) armServo(scorePosition, scorePosition);
+        else if (Driver2.dpad_left) armServo(scorePosition, scorePosition);
+        else if (Driver2.dpad_right) armServo(scorePosition, scorePosition);
+        else if (Driver2.dpad_down) armServo(intakePosition, intakePosition);
 
         //for(int i=0; i<=7;i++){
            // wait();
