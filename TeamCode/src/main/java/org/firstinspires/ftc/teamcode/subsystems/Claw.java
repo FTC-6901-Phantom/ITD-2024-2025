@@ -48,7 +48,6 @@ public class Claw {
             rightClaw.setPosition(closeClaw);
         }
     }
-
     public static void clawServo(double setPositionRight, double setPositionLeft) {
         rightClaw.setPosition(setPositionRight);
         leftClaw.setPosition(setPositionLeft);
