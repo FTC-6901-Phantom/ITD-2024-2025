@@ -4,29 +4,31 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 public class Arm {
-    private static Servo LeftServo;
-    private static Servo RightServo;
+    private static Servo leftServo;
+    private static Servo rightServo;
     private final Gamepad Driver2;
     private static Gamepad Driver1 = null;
     private static double scorePosition = 0;
-    private static double intakePosition = 0.22;
+    private static double intakePosition = 0.36;
 
     public Arm(OpMode opMode) {
         Driver2 = opMode.gamepad2;
         Driver1 = opMode.gamepad1;
-        LeftServo = (Servo) opMode.hardwareMap.get("LeftClaw");
-        RightServo = (Servo) opMode.hardwareMap.get("RightClaw");
+        leftServo = (Servo) opMode.hardwareMap.get("leftArm");
+        rightServo = (Servo) opMode.hardwareMap.get("rightArm");
 
 
-        LeftServo.setDirection(Servo.Direction.FORWARD);
-        RightServo.setDirection(Servo.Direction.REVERSE);
-        clawServo(scorePosition, scorePosition);
+        leftServo.setDirection(Servo.Direction.REVERSE);
+        rightServo.setDirection(Servo.Direction.FORWARD);
+        armServo(scorePosition, scorePosition);
 //        opMode.time
     }
 
     public static void teleOp() throws InterruptedException {
-        if (Driver1.b) clawServo(scorePosition, scorePosition);
-        else if (Driver1.x) clawServo(intakePosition, intakePosition);
+        if (Driver1.dpad_up) armServo(scorePosition, scorePosition);
+        else if (Driver1.dpad_left) armServo(scorePosition, scorePosition);
+        else if (Driver1.dpad_right) armServo(scorePosition, scorePosition);
+        else if (Driver1.dpad_down) armServo(intakePosition, intakePosition);
 
         //for(int i=0; i<=7;i++){
            // wait();
@@ -34,8 +36,8 @@ public class Arm {
 
 
 
-    public static void clawServo(double setPositionRight, double setPositionLeft) {
-        RightServo.setPosition(setPositionRight);
-        LeftServo.setPosition(setPositionLeft);
+    public static void armServo(double setPositionRight, double setPositionLeft) {
+        rightServo.setPosition(setPositionRight);
+        leftServo.setPosition(setPositionLeft);
     }
 }
