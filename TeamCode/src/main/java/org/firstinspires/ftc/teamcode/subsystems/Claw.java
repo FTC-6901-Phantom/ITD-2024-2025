@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class Claw {
-    private static double closeClaw = 0.169;
+    private static double closeClaw = 0.15;
     private static double openClaw = 0;
     private static double distanceThreshold = 1;
     private static Servo leftClaw;
@@ -20,6 +20,7 @@ public class Claw {
     private static Gamepad Driver2;
     private static Gamepad Driver1;
     private static OpMode opMode;
+    static boolean sensorWork;
 
     public Claw(OpMode opMode) {
         Driver2 = opMode.gamepad2;
@@ -28,25 +29,40 @@ public class Claw {
         rightClaw = (Servo) opMode.hardwareMap.get("rightClaw");
         leftSensor = (ColorRangeSensor) opMode.hardwareMap.get("leftSensor");
         rightSensor = (ColorRangeSensor) opMode.hardwareMap.get("rightSensor");
-        leftClaw.setDirection(Servo.Direction.FORWARD);
-        rightClaw.setDirection(Servo.Direction.REVERSE);
+        leftClaw.setDirection(Servo.Direction.REVERSE);
+        rightClaw.setDirection(Servo.Direction.FORWARD);
         clawServo(openClaw, openClaw);
         Claw.opMode = opMode;
     }
 
     public static void teleOp() {
-        opMode.telemetry.addData("leftSensor", leftSensor.getDistance(DistanceUnit.CM));
-        opMode.telemetry.addData("rightSensor", rightSensor.getDistance(DistanceUnit.CM));
-        if (Driver2.right_trigger >= 0.1){ clawServo(closeClaw, closeClaw);}
-        else if (Driver2.left_trigger >= 0.1) clawServo(openClaw, openClaw);
+        if (Driver2.right_trigger >= 0.1) {
+            rightClaw.setPosition(openClaw);
+            sensorWork = false;
+        }
+        else if (Driver2.left_trigger >= 0.1){
+            leftClaw.setPosition(openClaw);
+            sensorWork=false;
+        } else {
+            sensorWork=true;
+        }
 
-        if (leftSensor.getDistance(DistanceUnit.CM) < distanceThreshold) {
+        if (Driver2.right_bumper) {
+            rightClaw.setPosition(closeClaw);
+        }
+        else if (Driver2.left_bumper){
             leftClaw.setPosition(closeClaw);
         }
 
-        if (rightSensor.getDistance(DistanceUnit.CM) < distanceThreshold) {
-            rightClaw.setPosition(closeClaw);
+        if (sensorWork){
+            if(leftSensor.getDistance(DistanceUnit.CM) < distanceThreshold) {
+                leftClaw.setPosition(closeClaw);
+            }
+            if(rightSensor.getDistance(DistanceUnit.CM) < distanceThreshold) {
+                rightClaw.setPosition(closeClaw);
+            }
         }
+
     }
     public static void clawServo(double setPositionRight, double setPositionLeft) {
         rightClaw.setPosition(setPositionRight);
