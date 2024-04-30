@@ -29,6 +29,7 @@ public class Arm {
         else if (Driver2.dpad_left) armServo(scorePosition, scorePosition);
         else if (Driver2.dpad_right) armServo(scorePosition, scorePosition);
         else if (Driver2.dpad_down) armServo(intakePosition, intakePosition);
+        else if (Driver2.y) armServo(scorePosition,scorePosition);
 
         //for(int i=0; i<=7;i++){
            // wait();

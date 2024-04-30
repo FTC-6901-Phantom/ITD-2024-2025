@@ -10,9 +10,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class Claw {
-    private static double closeClaw = 0.15;
+    private static double closeClaw = 0.14;
     private static double openClaw = 0;
-    private static double distanceThreshold = 1;
+    private static double distanceThreshold = 3;
     private static Servo leftClaw;
     private static Servo rightClaw;
     private static ColorRangeSensor leftSensor;
@@ -44,8 +44,7 @@ public class Claw {
             leftClaw.setPosition(openClaw);
             sensorWork=false;
         } else {
-            sensorWork=true;
-        }
+            sensorWork=true;}
 
         if (Driver2.right_bumper) {
             rightClaw.setPosition(closeClaw);
@@ -53,20 +52,13 @@ public class Claw {
         else if (Driver2.left_bumper){
             leftClaw.setPosition(closeClaw);
         }
-
         if (sensorWork){
             if(leftSensor.getDistance(DistanceUnit.CM) < distanceThreshold) {
-                leftClaw.setPosition(closeClaw);
-            }
+                leftClaw.setPosition(closeClaw);}
             if(rightSensor.getDistance(DistanceUnit.CM) < distanceThreshold) {
-                rightClaw.setPosition(closeClaw);
-            }
-        }
-
+                rightClaw.setPosition(closeClaw);}}
     }
     public static void clawServo(double setPositionRight, double setPositionLeft) {
         rightClaw.setPosition(setPositionRight);
         leftClaw.setPosition(setPositionLeft);
-    }
-
-}
+    }}

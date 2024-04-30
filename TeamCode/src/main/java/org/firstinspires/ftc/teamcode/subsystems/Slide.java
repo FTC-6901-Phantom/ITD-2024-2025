@@ -60,8 +60,8 @@ public class Slide {
         else if (Driver2.right_stick_y < -0.3) moveMotors(position + MANUAL_MOVE_SPEED);
         else if (Driver2.right_stick_y > 0.3) moveMotors(position - MANUAL_MOVE_SPEED);
 
-        telemetry.addData("slide position", position);
-
+        telemetry.addData("LeftEncoder",slideLeft.getCurrentPosition());
+        telemetry.addData("RightEncoder",slideRight.getCurrentPosition());
     }
 
     public void moveHigh(){
