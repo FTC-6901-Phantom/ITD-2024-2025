@@ -15,8 +15,8 @@ public class Claw {
     private static double distanceThreshold = 3;
     private static Servo leftClaw;
     private static Servo rightClaw;
-    private static ColorRangeSensor leftSensor;
-    private static ColorRangeSensor rightSensor;
+    public static ColorRangeSensor leftSensor;
+    public static ColorRangeSensor rightSensor;
     private static Gamepad Driver2;
     private static Gamepad Driver1;
     private static OpMode opMode;
@@ -36,20 +36,20 @@ public class Claw {
     }
 
     public static void teleOp() {
-        if (Driver2.right_trigger >= 0.1) {
+        if (Driver1.right_trigger >= 0.1) {
             rightClaw.setPosition(openClaw);
             sensorWork = false;
         }
-        else if (Driver2.left_trigger >= 0.1){
+        else if (Driver1.left_trigger >= 0.1){
             leftClaw.setPosition(openClaw);
             sensorWork=false;
         } else {
             sensorWork=true;}
 
-        if (Driver2.right_bumper) {
+        if (Driver1.right_bumper) {
             rightClaw.setPosition(closeClaw);
         }
-        else if (Driver2.left_bumper){
+        else if (Driver1.left_bumper){
             leftClaw.setPosition(closeClaw);
         }
         if (sensorWork){

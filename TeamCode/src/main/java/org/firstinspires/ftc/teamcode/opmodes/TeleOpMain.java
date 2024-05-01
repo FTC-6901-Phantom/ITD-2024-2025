@@ -14,14 +14,14 @@ public class TeleOpMain extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Slide slide = new Slide(this);
     FieldCentricDrive fieldCentricDrive= new FieldCentricDrive(this);
-    //Claw claw = new Claw(this);
-    //Arm arm = new Arm(this);
+    Claw claw = new Claw(this);
+    Arm arm = new Arm(this);
         waitForStart();
         while (opModeIsActive()) {
     fieldCentricDrive.fieldCentric();
-     //Claw.teleOp();
+     Claw.teleOp();
      slide.teleOp();
-     //Arm.teleOp();
+     Arm.teleOp();
 
      }
   }

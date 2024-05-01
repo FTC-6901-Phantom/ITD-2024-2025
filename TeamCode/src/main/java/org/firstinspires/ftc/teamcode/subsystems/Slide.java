@@ -11,9 +11,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Slide {
 
     public static double POWER = 1;
-    public static int High = 1500;
-    public static int Mid = 1000;
-    public static int Low = 500;
+    public static int High = 4000;
+    public static int Mid = 2750;
+    public static int Low = 1750;
     public static int RESET = 0;
     public static int MANUAL_MOVE_SPEED = 10;
     private int position = 0;
@@ -52,16 +52,15 @@ public class Slide {
 
     }
 
-    public void teleOp() {
-        if(Driver2.dpad_up) moveHigh();
-        else if (Driver2.dpad_left) moveMid();
-        else if (Driver2.dpad_right) moveLow();
-        else if(Driver2.dpad_down) Reset();
-        else if (Driver2.right_stick_y < -0.3) moveMotors(position + MANUAL_MOVE_SPEED);
-        else if (Driver2.right_stick_y > 0.3) moveMotors(position - MANUAL_MOVE_SPEED);
-
-        telemetry.addData("LeftEncoder",slideLeft.getCurrentPosition());
-        telemetry.addData("RightEncoder",slideRight.getCurrentPosition());
+    public void teleOp(){
+        if(Driver1.y) moveHigh();
+        else if (Driver1.x) moveMid();
+        else if (Driver1.b) moveLow();
+        else if(Driver1.a) Reset();
+        else if (Driver1.dpad_up) moveMotors(position + MANUAL_MOVE_SPEED);
+        else if (Driver1.dpad_down) moveMotors(position - MANUAL_MOVE_SPEED);
+        telemetry.addData("SlidePos",slideLeft.getCurrentPosition());
+        telemetry.addData("SlidePos",slideRight.getCurrentPosition());
     }
 
     public void moveHigh(){

@@ -9,7 +9,7 @@ public class Arm {
     private static Gamepad Driver2;
     private static Gamepad Driver1;
     private static double scorePosition = 0;
-    private static double intakePosition = 0.36;
+    private static double intakePosition = 0.40;
 
     public Arm(OpMode opMode) {
         Driver2 = opMode.gamepad2;
@@ -25,11 +25,11 @@ public class Arm {
     }
 
     public static void teleOp() throws InterruptedException {
-        if (Driver2.dpad_up) armServo(scorePosition, scorePosition);
-        else if (Driver2.dpad_left) armServo(scorePosition, scorePosition);
-        else if (Driver2.dpad_right) armServo(scorePosition, scorePosition);
-        else if (Driver2.dpad_down) armServo(intakePosition, intakePosition);
-        else if (Driver2.y) armServo(scorePosition,scorePosition);
+        if (Driver1.dpad_left) armServo(scorePosition, scorePosition);
+        else if (Driver1.x) armServo(scorePosition, scorePosition);
+        else if (Driver1.b) armServo(scorePosition, scorePosition);
+        else if (Driver1.a) armServo(intakePosition, intakePosition);
+        else if (Driver1.y) armServo(scorePosition,scorePosition);
 
         //for(int i=0; i<=7;i++){
            // wait();

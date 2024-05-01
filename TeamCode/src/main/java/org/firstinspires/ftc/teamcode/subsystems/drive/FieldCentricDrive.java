@@ -42,27 +42,24 @@ public class FieldCentricDrive {
         //SET UP HUB POSITION
         IMU imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
+                RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
+                RevHubOrientationOnRobot.UsbFacingDirection.UP));
 
         imu.initialize(parameters);
-
-
-
 
     }
 
     public void fieldCentric() {
-        if(Driver1.right_bumper){
+        if(Driver1.left_stick_button){
             speed=.5;
         } else{
-            speed=.75;
+            speed=speed;
         }
         double y = -Driver1.left_stick_y;
         double x = Driver1.left_stick_x;
         double rx = Driver1.right_stick_x;
 
-        if (Driver1.a) {
+        if (Driver1.start) {
             imu.resetYaw();
         }
 
