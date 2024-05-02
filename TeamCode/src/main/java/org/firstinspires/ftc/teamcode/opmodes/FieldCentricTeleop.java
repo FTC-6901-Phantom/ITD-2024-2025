@@ -3,13 +3,14 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.drive.FieldCentricDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
-import org.firstinspires.ftc.teamcode.subsystems.drive.FieldCentricDrive;
+import org.firstinspires.ftc.teamcode.drive.DriverCentricDrive;
 
 @TeleOp
-public class TeleOpMain extends LinearOpMode {
+public class FieldCentricTeleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Slide slide = new Slide(this);
@@ -19,10 +20,9 @@ public class TeleOpMain extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
     fieldCentricDrive.fieldCentric();
-     Claw.teleOp();
+     Claw.TeleOp();
      slide.teleOp();
      Arm.teleOp();
-
      }
   }
 }

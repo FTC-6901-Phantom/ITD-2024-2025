@@ -99,14 +99,6 @@ public class Slide {
         slideRight.setTargetPosition(position);
         slideLeft.setPower(POWER);
         slideRight.setPower(POWER);
+
     }
-
-    public void testCommand(){
-        if (Driver1.right_stick_y < -0.3) moveMotors(position + MANUAL_MOVE_SPEED);
-
-        if (Driver1.right_stick_y > 0.3) moveMotors(position - MANUAL_MOVE_SPEED);
-        telemetry.addData("slide position", position);
-    }
-
-
 }

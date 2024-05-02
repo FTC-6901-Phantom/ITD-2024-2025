@@ -11,7 +11,7 @@ public class RightRW {
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                .setConstraints(30, 30, Math.toRadians(180), Math.toRadians(180), 7.55)
+                .setConstraints(77, 77, Math.toRadians(180), Math.toRadians(180), 7.55)
                 .setDimensions(11,14.5)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(-29, -60, Math.toRadians(270)))

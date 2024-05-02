@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.drive;
+package org.firstinspires.ftc.teamcode.drive;
 
 import androidx.annotation.NonNull;
 
@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.util.Encoder;
 import java.util.Arrays;
 import java.util.List;
 @Config
-public class StandardTrackingLocalization extends ThreeTrackingWheelLocalizer{
+public class StandardTrackingLocalization extends ThreeTrackingWheelLocalizer {
     public static double TICKS_PER_REV = 0;
     public static double WHEEL_RADIUS = 2; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (encoder) speed
