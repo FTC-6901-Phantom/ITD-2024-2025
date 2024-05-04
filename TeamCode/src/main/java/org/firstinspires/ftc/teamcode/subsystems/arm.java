@@ -3,16 +3,14 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
-public class Arm {
+public class arm {
     private static Servo leftServo;
     private static Servo rightServo;
-    private static Gamepad Driver2;
     private static Gamepad Driver1;
     private static double scorePosition = 0;
     private static double intakePosition = 0.40;
 
-    public Arm(OpMode opMode) {
-        Driver2 = opMode.gamepad2;
+    public arm(OpMode opMode) {
         Driver1 = opMode.gamepad1;
         leftServo = (Servo) opMode.hardwareMap.get("leftArm");
         rightServo = (Servo) opMode.hardwareMap.get("rightArm");

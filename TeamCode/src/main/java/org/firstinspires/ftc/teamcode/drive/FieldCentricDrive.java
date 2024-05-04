@@ -15,7 +15,7 @@ public class FieldCentricDrive {
     private final HardwareMap hardwareMap;
     private final Gamepad Driver1;
     private final IMU imu;
-    double speed=.75;
+    double speed=1;
 
     public FieldCentricDrive(OpMode opMode) {
         Driver1 = opMode.gamepad1;

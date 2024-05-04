@@ -9,7 +9,7 @@ import com .qualcomm.robotcore.hardware.ColorRangeSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
-public class Claw {
+public class claw {
     private static final double openClaw = 0;
     private static Servo leftClaw;
     private static Servo rightClaw;
@@ -18,7 +18,7 @@ public class Claw {
     private static Gamepad Driver1;
     static boolean sensorWork;
 
-    public Claw(OpMode opMode) {
+    public claw(OpMode opMode) {
         Driver1 = opMode.gamepad1;
         leftClaw = (Servo) opMode.hardwareMap.get("leftClaw");
         rightClaw = (Servo) opMode.hardwareMap.get("rightClaw");

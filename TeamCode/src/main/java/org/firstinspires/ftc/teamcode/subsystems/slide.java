@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class Slide {
+public class slide {
 
     public static double POWER = 1;
     public static int High = 4000;
@@ -26,7 +26,7 @@ public class Slide {
     private final Gamepad Driver1;
     private final Telemetry telemetry;
 
-    public Slide(OpMode opMode) {
+    public slide(OpMode opMode) {
         Driver2 = opMode.gamepad2;
         Driver1 = opMode.gamepad1;
         hardwareMap = opMode.hardwareMap;
