@@ -22,7 +22,7 @@ public class arm {
 //        opMode.time
     }
 
-    public static void teleOp() throws InterruptedException {
+    public void teleOp() throws InterruptedException {
         if (Driver1.dpad_left) armServo(scorePosition, scorePosition);
         else if (Driver1.x) armServo(scorePosition, scorePosition);
         else if (Driver1.b) armServo(scorePosition, scorePosition);

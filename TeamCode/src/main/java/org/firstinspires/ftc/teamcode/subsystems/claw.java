@@ -10,13 +10,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class claw {
-    private static final double openClaw = 0;
+    public final double openClaw = 0;
     private static Servo leftClaw;
     private static Servo rightClaw;
     public static ColorRangeSensor leftSensor;
     public static ColorRangeSensor rightSensor;
     private static Gamepad Driver1;
     static boolean sensorWork;
+    public  final double closeClaw= 0.14;
 
     public claw(OpMode opMode) {
         Driver1 = opMode.gamepad1;
@@ -26,10 +27,10 @@ public class claw {
         rightSensor = (ColorRangeSensor) opMode.hardwareMap.get("rightSensor");
         leftClaw.setDirection(Servo.Direction.REVERSE);
         rightClaw.setDirection(Servo.Direction.FORWARD);
-        clawServo(openClaw, openClaw);
+        clawServo(closeClaw, closeClaw);
     }
 
-    public static void TeleOp() {
+    public  void teleOp() {
         if (Driver1.right_trigger >= 0.1) {
             rightClaw.setPosition(openClaw);
             sensorWork = false;
@@ -40,7 +41,6 @@ public class claw {
         } else {
             sensorWork=true;}
 
-        double closeClaw = 0.14;
         if (Driver1.left_bumper) {
             clawServo(closeClaw, closeClaw);
         }
@@ -52,7 +52,7 @@ public class claw {
                 rightClaw.setPosition(closeClaw);}
         }
     }
-    public static void clawServo(double setPositionRight, double setPositionLeft) {
+    public  void clawServo(double setPositionRight, double setPositionLeft) {
         rightClaw.setPosition(setPositionRight);
         leftClaw.setPosition(setPositionLeft);
     }}

@@ -13,17 +13,18 @@ import org.firstinspires.ftc.teamcode.subsystems.slide;
 public class FieldCentricTeleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        slide slide = new slide(this);
+        //slide slide = new slide(this);
     FieldCentricDrive fieldCentricDrive= new FieldCentricDrive(this);
-    claw claw = new claw(this);
-    arm arm = new arm(this);
+    //claw claw = new claw(this);
+    //arm arm = new arm(this);
+   // shooter shooter = new shooter(this);
         waitForStart();
         while (opModeIsActive()) {
     fieldCentricDrive.fieldCentric();
-     org.firstinspires.ftc.teamcode.subsystems.claw.TeleOp();
-     slide.teleOp();
-     org.firstinspires.ftc.teamcode.subsystems.arm.teleOp();
-     shooter.teleOp();
+     //claw.teleOp();
+     //slide.teleOp();
+     //arm.teleOp();
+     //shooter.teleOp();
      }
   }
 }

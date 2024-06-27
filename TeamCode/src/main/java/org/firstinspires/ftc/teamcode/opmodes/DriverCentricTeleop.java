@@ -13,17 +13,18 @@ import org.firstinspires.ftc.teamcode.drive.DriverCentricDrive;
 public class DriverCentricTeleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        slide slide = new slide(this);
+        //slide slide = new slide(this);
         DriverCentricDrive driverCentricDrive= new DriverCentricDrive(this);
-        claw claw = new claw(this);
+        //claw claw = new claw(this);
         arm arm = new arm(this);
+       // shooter shooter = new shooter(this);
         waitForStart();
         while (opModeIsActive()) {
             driverCentricDrive.driverCentric();
-            org.firstinspires.ftc.teamcode.subsystems.claw.TeleOp();
-            slide.teleOp();
-            org.firstinspires.ftc.teamcode.subsystems.arm.teleOp();
-            shooter.teleOp();
+            //claw.TeleOp();
+            //slide.teleOp();
+          //org.firstinspires.ftc.teamcode.subsystems.arm.teleOp();
+         //   shooter.teleOp();
         }
     }
 }

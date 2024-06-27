@@ -11,11 +11,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class slide {
 
     public static double POWER = 1;
-    public static int High = 4000;
-    public static int Mid = 2750;
-    public static int Low = 1750;
+    public static int High = 1850;
+    public static int Mid = 1450;
+    public static int Low = 1100;
     public static int RESET = 0;
-    public static int MANUAL_MOVE_SPEED = 10;
+    public static int MANUAL_MOVE_SPEED = 20;
     private int position = 0;
 
     private final DcMotor slideLeft;

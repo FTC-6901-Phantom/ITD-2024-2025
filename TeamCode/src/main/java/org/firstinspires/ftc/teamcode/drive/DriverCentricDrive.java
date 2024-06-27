@@ -9,15 +9,15 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 public class DriverCentricDrive {
     private final DcMotor leftFront,leftBack,rightFront,rightBack;
     private final Gamepad Driver1;
-    double speed=1;
+    double speed=.85;
 
     public DriverCentricDrive(OpMode opMode) {
         Driver1 = opMode.gamepad1;
         HardwareMap hardwareMap = opMode.hardwareMap;
         leftFront = hardwareMap.get(DcMotor.class, "leftFront");
-        leftBack = hardwareMap.get(DcMotor.class, "leftBack");
+        leftBack = hardwareMap.get(DcMotor.class, "leftRear");
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
-        rightBack = hardwareMap.get(DcMotor.class, "rightBack");
+        rightBack = hardwareMap.get(DcMotor.class, "rightRear");
 
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -44,7 +44,7 @@ public class DriverCentricDrive {
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double frontLeftPower = (y + x + rx) / denominator * speed;
         double backLeftPower = (y - x + rx) / denominator* speed;
-        double frontRightPower = (y - x - rx) / denominator* speed;
+        double frontRightPower = (y - x - rx)  / denominator* speed;
         double backRightPower = (y + x - rx) / denominator* speed;
 
         leftFront.setPower(frontLeftPower);
