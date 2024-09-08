@@ -10,7 +10,6 @@ public class DriverCentricDrive {
     private final DcMotor leftFront,leftBack,rightFront,rightBack;
     private final Gamepad Driver1;
     double speed=.85;
-
     public DriverCentricDrive(OpMode opMode) {
         Driver1 = opMode.gamepad1;
         HardwareMap hardwareMap = opMode.hardwareMap;
@@ -19,9 +18,9 @@ public class DriverCentricDrive {
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
         rightBack = hardwareMap.get(DcMotor.class, "rightRear");
 
-        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBack.setDirection(DcMotorSimple.Direction.FORWARD);
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
