@@ -16,14 +16,12 @@ public class DriverCentricTeleop extends LinearOpMode {
         DriverCentricDrive driverCentricDrive= new DriverCentricDrive(this);
         claw claw = new claw(this);
         arm arm = new arm(this);
-       // shooter shooter = new shooter(this);
         waitForStart();
         while (opModeIsActive()) {
             driverCentricDrive.driverCentric();
             claw.teleOp();
             slide.teleOp();
-          org.firstinspires.ftc.teamcode.subsystems.arm.teleOp();
-         //   shooter.teleOp();
+            org.firstinspires.ftc.teamcode.subsystems.arm.teleOp();
         }
     }
 }

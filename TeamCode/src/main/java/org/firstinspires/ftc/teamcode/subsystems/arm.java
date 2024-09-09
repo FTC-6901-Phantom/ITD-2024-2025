@@ -30,8 +30,8 @@ public class arm {
         else if (Driver1.y) armServo(scorePosition,scorePosition);
 
         //for(int i=0; i<=7;i++){
-           // wait();
-        }
+        // wait();
+    }
 
 
 

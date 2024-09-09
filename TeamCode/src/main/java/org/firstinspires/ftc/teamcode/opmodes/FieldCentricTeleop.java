@@ -13,17 +13,15 @@ public class FieldCentricTeleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         slide slide = new slide(this);
-    FieldCentricDrive fieldCentricDrive= new FieldCentricDrive(this);
-    claw claw = new claw(this);
-    arm arm = new arm(this);
-   // shooter shooter = new shooter(this);
+        FieldCentricDrive fieldCentricDrive= new FieldCentricDrive(this);
+        claw claw = new claw(this);
+        arm arm = new arm(this);
         waitForStart();
         while (opModeIsActive()) {
-    fieldCentricDrive.fieldCentric();
-     claw.teleOp();
-     slide.teleOp();
-     arm.teleOp();
-     //shooter.teleOp();
-     }
-  }
+            fieldCentricDrive.fieldCentric();
+            claw.teleOp();
+            slide.teleOp();
+            arm.teleOp();
+        }
+    }
 }
