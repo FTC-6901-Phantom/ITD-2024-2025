@@ -15,7 +15,7 @@ public class slide {
     public static int Mid = 1450;
     public static int Low = 1100;
     public static int RESET = 0;
-    public static int MANUAL_MOVE_SPEED = 20;
+    public static int MANUAL_MOVE_SPEED = 10;
     private int position = 0;
 
     private final DcMotor slideLeft;
