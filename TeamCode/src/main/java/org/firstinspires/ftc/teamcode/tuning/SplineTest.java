@@ -6,7 +6,7 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
-import org.firstinspires.ftc.teamcode.drive.TankDrive;
+import org.firstinspires.ftc.teamcode.drive.uSELESS;
 
 public final class SplineTest extends LinearOpMode {
     @Override
@@ -22,8 +22,8 @@ public final class SplineTest extends LinearOpMode {
                         .splineTo(new Vector2d(30, 30), Math.PI / 2)
                         .splineTo(new Vector2d(0, 60), Math.PI)
                         .build());
-        } else if (TuningOpModes.DRIVE_CLASS.equals(TankDrive.class)) {
-            TankDrive drive = new TankDrive(hardwareMap, beginPose);
+        } else if (TuningOpModes.DRIVE_CLASS.equals(uSELESS.class)) {
+            uSELESS drive = new uSELESS(hardwareMap, beginPose);
 
             waitForStart();
 

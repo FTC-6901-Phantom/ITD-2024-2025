@@ -23,7 +23,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
 
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
 import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
-import org.firstinspires.ftc.teamcode.drive.TankDrive;
+import org.firstinspires.ftc.teamcode.drive.uSELESS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,14 +102,14 @@ public final class TuningOpModes {
                                 MecanumDrive.PARAMS.kA / MecanumDrive.PARAMS.inPerTick)
                 );
             };
-        } else if (DRIVE_CLASS.equals(TankDrive.class)) {
+        } else if (DRIVE_CLASS.equals(uSELESS.class)) {
             dvf = hardwareMap -> {
-                TankDrive td = new TankDrive(hardwareMap, new Pose2d(0, 0, 0));
+                uSELESS td = new uSELESS(hardwareMap, new Pose2d(0, 0, 0));
 
                 List<Encoder> leftEncs = new ArrayList<>(), rightEncs = new ArrayList<>();
                 List<Encoder> parEncs = new ArrayList<>(), perpEncs = new ArrayList<>();
-                if (td.localizer instanceof TankDrive.DriveLocalizer) {
-                    TankDrive.DriveLocalizer dl = (TankDrive.DriveLocalizer) td.localizer;
+                if (td.localizer instanceof uSELESS.DriveLocalizer) {
+                    uSELESS.DriveLocalizer dl = (uSELESS.DriveLocalizer) td.localizer;
                     leftEncs.addAll(dl.leftEncs);
                     rightEncs.addAll(dl.rightEncs);
                 } else if (td.localizer instanceof ThreeDeadWheelLocalizer) {
@@ -127,10 +127,10 @@ public final class TuningOpModes {
 
                 return new DriveView(
                     DriveType.TANK,
-                        TankDrive.PARAMS.inPerTick,
-                        TankDrive.PARAMS.maxWheelVel,
-                        TankDrive.PARAMS.minProfileAccel,
-                        TankDrive.PARAMS.maxProfileAccel,
+                        uSELESS.PARAMS.inPerTick,
+                        uSELESS.PARAMS.maxWheelVel,
+                        uSELESS.PARAMS.minProfileAccel,
+                        uSELESS.PARAMS.maxProfileAccel,
                         hardwareMap.getAll(LynxModule.class),
                         td.leftMotors,
                         td.rightMotors,
@@ -140,9 +140,9 @@ public final class TuningOpModes {
                         perpEncs,
                         td.lazyImu,
                         td.voltageSensor,
-                        () -> new MotorFeedforward(TankDrive.PARAMS.kS,
-                                TankDrive.PARAMS.kV / TankDrive.PARAMS.inPerTick,
-                                TankDrive.PARAMS.kA / TankDrive.PARAMS.inPerTick)
+                        () -> new MotorFeedforward(uSELESS.PARAMS.kS,
+                                uSELESS.PARAMS.kV / uSELESS.PARAMS.inPerTick,
+                                uSELESS.PARAMS.kA / uSELESS.PARAMS.inPerTick)
                 );
             };
         } else {

@@ -60,7 +60,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Config
-public final class TankDrive {
+public final class uSELESS {
     public static class Params {
         // IMU orientation
         // TODO: fill in these values based on
@@ -213,7 +213,7 @@ public final class TankDrive {
         }
     }
 
-    public TankDrive(HardwareMap hardwareMap, Pose2d pose) {
+    public uSELESS(HardwareMap hardwareMap, Pose2d pose) {
         this.pose = pose;
 
         LynxFirmware.throwIfModulesAreOutdated(hardwareMap);
@@ -245,7 +245,7 @@ public final class TankDrive {
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
-        localizer = new TankDrive.DriveLocalizer();
+        localizer = new uSELESS.DriveLocalizer();
 
         FlightRecorder.write("TANK_PARAMS", PARAMS);
     }

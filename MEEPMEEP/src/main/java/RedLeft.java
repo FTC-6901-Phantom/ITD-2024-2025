@@ -4,7 +4,7 @@ import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 import com.acmerobotics.roadrunner.Vector2d;
 
-public class MEEp {
+public class RedLeft {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
@@ -18,8 +18,9 @@ public class MEEp {
                 .splineToConstantHeading(new Vector2d(-8, -40), Math.PI / 2)
                 .waitSeconds(2)
                 .strafeTo(new Vector2d(-48, -42))
+                        .waitSeconds(2)
                         .splineToLinearHeading(new Pose2d(-52,-52, Math.toRadians(-135)), Math.PI/2)
-                        .waitSeconds(1)
+                        .waitSeconds(2)
                 .splineTo(new Vector2d(-58, -42), Math.PI / 2)
                         .waitSeconds(2)
                 .splineToLinearHeading(new Pose2d(-52,-52, Math.toRadians(-135)), Math.PI/2)
