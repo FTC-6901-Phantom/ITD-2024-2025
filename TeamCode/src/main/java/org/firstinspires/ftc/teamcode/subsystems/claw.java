@@ -9,14 +9,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class claw {
-    public final double openClaw = 0;
+    private final double openClaw = 0;
     private static Servo clawServo;
     private static Gamepad Driver1;
-    public  final double closeClaw= 0.14;
+    private  final double closeClaw= 0.14;
 
     public claw(OpMode opMode) {
         Driver1 = opMode.gamepad1;
-        clawServo = (Servo) opMode.hardwareMap.get("leftClaw");
+        clawServo = (Servo) opMode.hardwareMap.get("claw");
         clawServo.setDirection(Servo.Direction.REVERSE);
         clawServo(closeClaw, closeClaw);
     }

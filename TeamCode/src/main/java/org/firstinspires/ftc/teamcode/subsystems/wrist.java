@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 public class wrist {
-    public final double intakePos = 0;
+    public final double Outtake = 0;
     private static Servo wristServo;
     private static Gamepad Driver1;
     public  final double specimenIntake = 0.14;
@@ -21,7 +21,7 @@ public class wrist {
 
     public  void teleOp() {
         if (Driver1.left_bumper){
-            wristServo.setPosition(intakePos);}
+            wristServo.setPosition(Outtake);}
 
         if (Driver1.right_bumper) {
             wristServo(specimenIntake, specimenIntake);

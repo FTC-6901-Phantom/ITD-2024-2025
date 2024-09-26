@@ -13,7 +13,7 @@ public class BlueLeft {
                 .setConstraints(45, 45, Math.toRadians(180), Math.toRadians(180), 10.67)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(33, 63, -Math.PI / 2))
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(33, 63, Math.toRadians(270)))
                 .setTangent(180)
                 .splineToConstantHeading(new Vector2d(8, 40), -Math.PI / 2)
                 .waitSeconds(2)

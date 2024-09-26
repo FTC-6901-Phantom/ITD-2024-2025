@@ -221,10 +221,8 @@ public class LeftBlue extends LinearOpMode {
 
                 Actions.runBlocking(
                         new SequentialAction(
-                                lift.liftUp(),
-                                claw.openClaw(),
-                                arm.scoreArm(),
-                                wrist.intake()));
-
-
-                        }}}}}
+                        lift.liftUp(),
+                        claw.openClaw(),
+                        arm.scoreArm(),
+                        wrist.intake()));
+                }}}}}

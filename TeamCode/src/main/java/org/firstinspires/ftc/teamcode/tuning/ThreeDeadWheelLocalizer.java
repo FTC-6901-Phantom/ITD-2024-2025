@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.messages.ThreeDeadWheelInputsMessage;
-import org.firstinspires.ftc.teamcode.util.Localizer;
+import org.firstinspires.ftc.teamcode.messages.Localizer;
 
 @Config
 public final class ThreeDeadWheelLocalizer implements Localizer {
