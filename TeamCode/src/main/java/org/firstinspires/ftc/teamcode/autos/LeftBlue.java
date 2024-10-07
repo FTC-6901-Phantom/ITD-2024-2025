@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autos;
+package org.firstinspires.ftc.teamcode.autos;
 
 import androidx.annotation.NonNull;
 
@@ -22,8 +22,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 
 @Config
-@Autonomous(name = "LeftRed", group = "Autonomous")
-public class LeftRed extends LinearOpMode {
+@Autonomous(name = "LeftBlue", group = "Autonomous")
+public class LeftBlue extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
     }
@@ -54,7 +54,7 @@ public class LeftRed extends LinearOpMode {
 
                 double pos = rightSlide.getCurrentPosition();
                 packet.put("liftPos", pos);
-                if (pos == 3000.0) {
+                if (pos == 5500.0) {
                     return true;
                 } else {
                     rightSlide.setPower(0);
@@ -104,7 +104,7 @@ public class LeftRed extends LinearOpMode {
         public class CloseClaw implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                claw.setPosition(0.14);
+                claw.setPosition(0.622);
                 return false;
             }
         }
@@ -132,61 +132,97 @@ public class LeftRed extends LinearOpMode {
             public class Score implements Action {
                 @Override
                 public boolean run(@NonNull TelemetryPacket packet) {
-                    wrist.setPosition(0.14);
+                    wrist.setPosition(0);
                     return false;
                 }
             }
-            public Action Score() {
-                return new Wrist.Score();
+            public Action score() {
+                return new Score();
             }
 
             public class Intake implements Action {
                 @Override
                 public boolean run(@NonNull TelemetryPacket packet) {
-                    wrist.setPosition(0);
+                    wrist.setPosition(0.45);
                     return false;
                 }
             }
-            public Action Intake() {
-                return new Wrist.Intake();
+            public Action intake() {
+                return new Intake();
             }
 
+            public class Arm {
+                private Servo leftArm;
+                private Servo rightArm;
 
-    public void runOpMode() {
-        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-33, -63, Math.PI/2));
-        Claw claw = new Claw(hardwareMap);
-        Lift lift = new Lift(hardwareMap);
+                public Arm(HardwareMap hardwareMap) {
+                    leftArm = hardwareMap.get(Servo.class, "leftArm");
+                    rightArm =  hardwareMap.get(Servo.class, "rightArm");
+                }
 
-        Action trajectoryAction1;
-        trajectoryAction1 = drive.actionBuilder(drive.pose)
-                .setTangent(0)
-                .splineToConstantHeading(new Vector2d(-8, -40), Math.PI / 2)
-                .waitSeconds(2)
-                .strafeTo(new Vector2d(-48, -42))
-                .splineToLinearHeading(new Pose2d(-52,-52, Math.toRadians(-135)), Math.PI/2)
-                .waitSeconds(1)
-                .splineTo(new Vector2d(-58, -42), Math.PI / 2)
-                .waitSeconds(2)
-                .splineToLinearHeading(new Pose2d(-52,-52, Math.toRadians(-135)), Math.PI/2)
-                .waitSeconds(2)
-                .setTangent(Math.toRadians(90))
-                .lineToYLinearHeading (-26,Math.toRadians(180))
-                .waitSeconds(2)
-                .splineToLinearHeading(new Pose2d(-52,-52, Math.toRadians(-135)), Math.PI/2)
-                .waitSeconds(2)
-                .setTangent(Math.toRadians(355))
-                .lineToXLinearHeading (36,Math.toRadians(90))
-                .build();
+                public class ScoreArm implements Action {
+                    @Override
+                    public boolean run(@NonNull TelemetryPacket packet) {
+                        leftArm.setPosition(0.5033);
+                        rightArm.setPosition(0.5033);
+                        return false;
+                    }
+                }
+                public Action scoreArm() {
+                    return new ScoreArm();
+                }
 
-        // actions that need to happen on init; for instance, a claw tightening.
-        Actions.runBlocking(claw.closeClaw());
+                public class IntakeArm implements Action {
+                    @Override
+                    public boolean run(@NonNull TelemetryPacket packet) {
+                        leftArm.setPosition(0.965);
+                        rightArm.setPosition(0.965);
+                        return false;
+                    }
+                }
+                public Action intakeArm() {
+                    return new IntakeArm();
+                }
 
-        Actions.runBlocking(
-                new SequentialAction(
+
+            public void runOpMode() {
+                MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-33, -63, Math.PI/2));
+                Claw claw = new Claw(hardwareMap);
+                Lift lift = new Lift(hardwareMap);
+                Wrist wrist = new Wrist(hardwareMap);
+                Arm arm = new Arm(hardwareMap);
+
+
+
+                Action trajectoryAction1;
+                trajectoryAction1 = drive.actionBuilder(drive.pose)
+                        .setTangent(180)
+                        .splineToConstantHeading(new Vector2d(8, 40), -Math.PI / 2)
+                        .waitSeconds(2)
+                        .strafeTo(new Vector2d(48, 42))
+                        .waitSeconds(2)
+                        .splineToLinearHeading(new Pose2d(52,52, Math.toRadians(45)), -Math.PI/2)
+                        .waitSeconds(2)
+                        .splineTo(new Vector2d(58, 42), -Math.PI / 2)
+                        .waitSeconds(2)
+                        .splineToLinearHeading(new Pose2d(52,52, Math.toRadians(45)), -Math.PI/2)
+                        .waitSeconds(2)
+                        .setTangent(Math.toRadians(270))
+                        .lineToYLinearHeading (26,Math.toRadians(0))
+                        .waitSeconds(2)
+                        .splineToLinearHeading(new Pose2d(52,52, Math.toRadians(45)), -Math.PI/2)
+                        .waitSeconds(2)
+                        .setTangent(Math.toRadians(175))
+                        .lineToXLinearHeading (-36,Math.toRadians(270))
+                        .build();
+
+                // actions that need to happen on init; for instance, a claw tightening.
+                Actions.runBlocking(claw.closeClaw());
+
+                Actions.runBlocking(
+                        new SequentialAction(
                         lift.liftUp(),
                         claw.openClaw(),
-                        lift.liftDown()
-                )
-        );
-    }
-}}}
+                        arm.scoreArm(),
+                        wrist.intake()));
+                }}}}}

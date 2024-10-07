@@ -23,9 +23,9 @@ public class FieldCentricDrive {
         imu = hardwareMap.get(IMU.class, "imu");
 
         leftFront = hardwareMap.get(DcMotor.class, "leftFront");
-        leftBack = hardwareMap.get(DcMotor.class, "leftRear");
+        leftBack = hardwareMap.get(DcMotor.class, "leftBack");
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
-        rightBack = hardwareMap.get(DcMotor.class, "rightRear");
+        rightBack = hardwareMap.get(DcMotor.class, "rightBack");
 
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -49,10 +49,10 @@ public class FieldCentricDrive {
     }
 
     public void fieldCentric() {
-        if(Driver1.right_bumper){
+        if(Driver1.y){
             speed=.5;
         } else{
-            speed=speed;
+            speed=1;
         }
         double y = -Driver1.left_stick_y;
         double x = Driver1.left_stick_x;

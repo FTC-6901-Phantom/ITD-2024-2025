@@ -11,9 +11,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class slide {
 
     public static double POWER = 1;
-    public static int High = 1850;
-    public static int Mid = 1450;
-    public static int Low = 1100;
+    public static int High =4000;
+    public static int Mid = 2000;
+    public static int Low = 1000;
     public static int RESET = 0;
     public static int MANUAL_MOVE_SPEED = 10;
     private int position = 0;
@@ -33,11 +33,11 @@ public class slide {
         telemetry = opMode.telemetry;
 
         slideLeft = hardwareMap.get(DcMotor.class,"leftSlide");
-        slideLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        slideLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         slideLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         slideRight = hardwareMap.get(DcMotor.class, "rightSlide");
-        slideRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        slideRight.setDirection(DcMotorSimple.Direction.REVERSE);
         slideRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         slideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -53,15 +53,20 @@ public class slide {
     }
 
     public void teleOp(){
-        if(Driver1.y) moveHigh();
-        else if (Driver1.x) moveMid();
-        else if (Driver1.b) moveLow();
-        else if(Driver1.a) Reset();
-        else if (Driver1.dpad_up) moveMotors(position + MANUAL_MOVE_SPEED);
-        else if (Driver1.dpad_down) moveMotors(position - MANUAL_MOVE_SPEED);
-        telemetry.addData("SlidePos",slideLeft.getCurrentPosition());
-        telemetry.addData("SlidePos",slideRight.getCurrentPosition());
+        if(Driver2.dpad_up) moveHigh();
+        else if (Driver2.dpad_left) moveMid();
+        else if (Driver2.dpad_right) moveLow();
+        else if(Driver2.dpad_down) Reset();
+        else if (Driver2.left_bumper) moveMotors(position + MANUAL_MOVE_SPEED);
+        else if (Driver2.right_bumper) moveMotors(position - MANUAL_MOVE_SPEED);
+
+        // Add telemetry data
+        telemetry.addData("Slide Position", slideLeft.getCurrentPosition());
+
+        // Update the telemetry to reflect the changes on the Driver Hub
+        telemetry.update();
     }
+
 
     public void moveHigh(){
         slideLeft.setPower(1);
