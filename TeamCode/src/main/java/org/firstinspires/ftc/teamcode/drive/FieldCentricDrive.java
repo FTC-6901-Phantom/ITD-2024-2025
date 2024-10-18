@@ -14,11 +14,13 @@ public class FieldCentricDrive {
     private final DcMotor leftFront,leftBack,rightFront,rightBack;
     private final HardwareMap hardwareMap;
     private final Gamepad Driver1;
+    private final Gamepad Driver2;
     private final IMU imu;
     double speed=.85;
 
     public FieldCentricDrive(OpMode opMode) {
         Driver1 = opMode.gamepad1;
+        Driver2 = opMode.gamepad2;
         hardwareMap = opMode.hardwareMap;
         imu = hardwareMap.get(IMU.class, "imu");
 
@@ -49,7 +51,7 @@ public class FieldCentricDrive {
     }
 
     public void fieldCentric() {
-        if(Driver1.y){
+        if(Driver1.right_bumper){
             speed=.5;
         } else{
             speed=1;

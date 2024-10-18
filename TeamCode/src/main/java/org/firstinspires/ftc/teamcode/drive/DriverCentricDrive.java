@@ -31,7 +31,7 @@ public class DriverCentricDrive {
     }
 
     public void driverCentric() {
-        if(Driver1.y){
+        if(Driver1.right_bumper){
             speed=.5;
         } else{
             speed=1;

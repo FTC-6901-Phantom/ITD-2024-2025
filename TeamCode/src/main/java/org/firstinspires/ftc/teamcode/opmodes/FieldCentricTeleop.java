@@ -4,20 +4,20 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.drive.FieldCentricDrive;
-import org.firstinspires.ftc.teamcode.subsystems.arm;
-import org.firstinspires.ftc.teamcode.subsystems.claw;
-import org.firstinspires.ftc.teamcode.subsystems.slide;
-import org.firstinspires.ftc.teamcode.subsystems.wrist;
+import org.firstinspires.ftc.teamcode.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.subsystems.Claw;
+import org.firstinspires.ftc.teamcode.subsystems.Slide;
+import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 
 @TeleOp
 public class FieldCentricTeleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        slide slide = new slide(this);
+        Slide slide = new Slide(this);
         FieldCentricDrive fieldCentricDrive= new FieldCentricDrive(this);
-        claw claw = new claw(this);
-        arm arm = new arm(this);
-        wrist wrist = new wrist(this);
+        Claw claw = new Claw(this);
+        Arm arm = new Arm(this);
+        Wrist wrist = new Wrist(this);
         waitForStart();
         while (opModeIsActive()) {
             fieldCentricDrive.fieldCentric();
@@ -25,6 +25,10 @@ public class FieldCentricTeleop extends LinearOpMode {
             slide.teleOp();
             arm.teleOp();
             wrist.teleOp();
+
+            if (slide.slideLeft.getCurrentPosition()>3992){
+                wrist.wristServo(wrist.outtake);
+            }
         }
     }
 }
