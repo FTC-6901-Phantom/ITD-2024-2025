@@ -3,11 +3,12 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.drive.DriverCentricDrive;
+import org.firstinspires.ftc.teamcode.subsystems.drive.DriverCentricDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.Wrist;
+import org.firstinspires.ftc.teamcode.subsystems.Rotator;
 
 @TeleOp
 public class DriverCentricTeleop extends LinearOpMode {
@@ -18,6 +19,8 @@ public class DriverCentricTeleop extends LinearOpMode {
         Claw claw = new Claw(this);
         Arm arm = new Arm(this);
         Wrist wrist = new Wrist(this);
+        //Rotator rotator = new Rotator(this);
+
         waitForStart();
         while (opModeIsActive()) {
             driverCentricDrive.driverCentric();
@@ -25,8 +28,10 @@ public class DriverCentricTeleop extends LinearOpMode {
             slide.teleOp();
             Arm.teleOp();
             wrist.teleOp();
-            if (slide.slideLeft.getCurrentPosition()>3992){
-                wrist.wristServo(wrist.outtake);}
+            //rotator.teleOp();
+
+            if (slide.slideLeft.getCurrentPosition()>3892){
+                wrist.WristScore();}
             }
         }
     }

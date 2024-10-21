@@ -26,7 +26,7 @@ public class Claw {
 
     public void teleOp() {
         if (count>40){
-            if (Driver2.left_trigger>=0.1){
+            if (Driver2.right_trigger>=0.1){
                 if(ClawIsOpen){
                     clawServo.setPosition(closeClaw);
                     ClawIsOpen = false;
@@ -38,6 +38,20 @@ public class Claw {
                 }
             }
         } else{count++;}}
+
+//        if (count>40){
+//            if (Driver1.right_trigger>=0.1){
+//                if(ClawIsOpen){
+//                    clawServo.setPosition(closeClaw);
+//                    ClawIsOpen = false;
+//                    count =0;
+//                } else {
+//                    clawServo.setPosition(openClaw);
+//                    ClawIsOpen = true;
+//                    count =0;
+//                }
+//            }
+//        } else{count++;}
 
     public void setcloseClaw(){
         clawServo.setPosition(closeClaw);

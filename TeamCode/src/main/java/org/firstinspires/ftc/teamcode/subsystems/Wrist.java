@@ -7,11 +7,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 public class Wrist {
-    public final double outtake = 0.74;
     private static Servo wristServo;
     private static Gamepad Driver1;
     private  static Gamepad Driver2;
-    public  final double specimenIntake = 0.215;
+
+    public  final double travel = 0.4;
+    public final double outtake = 0.7894;
+    private final double specimen = .0328;
+
     int count = 0;
     static boolean WristUp;
 
@@ -20,7 +23,7 @@ public class Wrist {
         Driver2 = opMode.gamepad2;
         wristServo = (Servo) opMode.hardwareMap.get("Wrist");
         wristServo.setDirection(Servo.Direction.REVERSE);
-        wristServo(specimenIntake);
+        wristServo.setPosition(travel);
 
     }
 
@@ -28,7 +31,7 @@ public class Wrist {
         if (count>40){
             if (Driver2.b){
                 if(WristUp){
-                    wristServo.setPosition(specimenIntake);
+                    wristServo.setPosition(travel);
                     WristUp = false;
                     count =0;
                 } else {
@@ -40,23 +43,24 @@ public class Wrist {
         } else{count++;}
 
         if (Driver2.dpad_down){
-    wristServo(specimenIntake);
+    wristServo.setPosition(travel);
     }
         if (Driver2.dpad_up){
-            wristServo(specimenIntake);
+            wristServo.setPosition(travel);
         }
         if (Driver2.dpad_left){
-            wristServo(specimenIntake);
+            wristServo.setPosition(travel);
         }
         if (Driver2.dpad_right){
-            wristServo(specimenIntake);
+            wristServo.setPosition(specimen);
         }
     }
 
-    public  void wristServo(double setPositionLeft) {
-        wristServo.setPosition(setPositionLeft);
-    }
     public void WristScore(){
         wristServo.setPosition(outtake);
     }
+    public void Travel(){
+        wristServo.setPosition(travel);
+    }
+    public void  Specimen(){wristServo.setPosition(specimen);}
 }

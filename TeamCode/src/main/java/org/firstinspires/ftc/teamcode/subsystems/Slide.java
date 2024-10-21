@@ -11,9 +11,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Slide {
 
     public static double POWER = 1;
-    public static int High =4000;
-    public static int Mid = 2000;
-    public static int Low = 1000;
+    public static int HighBasket =3900;
+    public static int LowBasket = 2200;
+    public static int HighRung = 1000;
     public static int RESET = 0;
     public static int MANUAL_MOVE_SPEED = 10;
     private int position = 0;
@@ -53,9 +53,9 @@ public class Slide {
     }
 
     public void teleOp(){
-        if(Driver2.dpad_up) moveHigh();
-        else if (Driver2.dpad_left) moveMid();
-        else if (Driver2.dpad_right) moveLow();
+        if(Driver2.dpad_up) moveHighBasket();
+        else if (Driver2.dpad_left) moveLowBasket();
+        else if (Driver2.dpad_right) moveHighRung();
         else if(Driver2.dpad_down) Reset();
         else if (Driver2.left_bumper) moveMotors(position + MANUAL_MOVE_SPEED);
         else if (Driver2.right_bumper) moveMotors(position - MANUAL_MOVE_SPEED);
@@ -68,27 +68,27 @@ public class Slide {
     }
 
 
-    public void moveHigh(){
+    public void moveHighBasket(){
         slideLeft.setPower(1);
-        slideLeft.setTargetPosition(High);
+        slideLeft.setTargetPosition(HighBasket);
 
         slideRight.setPower(1);
-        slideRight.setTargetPosition(High);
+        slideRight.setTargetPosition(HighBasket);
     }
-    public void moveMid() {
+    public void moveLowBasket() {
         slideLeft.setPower(1);
-        slideLeft.setTargetPosition(Mid);
+        slideLeft.setTargetPosition(LowBasket);
 
         slideRight.setPower(1);
-        slideRight.setTargetPosition(Mid);
+        slideRight.setTargetPosition(LowBasket);
 
     }
-    public void moveLow() {
+    public void moveHighRung() {
         slideLeft.setPower(1);
-        slideLeft.setTargetPosition(Low);
+        slideLeft.setTargetPosition(HighRung);
 
         slideRight.setPower(1);
-        slideRight.setTargetPosition(Low);
+        slideRight.setTargetPosition(HighRung);
 
     }
     public void Reset(){
@@ -107,12 +107,16 @@ public class Slide {
 
     }
     public void SlidesHigh() {
-        slideLeft.setTargetPosition(High);
-        slideRight.setTargetPosition(High);
+        slideLeft.setTargetPosition(HighBasket);
+        slideRight.setTargetPosition(HighBasket);
+        slideLeft.setPower(POWER);
+        slideRight.setPower(POWER);
     }
     public void ResetSlides() {
         slideLeft.setTargetPosition(RESET);
         slideRight.setTargetPosition(RESET);
+        slideLeft.setPower(POWER);
+        slideRight.setPower(POWER);
     }
 }
 

@@ -41,18 +41,19 @@ public class Arm {
                     Count =0;
                 }
             }
-        } else{Count++;}}
-
-
+        } else{Count++;}
+    if (Driver2.dpad_right){
+        armServo(intakePosition, intakePosition);
+    }}
 
     public static void armServo(double setPositionRight, double setPositionLeft) {
         rightServo.setPosition(setPositionRight);
         leftServo.setPosition(setPositionLeft);
     }
     public void ArmUp(){
-        armServo(intakePosition,intakePosition);
+        armServo(scorePosition,scorePosition);
     }
     public void ArmDown(){
-        armServo(scorePosition,scorePosition);
+        armServo(intakePosition,intakePosition);
     }
 }

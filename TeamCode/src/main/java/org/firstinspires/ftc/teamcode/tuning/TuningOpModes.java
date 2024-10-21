@@ -22,8 +22,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
 
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
-import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
-import org.firstinspires.ftc.teamcode.drive.uSELESS;
+import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
+import org.firstinspires.ftc.teamcode.subsystems.drive.uSELESS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
