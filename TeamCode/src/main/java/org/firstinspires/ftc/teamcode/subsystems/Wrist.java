@@ -62,5 +62,5 @@ public class Wrist {
     public void Travel(){
         wristServo.setPosition(travel);
     }
-    public void  Specimen(){wristServo.setPosition(specimen);}
+    public void Specimen(){wristServo.setPosition(specimen);}
 }

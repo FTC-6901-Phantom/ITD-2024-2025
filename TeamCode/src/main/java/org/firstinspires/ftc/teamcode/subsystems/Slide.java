@@ -22,7 +22,7 @@ public class Slide {
     public final DcMotor slideLeft;
     public final DcMotor slideRight;
 
-    PIDFController Controller = new PIDFController(0,0,0,0); //tune kp
+    PIDFController Controller = new PIDFController(.001,0,0.00005,0); //tune kp
 
     private final HardwareMap hardwareMap;
     private final Gamepad Driver2;
@@ -43,14 +43,11 @@ public class Slide {
         slideRight.setDirection(DcMotorSimple.Direction.REVERSE);
         slideRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        slideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        slideLeft.setTargetPosition(0);
+//        slideRight.setTargetPosition(0);
 
-        slideLeft.setTargetPosition(0);
-        slideRight.setTargetPosition(0);
-
-        slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slideLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         Controller.setTolerance(2);
     }
@@ -67,10 +64,13 @@ public class Slide {
 //        else if (Driver2.right_bumper) moveMotors(position - MANUAL_MOVE_SPEED);
 
         slideLeft.setPower(Controller.calculate(slideLeft.getCurrentPosition()));
-        slideRight.setPower(-Controller.calculate(slideRight.getCurrentPosition()));
+        slideRight.setPower(Controller.calculate(slideRight.getCurrentPosition()));
 
         // Add telemetry data
         telemetry.addData("Slide Position", slideLeft.getCurrentPosition());
+        telemetry.addData("Set Point", Controller.getSetPoint());
+        telemetry.addData("Power", slideLeft.getPower());
+        telemetry.addData("Target", slideLeft.getTargetPosition());
         telemetry.update();
 
 //        if (Driver2.share) {
@@ -82,18 +82,18 @@ public class Slide {
         slideLeft.setTargetPosition(position);
         slideRight.setTargetPosition(position);
         slideLeft.setPower(Controller.calculate(slideLeft.getCurrentPosition()));
-        slideRight.setPower(-Controller.calculate(slideLeft.getCurrentPosition()));
+        slideRight.setPower(Controller.calculate(slideLeft.getCurrentPosition()));
 
     }
     public void SlidesHigh() {
         setsetpoint(HighBasket);
         slideLeft.setPower(Controller.calculate(slideLeft.getCurrentPosition()));
-        slideRight.setPower(-Controller.calculate(slideLeft.getCurrentPosition()));
+        slideRight.setPower(Controller.calculate(slideLeft.getCurrentPosition()));
     }
     public void ResetSlides() {
         setsetpoint(RESET);
         slideLeft.setPower(Controller.calculate(slideLeft.getCurrentPosition()));
-        slideRight.setPower(-Controller.calculate(slideLeft.getCurrentPosition()));
+        slideRight.setPower(Controller.calculate(slideLeft.getCurrentPosition()));
     }
 }
 

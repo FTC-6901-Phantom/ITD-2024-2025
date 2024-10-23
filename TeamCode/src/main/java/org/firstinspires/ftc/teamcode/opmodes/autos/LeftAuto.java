@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.Wrist;
+import org.firstinspires.ftc.teamcode.subsystems.Rotator;
 
 @Config
 @Autonomous(name = "LeftAuto", group = "Autonomous")
@@ -25,7 +26,7 @@ public final class LeftAuto extends LinearOpMode {
         Pose2d specimenPos = new Pose2d(8, 40, Math.toRadians(270));
         Pose2d firstsample = new Pose2d(52, 42, Math.toRadians(270));
         Pose2d secondsample = new Pose2d(60, 42, Math.toRadians(270));
-        Pose2d Basket = new Pose2d(52, 52, Math.toRadians(25));
+        Pose2d Basket = new Pose2d(52, 52, Math.toRadians(35));
         Pose2d thirdSample = new Pose2d(52, 26, Math.toRadians(0));
 
 
@@ -40,11 +41,13 @@ public final class LeftAuto extends LinearOpMode {
         Arm arm = new Arm(this);    // Assuming Arm class exists
         Slide slides = new Slide(this); // Assuming Slides class exists
         Wrist wrist = new Wrist(this);
+        Rotator rotator = new Rotator(this);
 
         while (!opModeIsActive()&&!isStopRequested()){
             claw.setOpenClaw();
             arm.ArmUp();
-            wrist.Specimen();}
+            wrist.Travel();}
+            rotator.clawHorizonal();
 
         waitForStart();
 
@@ -75,17 +78,18 @@ public final class LeftAuto extends LinearOpMode {
 
             // Grabbing First Sample
             wrist.WristScore();
+            sleep(500);
             arm.ArmDown();
-            sleep(1000);
+            sleep(500);
             claw.setcloseClaw();
             sleep(500);
             arm.ArmUp();
-            wrist.Specimen();
+            wrist.Travel();
 
             // Going to scoring
             Actions.runBlocking(
                     drive.actionBuilder(firstsample)
-                    .splineToLinearHeading(new Pose2d(52, 52, Math.toRadians(25)), -Math.PI / 2)
+                    .splineToLinearHeading(new Pose2d(52, 52, Math.toRadians(35)), -Math.PI / 2)
                     .build());
 
             // Scoring First Sample Score
@@ -95,7 +99,7 @@ public final class LeftAuto extends LinearOpMode {
             sleep(500);
             claw.setOpenClaw();
             sleep(500);
-            wrist.Specimen();
+            wrist.Travel();
             sleep(450);
             slides.ResetSlides();
             sleep(1500);
@@ -114,7 +118,7 @@ public final class LeftAuto extends LinearOpMode {
             claw.setcloseClaw();
             sleep(450);
             arm.ArmUp();
-            wrist.Specimen();
+            wrist.Travel();
 
             //Going to Basket Second Time
             Actions.runBlocking(
@@ -129,14 +133,14 @@ public final class LeftAuto extends LinearOpMode {
             sleep(500);
             claw.setOpenClaw();
             sleep(500);
-            wrist.Specimen();
+            wrist.Travel();
             slides.ResetSlides();
             sleep(1500);
 
             //Going To Grabbing Third
             Actions.runBlocking(
                     drive.actionBuilder(new Pose2d(54, 54, Math.toRadians(35)))
-                    .setTangent(Math.toRadians(270))
+                    .setTangent(Math.toRadians(275))
                     .lineToYLinearHeading(26, Math.toRadians(0))
                     .build());
 
@@ -148,12 +152,12 @@ public final class LeftAuto extends LinearOpMode {
             claw.setcloseClaw();
             sleep(450);
             arm.ArmUp();
-            wrist.Specimen();
+            wrist.Travel();
 
             //Going to last Basket
             Actions.runBlocking(
                     drive.actionBuilder(thirdSample)
-                    .splineToLinearHeading(new Pose2d(52, 52, Math.toRadians(25)), -Math.PI / 2)
+                    .splineToLinearHeading(new Pose2d(56, 56, Math.toRadians(35)), -Math.PI / 2)
                     .build());
 
             // Scoring Third Commands
@@ -163,7 +167,7 @@ public final class LeftAuto extends LinearOpMode {
             sleep(500);
             claw.setOpenClaw();
             sleep(500);
-            wrist.Specimen();
+            wrist.Travel();
             slides.ResetSlides();
             sleep(1500);
 
