@@ -10,7 +10,7 @@ public class Arm {
     private static Gamepad Driver1;
     private static Gamepad Driver2;
     private static double scorePosition = 0.50;
-    private static double intakePosition = 0.03;
+    private static double intakePosition = 0.08;
     static boolean ArmIsUp;
     static int Count = 0;
 

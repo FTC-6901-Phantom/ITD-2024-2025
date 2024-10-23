@@ -19,7 +19,7 @@ public class FieldCentricTeleop extends LinearOpMode {
         Claw claw = new Claw(this);
         Arm arm = new Arm(this);
         Wrist wrist = new Wrist(this);
-        //Rotator rotator = new Rotator(this);
+        Rotator rotator = new Rotator(this);
 
         waitForStart();
         while (opModeIsActive()) {
@@ -28,7 +28,7 @@ public class FieldCentricTeleop extends LinearOpMode {
             slide.teleOp();
             arm.teleOp();
             wrist.teleOp();
-            //rotator.teleOp();
+            rotator.teleOp();
 
             if (slide.slideLeft.getCurrentPosition()>3892){
                 wrist.WristScore();

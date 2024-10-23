@@ -11,10 +11,10 @@ public class Rotator {
     private static Gamepad Driver1;
     private  static Gamepad Driver2;
 
-    public  final double vertical = 0.253; //hypothetical values
-    public final double horizontal = 0;
-    public final double angleleft = 0.380; //hypothetical values
-    public final double angleright = 0.126; //hypothetical values
+    public  final double vertical = 0; //hypothetical values
+    public final double horizontal = .5444;
+    public final double angleleft = 0.2972; //hypothetical values
+    public final double angleright = 0.8172; //hypothetical values
 
     int count = 0;
     static boolean InitPosOne;
@@ -24,7 +24,7 @@ public class Rotator {
         Driver1 = opMode.gamepad1;
         Driver2 = opMode.gamepad2;
         rotatorServo = (Servo) opMode.hardwareMap.get("rotator");
-        rotatorServo.setDirection(Servo.Direction.REVERSE);
+        rotatorServo.setDirection(Servo.Direction.FORWARD);
         wristServo(vertical);
 
     }
@@ -48,7 +48,7 @@ public class Rotator {
             if (Driver2.left_bumper){
                 if(InitPosTwo){
                     rotatorServo.setPosition(angleleft);
-                    InitPosOne = false;
+                    InitPosTwo = false;
                     count =0;
                 } else {
                     rotatorServo.setPosition(angleright);

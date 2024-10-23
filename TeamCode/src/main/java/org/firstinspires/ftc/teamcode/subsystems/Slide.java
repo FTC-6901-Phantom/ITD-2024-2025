@@ -63,8 +63,8 @@ public class Slide {
         else if (Driver2.dpad_left) setsetpoint(LowBasket);
         else if (Driver2.dpad_right) setsetpoint(HighRung);
         else if(Driver2.dpad_down) setsetpoint(RESET);
-        else if (Driver2.left_bumper) moveMotors(position + MANUAL_MOVE_SPEED);
-        else if (Driver2.right_bumper) moveMotors(position - MANUAL_MOVE_SPEED);
+//        else if (Driver2.left_bumper) moveMotors(position + MANUAL_MOVE_SPEED);
+//        else if (Driver2.right_bumper) moveMotors(position - MANUAL_MOVE_SPEED);
 
         slideLeft.setPower(Controller.calculate(slideLeft.getCurrentPosition()));
         slideRight.setPower(-Controller.calculate(slideRight.getCurrentPosition()));

@@ -22,7 +22,7 @@ public class Wrist {
         Driver1 = opMode.gamepad1;
         Driver2 = opMode.gamepad2;
         wristServo = (Servo) opMode.hardwareMap.get("Wrist");
-        wristServo.setDirection(Servo.Direction.REVERSE);
+        wristServo.setDirection(Servo.Direction.FORWARD);
         wristServo.setPosition(travel);
 
     }
