@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.subsystems.Climb;
 import org.firstinspires.ftc.teamcode.subsystems.drive.DriverCentricDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
@@ -20,6 +21,7 @@ public class DriverCentricTeleop extends LinearOpMode {
         Arm arm = new Arm(this);
         Wrist wrist = new Wrist(this);
         Rotator rotator = new Rotator(this);
+        Climb climb = new Climb(this);
 
         waitForStart();
         while (opModeIsActive()) {
@@ -29,9 +31,7 @@ public class DriverCentricTeleop extends LinearOpMode {
             Arm.teleOp();
             wrist.teleOp();
             rotator.teleOp();
-
-            if (slide.slideLeft.getCurrentPosition()>3892){
-                wrist.WristScore();}
+            climb.teleOp();
             }
         }
     }

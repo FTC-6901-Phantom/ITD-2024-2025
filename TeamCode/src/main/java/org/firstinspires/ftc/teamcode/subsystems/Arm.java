@@ -9,51 +9,69 @@ public class Arm {
     private static Servo rightServo;
     private static Gamepad Driver1;
     private static Gamepad Driver2;
-    private static double scorePosition = 0.50;
-    private static double intakePosition = 0.08;
-    static boolean ArmIsUp;
-    static int Count = 0;
+
+    private static final double scorePosition = 1;
+    private static final double intakePosition = 0.065;
+    private static final double rest = 0.5;
+    public static boolean ArmIsUp;
+    private static boolean previousButtonState = false; // Tracks the previous state of the 'a' button
 
     public Arm(OpMode opMode) {
         Driver1 = opMode.gamepad1;
         Driver2 = opMode.gamepad2;
-        leftServo = (Servo) opMode.hardwareMap.get("leftArm");
-        rightServo = (Servo) opMode.hardwareMap.get("rightArm");
-
+        leftServo = opMode.hardwareMap.get(Servo.class, "leftArm");
+        rightServo = opMode.hardwareMap.get(Servo.class, "rightArm");
 
         leftServo.setDirection(Servo.Direction.FORWARD);
         rightServo.setDirection(Servo.Direction.REVERSE);
         armServo(scorePosition, scorePosition);
-        ArmIsUp=true;
-    //        opMode.time
+        ArmIsUp = true;
     }
 
-    public static void teleOp() throws InterruptedException {
-        if (Count>40){
-            if (Driver2.a){
-                if(ArmIsUp){
-                    armServo(intakePosition,intakePosition);
-                    ArmIsUp = false;
-                    Count =0;
-                } else {
-                    armServo(scorePosition,scorePosition);
-                    ArmIsUp = true;
-                    Count =0;
-                }
-            }
-        } else{Count++;}
-    if (Driver2.dpad_right){
-        armServo(intakePosition, intakePosition);
-    }}
+    public void teleOp() {
+        // Debounce for toggle on Driver2.a button
+        boolean currentButtonState = Driver2.a;
+        if (currentButtonState && !previousButtonState) {
+            toggleArmPosition();
+        }
+        previousButtonState = currentButtonState;
 
-    public static void armServo(double setPositionRight, double setPositionLeft) {
+        // Direct D-pad controls
+        if (Driver2.dpad_right) {
+            armServo(intakePosition, intakePosition);
+        }
+        if (Driver2.dpad_down) {
+            armServo(rest, rest);
+        }
+    }
+
+    private void toggleArmPosition() {
+        if (ArmIsUp) {
+            armServo(intakePosition, intakePosition);
+            ArmIsUp = false;
+        } else {
+            armServo(scorePosition, scorePosition);
+            ArmIsUp = true;
+        }
+    }
+
+    private static void armServo(double setPositionRight, double setPositionLeft) {
         rightServo.setPosition(setPositionRight);
         leftServo.setPosition(setPositionLeft);
     }
-    public void ArmUp(){
-        armServo(scorePosition,scorePosition);
+
+    // Methods for direct control if needed elsewhere
+    public void ArmScore() {
+        armServo(scorePosition, scorePosition);
+        ArmIsUp = true;
     }
-    public void ArmDown(){
-        armServo(intakePosition,intakePosition);
+
+    public void ArmIntake() {
+        armServo(intakePosition, intakePosition);
+        ArmIsUp = false;
+    }
+
+    public void ArmRest() {
+        armServo(rest, rest);
     }
 }

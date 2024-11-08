@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -12,17 +11,15 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Slide {
 
     public static double POWER = 1;
-    public static int HighBasket =3900;
-    public static int LowBasket = 2200;
-    public static int HighRung = 1000;
+    public static int HighBasket =3400;
+    public static int SpecimenIntake = 500;
+    public static int HighRung = 2000;
     public static int RESET = 0;
     public static int MANUAL_MOVE_SPEED = 10;
     private int position = 0;
 
     public final DcMotor slideLeft;
     public final DcMotor slideRight;
-
-    PIDFController Controller = new PIDFController(.001,0,0.00005,0); //tune kp
 
     private final HardwareMap hardwareMap;
     private final Gamepad Driver2;
@@ -43,57 +40,83 @@ public class Slide {
         slideRight.setDirection(DcMotorSimple.Direction.REVERSE);
         slideRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-//        slideLeft.setTargetPosition(0);
-//        slideRight.setTargetPosition(0);
+        slideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        slideLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slideRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideLeft.setTargetPosition(0);
+        slideRight.setTargetPosition(0);
 
-        Controller.setTolerance(2);
-    }
-    public void setsetpoint(double setpoint){
-        Controller.setSetPoint(setpoint);
+        slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
     }
 
     public void teleOp(){
-        if(Driver2.dpad_up) setsetpoint(HighBasket);
-        else if (Driver2.dpad_left) setsetpoint(LowBasket);
-        else if (Driver2.dpad_right) setsetpoint(HighRung);
-        else if(Driver2.dpad_down) setsetpoint(RESET);
-//        else if (Driver2.left_bumper) moveMotors(position + MANUAL_MOVE_SPEED);
-//        else if (Driver2.right_bumper) moveMotors(position - MANUAL_MOVE_SPEED);
-
-        slideLeft.setPower(Controller.calculate(slideLeft.getCurrentPosition()));
-        slideRight.setPower(Controller.calculate(slideRight.getCurrentPosition()));
+        if(Driver2.dpad_up) moveHighBasket();
+        else if (Driver2.dpad_left) moveLowBasket();
+        else if (Driver2.dpad_right) moveHighRung();
+        else if(Driver2.dpad_down) Reset();
+        else if (Driver2.left_bumper) moveMotors(position + MANUAL_MOVE_SPEED);
+        else if (Driver2.right_bumper) moveMotors(position - MANUAL_MOVE_SPEED);
 
         // Add telemetry data
         telemetry.addData("Slide Position", slideLeft.getCurrentPosition());
-        telemetry.addData("Set Point", Controller.getSetPoint());
-        telemetry.addData("Power", slideLeft.getPower());
-        telemetry.addData("Target", slideLeft.getTargetPosition());
-        telemetry.update();
 
-//        if (Driver2.share) {
-//            slideLeft.rese
-//        }
+        // Update the telemetry to reflect the changes on the Driver Hub
+        telemetry.update();
+    }
+
+
+    public void moveHighBasket(){
+        slideLeft.setPower(1);
+        slideLeft.setTargetPosition(HighBasket);
+
+        slideRight.setPower(1);
+        slideRight.setTargetPosition(HighBasket);
+    }
+    public void moveLowBasket() {
+        slideLeft.setPower(1);
+        slideLeft.setTargetPosition(SpecimenIntake);
+
+        slideRight.setPower(1);
+        slideRight.setTargetPosition(SpecimenIntake);
+
+    }
+    public void moveHighRung() {
+        slideLeft.setPower(1);
+        slideLeft.setTargetPosition(HighRung);
+
+        slideRight.setPower(1);
+        slideRight.setTargetPosition(HighRung);
+
+    }
+    public void Reset(){
+        slideLeft.setPower(1);
+        slideLeft.setTargetPosition(RESET);
+
+        slideRight.setPower(1);
+        slideRight.setTargetPosition(RESET);
     }
     public void moveMotors(int position){
         this.position = position;
         slideLeft.setTargetPosition(position);
         slideRight.setTargetPosition(position);
-        slideLeft.setPower(Controller.calculate(slideLeft.getCurrentPosition()));
-        slideRight.setPower(Controller.calculate(slideLeft.getCurrentPosition()));
+        slideLeft.setPower(POWER);
+        slideRight.setPower(POWER);
 
     }
     public void SlidesHigh() {
-        setsetpoint(HighBasket);
-        slideLeft.setPower(Controller.calculate(slideLeft.getCurrentPosition()));
-        slideRight.setPower(Controller.calculate(slideLeft.getCurrentPosition()));
+        slideLeft.setTargetPosition(HighBasket);
+        slideRight.setTargetPosition(HighBasket);
+        slideLeft.setPower(POWER);
+        slideRight.setPower(POWER);
     }
     public void ResetSlides() {
-        setsetpoint(RESET);
-        slideLeft.setPower(Controller.calculate(slideLeft.getCurrentPosition()));
-        slideRight.setPower(Controller.calculate(slideLeft.getCurrentPosition()));
+        slideLeft.setTargetPosition(RESET);
+        slideRight.setTargetPosition(RESET);
+        slideLeft.setPower(POWER);
+        slideRight.setPower(POWER);
     }
 }
 

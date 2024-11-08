@@ -8,59 +8,50 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Wrist {
     private static Servo wristServo;
-    private static Gamepad Driver1;
-    private  static Gamepad Driver2;
+    private static Gamepad Driver2;
 
-    public  final double travel = 0.4;
-    public final double outtake = 0.7894;
-    private final double specimen = .0328;
+    public final double score = 0.4961;
+    public final double intake = 0.9244;
 
-    int count = 0;
-    static boolean WristUp;
+    private boolean isScorePosition = true;
+    private boolean previousButtonState = false; // Tracks the previous state of the button
 
     public Wrist(OpMode opMode) {
-        Driver1 = opMode.gamepad1;
         Driver2 = opMode.gamepad2;
         wristServo = (Servo) opMode.hardwareMap.get("Wrist");
         wristServo.setDirection(Servo.Direction.FORWARD);
-        wristServo.setPosition(travel);
-
+        wristServo.setPosition(score);
     }
 
-    public  void teleOp() {
-        if (count>40){
-            if (Driver2.b){
-                if(WristUp){
-                    wristServo.setPosition(travel);
-                    WristUp = false;
-                    count =0;
-                } else {
-                    wristServo.setPosition(outtake);
-                    WristUp = true;
-                    count =0;
-                }
-            }
-        } else{count++;}
+    public void teleOp() {
+        boolean currentButtonState = Driver2.b; // Current state of the 'b' button
 
-        if (Driver2.dpad_down){
-    wristServo.setPosition(travel);
-    }
-        if (Driver2.dpad_up){
-            wristServo.setPosition(travel);
+        // Toggle position on button press only, not while button is held down
+        if (currentButtonState && !previousButtonState) {
+            togglePosition();
         }
-        if (Driver2.dpad_left){
-            wristServo.setPosition(travel);
-        }
-        if (Driver2.dpad_right){
-            wristServo.setPosition(specimen);
-        }
+
+        // Update previous button state for the next loop
+        previousButtonState = currentButtonState;
     }
 
-    public void WristScore(){
-        wristServo.setPosition(outtake);
+    private void togglePosition() {
+        if (isScorePosition) {
+            wristServo.setPosition(intake);
+        } else {
+            wristServo.setPosition(score);
+        }
+        isScorePosition = !isScorePosition;
     }
-    public void Travel(){
-        wristServo.setPosition(travel);
+
+    // Methods for direct control if needed elsewhere
+    public void Score() {
+        wristServo.setPosition(score);
+        isScorePosition = true;
     }
-    public void Specimen(){wristServo.setPosition(specimen);}
+
+    public void Intake() {
+        wristServo.setPosition(intake);
+        isScorePosition = false;
+    }
 }

@@ -8,66 +8,62 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Rotator {
     private static Servo rotatorServo;
-    private static Gamepad Driver1;
-    private  static Gamepad Driver2;
+    private static Gamepad driver1;
+    private static Gamepad driver2;
 
-    public  final double vertical = 0; //hypothetical values
-    public final double horizontal = .5444;
-    public final double angleleft = 0.2972; //hypothetical values
-    public final double angleright = 0.8172; //hypothetical values
+    private static final double VERTICAL_POSITION = 0.0; // Adjust to correct value
+    private static final double HORIZONTAL_POSITION = 0.5444; // Adjust to correct value
 
-    int count = 0;
-    static boolean InitPosOne;
-    static boolean InitPosTwo;
+    private boolean isVertical = true;
+    private int debounceCounter = 0;
+    private static final int DEBOUNCE_THRESHOLD = 40;
 
     public Rotator(OpMode opMode) {
-        Driver1 = opMode.gamepad1;
-        Driver2 = opMode.gamepad2;
-        rotatorServo = (Servo) opMode.hardwareMap.get("rotator");
+        driver1 = opMode.gamepad1;
+        driver2 = opMode.gamepad2;
+        rotatorServo = opMode.hardwareMap.get(Servo.class, "rotator");
+
         rotatorServo.setDirection(Servo.Direction.FORWARD);
-        wristServo(vertical);
-
+        setVertical(); // Initialize to vertical position
     }
 
-    public  void teleOp() {
-        if (count>40){
-            if (Driver2.right_bumper){
-                if(InitPosOne){
-                    rotatorServo.setPosition(vertical);
-                    InitPosOne = false;
-                    count =0;
+    public void teleOp() {
+        handleToggle();
+
+        // Additional teleOp functionality can be added here if needed
+    }
+
+    private void handleToggle() {
+        if (debounceCounter > DEBOUNCE_THRESHOLD) {
+            if (driver2.right_bumper) {
+                if (isVertical) {
+                    setHorizontal();
                 } else {
-                    rotatorServo.setPosition(horizontal);
-                    InitPosOne = true;
-                    count =0;
+                    setVertical();
                 }
+                debounceCounter = 0; // Reset debounce counter after action
             }
-        } else{count++;}
-
-        if (count>40){
-            if (Driver2.left_bumper){
-                if(InitPosTwo){
-                    rotatorServo.setPosition(angleleft);
-                    InitPosTwo = false;
-                    count =0;
-                } else {
-                    rotatorServo.setPosition(angleright);
-                    InitPosTwo = true;
-                    count =0;
-                }
-            }
-        } else{count++;}
+        } else {
+            debounceCounter++;
+        }
     }
 
-    public  void wristServo(double setPositionLeft) {
-        rotatorServo.setPosition(setPositionLeft);
+    private void setVertical() {
+        rotatorServo.setPosition(VERTICAL_POSITION);
+        isVertical = true;
     }
-    public void clawVertical(){
-        rotatorServo.setPosition(vertical);
+
+    private void setHorizontal() {
+        rotatorServo.setPosition(HORIZONTAL_POSITION);
+        isVertical = false;
     }
-    public void clawHorizonal(){
-        rotatorServo.setPosition(horizontal);
+
+    // Additional utility methods if you need direct access to these positions
+    public void moveToVertical() {
+        setVertical();
     }
-    public void clawLeft(){rotatorServo.setPosition(angleleft);}
-    public void clawRight(){rotatorServo.setPosition(angleright);}
+
+    public void moveToHorizontal() {
+        setHorizontal();
+    }
 }

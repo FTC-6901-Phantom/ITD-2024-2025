@@ -30,9 +30,9 @@ public class FieldCentricTeleop extends LinearOpMode {
             wrist.teleOp();
             rotator.teleOp();
 
-            if (slide.slideLeft.getCurrentPosition()>3892){
-                wrist.WristScore();
+//            if (slide.slideLeft.getCurrentPosition()>2792){
+//                wrist.WristScore();
             }
         }
     }
-}
+
