@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @Config
 public class Claw {
     private static final double OPEN_POSITION = 0.0;
-    private static final double CLOSED_POSITION = 0.59;
+    private static final double CLOSED_POSITION = 0.6;
 
     private static Servo clawServo;
     private static ColorRangeSensor colorSensor;
@@ -26,7 +26,7 @@ public class Claw {
     public Claw(OpMode opMode) {
         driver1 = opMode.gamepad1;
         driver2 = opMode.gamepad2;
-        colorSensor = opMode.hardwareMap.get(ColorRangeSensor.class, "sensor");
+            colorSensor = opMode.hardwareMap.get(ColorRangeSensor.class, "sensor");
         clawServo = opMode.hardwareMap.get(Servo.class, "claw");
 
         clawServo.setDirection(Servo.Direction.FORWARD);
@@ -37,7 +37,7 @@ public class Claw {
         handleToggle();
 
         // Automatic closing if sensor detects object within 1 cm and claw is open
-        if (isSensorActive && colorSensor.getDistance(DistanceUnit.CM) < 1) {
+        if (isSensorActive && colorSensor.getDistance(DistanceUnit.CM) < 4) {
             setClawClosed();
         }
     }
@@ -47,9 +47,14 @@ public class Claw {
             if (driver2.right_trigger >= 0.1) {
                 toggleClaw();
                 debounceCounter = 0;
+                isSensorActive=false;
             }
         } else {
             debounceCounter++;
+            isSensorActive=true;
+        }
+        while (driver2.right_trigger>=0.1){
+            isSensorActive=false;
         }
     }
 

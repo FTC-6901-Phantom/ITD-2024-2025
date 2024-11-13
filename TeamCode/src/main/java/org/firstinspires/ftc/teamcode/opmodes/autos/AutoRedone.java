@@ -34,7 +34,7 @@ public final class AutoRedone extends LinearOpMode {
         while (!opModeIsActive() && !isStopRequested()) {
             claw.setClawClosed();
             arm.ArmRest();
-            wrist.Intake();
+            wrist.setIntakePosition();
             rotator.moveToHorizontal();
         }
         rotator.moveToHorizontal();
@@ -46,26 +46,26 @@ public final class AutoRedone extends LinearOpMode {
                     drive.actionBuilder(currentPose)
                             .splineToLinearHeading(new Pose2d(53, 53, Math.toRadians(225)), -Math.PI / 2)
                             .afterTime(-2, () -> {  // Begin actions 2s before arrival
-                                slides.SlidesHigh();
+                                slides.moveHighBasket();
                                 arm.ArmScore();
                             })
                             .build()
             );
             currentPose = new Pose2d(53, 53, Math.toRadians(225));
 
-            wrist.Score();
+            wrist.setScorePosition();
             sleep(500);
             claw.setClawOpen();
             sleep(450);
             arm.ArmRest();
-            slides.ResetSlides();
+            slides.Reset();
 
             // First Sample trajectory
             Actions.runBlocking(
                     drive.actionBuilder(currentPose)
                             .splineTo(new Vector2d(48, 42), -Math.PI / 2)
                             .afterTime(-2, () -> {
-                                wrist.Intake();
+                                wrist.setIntakePosition();
                                 arm.ArmIntake();
                             })
                             .build()
@@ -81,25 +81,25 @@ public final class AutoRedone extends LinearOpMode {
                     drive.actionBuilder(currentPose)
                             .splineToLinearHeading(new Pose2d(53, 53, Math.toRadians(225)), Math.toRadians(270))
                             .afterTime(-2, () -> {
-                                slides.SlidesHigh();
+                                slides.moveHighBasket();
                                 arm.ArmScore();
                             })
                             .build()
             );
             currentPose = new Pose2d(53, 53, Math.toRadians(225));
 
-            wrist.Score();
+            wrist.setIntakePosition();
             claw.setClawOpen();
             sleep(500);
             arm.ArmRest();
-            slides.ResetSlides();
+            slides.Reset();
 
             // Second Sample trajectory
             Actions.runBlocking(
                     drive.actionBuilder(currentPose)
                             .splineTo(new Vector2d(58, 42), -Math.PI / 2)
                             .afterTime(-2, () -> {
-                                wrist.Intake();
+                                wrist.setScorePosition();
                                 arm.ArmIntake();
                             })
                             .build()
@@ -115,18 +115,18 @@ public final class AutoRedone extends LinearOpMode {
                     drive.actionBuilder(currentPose)
                             .splineToLinearHeading(new Pose2d(53, 53, Math.toRadians(225)), Math.toRadians(270))
                             .afterTime(-2, () -> {
-                                slides.SlidesHigh();
+                                slides.moveHighBasket();
                                 arm.ArmScore();
                             })
                             .build()
             );
             currentPose = new Pose2d(53, 53, Math.toRadians(225));
 
-            wrist.Score();
+            wrist.setScorePosition();
             claw.setClawOpen();
             sleep(500);
             arm.ArmRest();
-            slides.ResetSlides();
+            slides.Reset();
 
             // Third Sample trajectory
             Actions.runBlocking(
@@ -135,7 +135,7 @@ public final class AutoRedone extends LinearOpMode {
                             .afterTime(-2, () -> {
                                 rotator.moveToVertical();
                                 arm.ArmIntake();
-                                wrist.Intake();
+                                wrist.setIntakePosition();
                             })
                             .build()
             );
@@ -149,8 +149,8 @@ public final class AutoRedone extends LinearOpMode {
                     drive.actionBuilder(currentPose)
                             .splineToLinearHeading(new Pose2d(53, 53, Math.toRadians(225)), -Math.PI / 2)
                             .afterTime(-2, () -> {
-                                slides.SlidesHigh();
-                                wrist.Score();
+                                slides.moveHighBasket();
+                                wrist.setScorePosition();
                             })
                             .build()
             );
@@ -158,7 +158,7 @@ public final class AutoRedone extends LinearOpMode {
 
             claw.setClawOpen();
             sleep(500);
-            slides.ResetSlides();
+            slides.Reset();
 
             // Final Parking
             Actions.runBlocking(

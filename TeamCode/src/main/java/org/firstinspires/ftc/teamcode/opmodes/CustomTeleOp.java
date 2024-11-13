@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -19,10 +20,10 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.FieldCentricDrive;
 import java.util.ArrayList;
 import java.util.List;
 
-@TeleOp
-public class CustomTeleOp extends LinearOpMode {
+@TeleOp(name = "HUH")
+public class CustomTeleOp extends OpMode {
 
-    private FtcDashboard dash = FtcDashboard.getInstance();
+    private final FtcDashboard dash = FtcDashboard.getInstance();
     private List<Action> runningActions = new ArrayList<>();
 
     // Subsystems
@@ -35,7 +36,7 @@ public class CustomTeleOp extends LinearOpMode {
     private Climb climb;
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void init() {
         // Initialize subsystems
         slide = new Slide(this);
         fieldCentricDrive = new FieldCentricDrive(this);
@@ -44,48 +45,49 @@ public class CustomTeleOp extends LinearOpMode {
         wrist = new Wrist(this);
         rotator = new Rotator(this);
         climb = new Climb(this);
+    }
 
-        waitForStart();
+    @Override
+    public void loop() {
+        // Standard operations
+        fieldCentricDrive.fieldCentric();
+        claw.teleOp();
+        slide.teleOp();
+        arm.teleOp();
+        wrist.teleOp();
+        rotator.teleOp();
+        climb.teleOp();
 
-        while (opModeIsActive()) {
-            // Standard operations
-            fieldCentricDrive.fieldCentric();
-            claw.teleOp();
-            slide.teleOp();
-            arm.teleOp();
-            wrist.teleOp();
-            rotator.teleOp();
-            climb.teleOp(); // Add the climb teleop method
+        // Check for sequential actions
+        if (gamepad2.dpad_up) {
+            runningActions.add(new SequentialAction(
+                    new InstantAction(slide::moveHighBasket),
+                    new SleepAction(.7),
+                    new InstantAction(arm::ArmScore),
+                    new SleepAction(1.5),
+                    new InstantAction(wrist::setIntakePosition)
+            ));}
 
-            // Check for sequential action (e.g., pressing the 'A' button)
-            if (gamepad2.dpad_up) {
-                runningActions.add(new SequentialAction(
-                        new InstantAction(slide::moveHighBasket), // Move slide to high basket
-                        new SleepAction(1.5), // Wait for 2 seconds
-                        new InstantAction(wrist::Score)// Adjust wrist position to score
-                ));
-                if (gamepad2.dpad_down) {
-                    runningActions.add(new SequentialAction(
-                        new InstantAction(wrist::Intake),
-                        new SleepAction(1.5),
-                        new InstantAction(slide::Reset)// Wait for 2 seconds
-                    ));
-                }
-                if (gamepad2.a) {
-                    runningActions.add(new SequentialAction(
-                            new InstantAction(wrist::Intake),
-                            new SleepAction(.25),
-                            new InstantAction(arm::ArmIntake)));
+        if (gamepad2.dpad_down) {
+            runningActions.add(new SequentialAction(
+                    new InstantAction(wrist::setScorePosition),
+                    new SleepAction(.5),
+                    new InstantAction(arm::ArmRest),
+                    new SleepAction(.3),
+                    new InstantAction(slide::Reset)
+            ));}
 
-                // Run the queued sequential actions
-                List<Action> newActions = new ArrayList<>();
-                for (Action action : runningActions) {
-                    TelemetryPacket packet = new TelemetryPacket();
-                    action.preview(packet.fieldOverlay());
-                    if (action.run(packet)) {
-                        newActions.add(action);
-                    }
-                    dash.sendTelemetryPacket(packet);
-                }
-                runningActions = newActions;
-            }}}}}
+        // Run the queued sequential actions
+        List<Action> newActions = new ArrayList<>();
+        for (Action action : runningActions) {
+            TelemetryPacket packet = new TelemetryPacket();
+            action.preview(packet.fieldOverlay());
+            if (!action.run(packet)) {
+                continue;
+            }
+            newActions.add(action);
+            dash.sendTelemetryPacket(packet);
+        }
+        runningActions = newActions;
+    }
+}

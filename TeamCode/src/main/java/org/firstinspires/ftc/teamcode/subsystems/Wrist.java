@@ -8,50 +8,55 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Wrist {
     private static Servo wristServo;
-    private static Gamepad Driver2;
+    private static Gamepad driver2;
 
-    public final double score = 0.4961;
-    public final double intake = 0.9244;
+    private static final double SCORE_POSITION = 0.6;
+    private static final double INTAKE_POSITION = -1;
+    private static final double SPECIMEN_POSITION = 0;
+
+
 
     private boolean isScorePosition = true;
-    private boolean previousButtonState = false; // Tracks the previous state of the button
+    private int debounceCounter = 0;
+    private static final int DEBOUNCE_THRESHOLD = 40;
 
     public Wrist(OpMode opMode) {
-        Driver2 = opMode.gamepad2;
-        wristServo = (Servo) opMode.hardwareMap.get("Wrist");
-        wristServo.setDirection(Servo.Direction.FORWARD);
-        wristServo.setPosition(score);
+        driver2 = opMode.gamepad2;
+        wristServo = opMode.hardwareMap.get(Servo.class, "Wrist");
+
+        wristServo.setDirection(Servo.Direction.REVERSE);
+        setScorePosition(); // Initialize to score position
     }
 
     public void teleOp() {
-        boolean currentButtonState = Driver2.b; // Current state of the 'b' button
-
-        // Toggle position on button press only, not while button is held down
-        if (currentButtonState && !previousButtonState) {
-            togglePosition();
-        }
-
-        // Update previous button state for the next loop
-        previousButtonState = currentButtonState;
+        handleToggle();
     }
 
-    private void togglePosition() {
-        if (isScorePosition) {
-            wristServo.setPosition(intake);
+    private void handleToggle() {
+        if (debounceCounter > DEBOUNCE_THRESHOLD) {
+            if (driver2.b) {
+                if (isScorePosition) {
+                    setIntakePosition();
+                } else {
+                    setScorePosition();
+                }
+                debounceCounter = 0; // Reset debounce counter after action
+            }
         } else {
-            wristServo.setPosition(score);
+            debounceCounter++;
         }
-        isScorePosition = !isScorePosition;
     }
 
-    // Methods for direct control if needed elsewhere
-    public void Score() {
-        wristServo.setPosition(score);
+    public void setScorePosition() {
+        wristServo.setPosition(SCORE_POSITION);
         isScorePosition = true;
     }
 
-    public void Intake() {
-        wristServo.setPosition(intake);
+    public void setIntakePosition() {
+        wristServo.setPosition(INTAKE_POSITION);
         isScorePosition = false;
     }
+
+    // Additional utility methods for direct control
+
 }

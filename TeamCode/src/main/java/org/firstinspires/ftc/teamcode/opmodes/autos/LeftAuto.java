@@ -42,7 +42,7 @@ public final class LeftAuto extends LinearOpMode {
         while (!opModeIsActive()&&!isStopRequested()){
             claw.setClawClosed();
             arm.ArmRest();
-            wrist.Intake();}
+            wrist.setIntakePosition();}
             rotator.moveToHorizontal();
 
         waitForStart();
@@ -54,17 +54,17 @@ public final class LeftAuto extends LinearOpMode {
                             .splineToLinearHeading(new Pose2d(53, 53, Math.toRadians(225)), -Math.PI / 2)
                             .build());
 
-            slides.SlidesHigh();
+            slides.moveHighBasket();
             sleep(2000);
             arm.ArmScore();
             sleep(500);
-            wrist.Score();
+            wrist.setScorePosition();
             sleep(400);
             claw.setClawOpen();
             sleep(450);
             arm.ArmRest();
             sleep(250);
-            slides.ResetSlides();
+            slides.Reset();
             sleep(1500);
 
             // Go to First Sample
@@ -74,7 +74,7 @@ public final class LeftAuto extends LinearOpMode {
                             .build());
 
             // Grabbing First Sample
-            wrist.Intake();
+            wrist.setIntakePosition();
             sleep(500);
             arm.ArmIntake();
             sleep(500);
@@ -90,17 +90,17 @@ public final class LeftAuto extends LinearOpMode {
                     .build());
 
             // Scoring First Sample Score
-            slides.SlidesHigh();
+            slides.moveHighBasket();
             sleep(2000);
             arm.ArmScore();
             sleep(500);
-            wrist.Score();
+            wrist.setScorePosition();
             sleep(400);
             claw.setClawOpen();
             sleep(450);
             arm.ArmRest();
             sleep(250);
-            slides.ResetSlides();
+            slides.Reset();
             sleep(1500);
 
             // Driving to Second Sample
@@ -110,7 +110,7 @@ public final class LeftAuto extends LinearOpMode {
                     .build());
 
             // Picking Up Second Commands
-            wrist.Score();
+            wrist.setScorePosition();
             sleep(500);
             arm.ArmIntake();
             sleep(500);
@@ -126,17 +126,17 @@ public final class LeftAuto extends LinearOpMode {
                     .build());
 
             // Scoring Second Commands
-            slides.SlidesHigh();
+            slides.moveHighBasket();
             sleep(2000);
             arm.ArmScore();
             sleep(500);
-            wrist.Score();
+            wrist.setScorePosition();
             sleep(400);
             claw.setClawOpen();
             sleep(450);
             arm.ArmRest();
             sleep(250);
-            slides.ResetSlides();
+            slides.Reset();
             sleep(1500);
 
             //Going To Grabbing Third
@@ -151,7 +151,7 @@ public final class LeftAuto extends LinearOpMode {
             sleep(1000);
             arm.ArmIntake();
             sleep(500);
-            wrist.Intake();
+            wrist.setIntakePosition();
 
             Actions.runBlocking(
                     drive.actionBuilder(thirdSample)
@@ -178,16 +178,16 @@ public final class LeftAuto extends LinearOpMode {
                     .build());
 
             // Scoring Third Commands
-            slides.SlidesHigh();
+            slides.moveHighBasket();
             sleep(2000);
             rotator.moveToVertical();
-            wrist.Score();
+            wrist.setScorePosition();
             sleep(500);
             claw.setClawOpen();
             sleep(500);
-            wrist.Intake();
+            wrist.setScorePosition();
             sleep(250);
-            slides.ResetSlides();
+            slides.Reset();
             sleep(1500);
 
             //Park

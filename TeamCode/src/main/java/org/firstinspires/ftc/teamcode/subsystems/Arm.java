@@ -10,9 +10,9 @@ public class Arm {
     private static Gamepad Driver1;
     private static Gamepad Driver2;
 
-    private static final double scorePosition = 1;
-    private static final double intakePosition = 0.065;
-    private static final double rest = 0.5;
+    private static final double scorePosition = .66;
+    private static final double intakePosition = 0.04;
+    private static final double rest = 0.486;
     public static boolean ArmIsUp;
     private static boolean previousButtonState = false; // Tracks the previous state of the 'a' button
 
@@ -22,13 +22,13 @@ public class Arm {
         leftServo = opMode.hardwareMap.get(Servo.class, "leftArm");
         rightServo = opMode.hardwareMap.get(Servo.class, "rightArm");
 
-        leftServo.setDirection(Servo.Direction.FORWARD);
-        rightServo.setDirection(Servo.Direction.REVERSE);
-        armServo(scorePosition, scorePosition);
+        leftServo.setDirection(Servo.Direction.REVERSE);
+        rightServo.setDirection(Servo.Direction.FORWARD);
+        armServo(rest, rest);
         ArmIsUp = true;
     }
 
-    public void teleOp() {
+    public static void teleOp() {
         // Debounce for toggle on Driver2.a button
         boolean currentButtonState = Driver2.a;
         if (currentButtonState && !previousButtonState) {
@@ -45,7 +45,7 @@ public class Arm {
         }
     }
 
-    private void toggleArmPosition() {
+    private static void toggleArmPosition() {
         if (ArmIsUp) {
             armServo(intakePosition, intakePosition);
             ArmIsUp = false;
