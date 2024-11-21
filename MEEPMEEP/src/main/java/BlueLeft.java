@@ -14,26 +14,35 @@ public class BlueLeft {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(33, 63, Math.toRadians(270)))
-                .splineToLinearHeading(new Pose2d(53, 53, Math.toRadians(225)), -Math.PI / 2)
-                .waitSeconds(2)
-                .splineToLinearHeading(new Pose2d(48, 42, Math.toRadians(270)), -Math.PI / 2)
-                .waitSeconds(2)
-                .splineToLinearHeading(new Pose2d(53,53, Math.toRadians(225)), Math.toRadians(270))
-                .waitSeconds(2)
-                .splineTo(new Vector2d(58, 42), -Math.PI / 2)
-                .waitSeconds(2)
-                .splineToLinearHeading(new Pose2d(53,53, Math.toRadians(225)), -Math.PI/2)
-                .waitSeconds(2)
-                .setTangent(Math.toRadians(270))
-                .lineToYLinearHeading (26,Math.toRadians(0))
-                .waitSeconds(2)
-                .splineToLinearHeading(new Pose2d(53,53, Math.toRadians(225)), -Math.PI/2)
-                .waitSeconds(2)
-                .setTangent(Math.toRadians(240))
-                .lineToYLinearHeading (0,Math.toRadians(270))
-                .build());
+                        .setTangent(Math.toRadians(350))
+                        .splineToLinearHeading(new Pose2d(60, 60, Math.toRadians(225)), Math.toRadians(350))  // Preload to Basket
+                        .waitSeconds(2)
+                        .splineToLinearHeading(new Pose2d(50, 41, Math.toRadians(270)), Math.toRadians(225))          // Basket to First Sample
+                        .waitSeconds(2)
+                        .setTangent(45)
+                        .splineToLinearHeading(new Pose2d(60, 60, Math.toRadians(225)), Math.toRadians(45))  // First Sample back to Basket
+                        .waitSeconds(2)
+                        .splineTo(new Vector2d(60, 40), -Math.PI / 2)                                        // Basket to Second Sample
+                        .waitSeconds(2)
+                        .splineToLinearHeading(new Pose2d(60, 60, Math.toRadians(225)), Math.toRadians(270))  // Second Sample back to Basket
+                        .waitSeconds(2)
+                        .setTangent(Math.toRadians(250))
+                        .lineToYLinearHeading(26, Math.toRadians(0))                                         // Basket to Third Sample (approach)
+                        .setTangent(Math.toRadians(0))
+                        .lineToXLinearHeading(54, Math.toRadians(0))                                         // Fine adjustment for Third Sample
+                        .waitSeconds(2)
+                        .setTangent(Math.toRadians(0))
+                        .lineToXLinearHeading(50, Math.toRadians(0))                                         // Adjust to grab Third Sample
+                        .waitSeconds(2)
+                        .splineToLinearHeading(new Pose2d(62, 62, Math.toRadians(225)), Math.toRadians(270))  // Third Sample to Basket
+                        .waitSeconds(2)
+                        .setTangent(Math.toRadians(245))
+                        .lineToYLinearHeading(0, Math.toRadians(270))                                        // Park
+                        .build());
 
-        meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
+
+
+                meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
                 .addEntity(myBot)

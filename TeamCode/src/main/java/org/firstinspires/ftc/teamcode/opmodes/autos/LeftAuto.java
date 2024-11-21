@@ -23,10 +23,9 @@ public final class LeftAuto extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         // Initialize the pose
         Pose2d beginPose = new Pose2d(33, 63, Math.toRadians(270));
-        Pose2d specimenPos = new Pose2d(8, 40, Math.toRadians(270));
-        Pose2d firstsample = new Pose2d(48, 42, Math.toRadians(270));
-        Pose2d secondsample = new Pose2d(58, 42, Math.toRadians(270));
-        Pose2d Basket = new Pose2d(53, 53, Math.toRadians(225));
+        Pose2d firstsample = new Pose2d(50, 41, Math.toRadians(270));
+        Pose2d secondsample = new Pose2d(60, 40, Math.toRadians(270));
+        Pose2d Basket = new Pose2d(60, 60, Math.toRadians(225));
         Pose2d thirdSample = new Pose2d(52, 26, Math.toRadians(0));
 
         // Initialize the drivetrain
@@ -51,145 +50,149 @@ public final class LeftAuto extends LinearOpMode {
            //preload
             Actions.runBlocking(
                     drive.actionBuilder(beginPose)
-                            .splineToLinearHeading(new Pose2d(53, 53, Math.toRadians(225)), -Math.PI / 2)
+                            .setTangent(Math.toRadians(350))
+                            .splineToLinearHeading(new Pose2d(60, 60, Math.toRadians(225)), Math.toRadians(350))
                             .build());
 
+            rotator.moveToHorizontal();
             slides.moveHighBasket();
-            sleep(2000);
+            sleep(1000);
             arm.ArmScore();
-            sleep(500);
+            sleep(200);
             wrist.setScorePosition();
-            sleep(400);
+            sleep(200);
             claw.setClawOpen();
-            sleep(450);
+            sleep(200);
+            wrist.setScorePosition();
             arm.ArmRest();
-            sleep(250);
+            sleep(200);
             slides.Reset();
-            sleep(1500);
 
             // Go to First Sample
             Actions.runBlocking(
                     drive.actionBuilder(Basket)
-                            .splineToLinearHeading(new Pose2d(48, 42, Math.toRadians(270)), -Math.PI / 2)
+                            .splineToLinearHeading(new Pose2d(50, 41, Math.toRadians(270)), Math.toRadians(225))
                             .build());
 
             // Grabbing First Sample
             wrist.setIntakePosition();
-            sleep(500);
+            sleep(200);
             arm.ArmIntake();
-            sleep(500);
+            sleep(200);
             claw.setClawClosed();
-            sleep(450);
+            sleep(350);
             arm.ArmRest();
-            sleep(500);
+            sleep(100);
 
             // Going to scoring
             Actions.runBlocking(
                     drive.actionBuilder(firstsample)
-                            .splineToLinearHeading(new Pose2d(53,53, Math.toRadians(225)), Math.toRadians(270))
+                            .setTangent(45)
+                            .splineToLinearHeading(new Pose2d(60,60, Math.toRadians(225)), Math.toRadians(45))
                     .build());
 
             // Scoring First Sample Score
+            rotator.moveToHorizontal();
             slides.moveHighBasket();
-            sleep(2000);
+            sleep(1000);
             arm.ArmScore();
-            sleep(500);
+            sleep(200);
             wrist.setScorePosition();
-            sleep(400);
+            sleep(200);
             claw.setClawOpen();
-            sleep(450);
+            sleep(200);
+            wrist.setScorePosition();
             arm.ArmRest();
-            sleep(250);
+            sleep(200);
             slides.Reset();
-            sleep(1500);
-
             // Driving to Second Sample
             Actions.runBlocking(
                     drive.actionBuilder(Basket)
-                            .splineTo(new Vector2d(58, 42), -Math.PI / 2)
+                            .splineTo(new Vector2d(60, 40), -Math.PI / 2)
                     .build());
 
             // Picking Up Second Commands
-            wrist.setScorePosition();
-            sleep(500);
+            wrist.setIntakePosition();
+            sleep(200);
             arm.ArmIntake();
-            sleep(500);
+            sleep(200);
             claw.setClawClosed();
-            sleep(450);
-            arm.ArmScore();
-            sleep(500);
-
+            sleep(350);
+            arm.ArmRest();
+            sleep(100);
             //Going to Basket Second Time
             Actions.runBlocking(
                     drive.actionBuilder(secondsample)
-                            .splineToLinearHeading(new Pose2d(53,53, Math.toRadians(225)), Math.toRadians(270))
+                            .splineToLinearHeading(new Pose2d(60,60, Math.toRadians(225)), Math.toRadians(270))
                     .build());
 
             // Scoring Second Commands
+            rotator.moveToHorizontal();
             slides.moveHighBasket();
-            sleep(2000);
+            sleep(1000);
             arm.ArmScore();
-            sleep(500);
+            sleep(200);
             wrist.setScorePosition();
-            sleep(400);
+            sleep(200);
             claw.setClawOpen();
-            sleep(450);
+            sleep(200);
+            wrist.setScorePosition();
             arm.ArmRest();
-            sleep(250);
+            sleep(200);
             slides.Reset();
-            sleep(1500);
+            sleep(500);
 
             //Going To Grabbing Third
             Actions.runBlocking(
                     drive.actionBuilder(Basket)
-                            .setTangent(Math.toRadians(270))
-                            .lineToYLinearHeading (26,Math.toRadians(0))
+                            .setTangent(Math.toRadians(250))
+                            .lineToYLinearHeading(26, Math.toRadians(0))
                     .build());
 
             //Grabbing Third Commands
             rotator.moveToVertical();
-            sleep(1000);
-            arm.ArmIntake();
-            sleep(500);
+            sleep(200);
             wrist.setIntakePosition();
+            sleep(200);
+            arm.ArmIntake();
 
             Actions.runBlocking(
                     drive.actionBuilder(thirdSample)
                             .setTangent(Math.toRadians(0))
-                            .lineToXLinearHeading (54,Math.toRadians(0))
+                            .lineToXLinearHeading(54, Math.toRadians(0))
                             .build());
 
             claw.setClawClosed();
-            sleep(450);
+            sleep(250);
 
             Actions.runBlocking(
                     drive.actionBuilder(new Pose2d(54, 26, Math.toRadians(0)))
                             .setTangent(Math.toRadians(0))
-                            .lineToXLinearHeading (52,Math.toRadians(0))
+                            .lineToXLinearHeading (50,Math.toRadians(0))
                             .build());
 
             arm.ArmRest();
-            sleep(500);
 
             //Going to last Basket
             Actions.runBlocking(
                     drive.actionBuilder(thirdSample)
-                    .splineToLinearHeading(new Pose2d(53,53, Math.toRadians(225)), -Math.PI/2)
+                    .splineToLinearHeading(new Pose2d(62,62, Math.toRadians(225)), Math.toRadians(270))
                     .build());
 
             // Scoring Third Commands
+            rotator.moveToHorizontal();
             slides.moveHighBasket();
-            sleep(2000);
-            rotator.moveToVertical();
+            sleep(1000);
+            arm.ArmScore();
+            sleep(200);
             wrist.setScorePosition();
-            sleep(500);
+            sleep(200);
             claw.setClawOpen();
-            sleep(500);
+            sleep(200);
             wrist.setScorePosition();
-            sleep(250);
+            arm.ArmRest();
+            sleep(200);
             slides.Reset();
-            sleep(1500);
-
             //Park
             Actions.runBlocking(
                     drive.actionBuilder(Basket)

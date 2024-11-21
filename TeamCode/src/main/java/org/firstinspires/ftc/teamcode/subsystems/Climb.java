@@ -40,6 +40,11 @@ public class Climb {
         else if (Driver1.left_bumper) Down();
         else Stop();}
 
+    public void teleOp2(){
+        if(Driver2.dpad_left) Up();
+        if (Driver2.dpad_right) Down();
+        else Stop();}
+
     public void Up(){
         LeftClimb.setPower(1);
         RightClimb.setPower(1);}

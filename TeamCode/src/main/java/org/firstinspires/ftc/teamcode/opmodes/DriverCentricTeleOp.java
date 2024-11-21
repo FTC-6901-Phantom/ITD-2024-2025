@@ -15,20 +15,21 @@ import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 import org.firstinspires.ftc.teamcode.subsystems.Rotator;
 import org.firstinspires.ftc.teamcode.subsystems.Climb;
+import org.firstinspires.ftc.teamcode.subsystems.drive.DriverCentricDrive;
 import org.firstinspires.ftc.teamcode.subsystems.drive.FieldCentricDrive;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@TeleOp(name = "HUH")
-public class CustomTeleOp extends OpMode {
+@TeleOp(name = "DriverCentric")
+public class DriverCentricTeleOp extends OpMode {
 
     private final FtcDashboard dash = FtcDashboard.getInstance();
     private List<Action> runningActions = new ArrayList<>();
 
     // Subsystems
     private Slide slide;
-    private FieldCentricDrive fieldCentricDrive;
+    private DriverCentricDrive driverCentricDrive;
     private Claw claw;
     private Arm arm;
     private Wrist wrist;
@@ -39,7 +40,7 @@ public class CustomTeleOp extends OpMode {
     public void init() {
         // Initialize subsystems
         slide = new Slide(this);
-        fieldCentricDrive = new FieldCentricDrive(this);
+        driverCentricDrive = new DriverCentricDrive(this);
         claw = new Claw(this);
         arm = new Arm(this);
         wrist = new Wrist(this);
@@ -50,7 +51,7 @@ public class CustomTeleOp extends OpMode {
     @Override
     public void loop() {
         // Standard operations
-        fieldCentricDrive.fieldCentric();
+        driverCentricDrive.driverCentric();
         claw.teleOp();
         slide.teleOp();
         arm.teleOp();
@@ -62,16 +63,15 @@ public class CustomTeleOp extends OpMode {
         if (gamepad2.dpad_up) {
             runningActions.add(new SequentialAction(
                     new InstantAction(slide::moveHighBasket),
-                    new SleepAction(.7),
-                    new InstantAction(arm::ArmScore),
                     new SleepAction(1.5),
-                    new InstantAction(wrist::setIntakePosition)
-            ));}
+                    new InstantAction(arm::ArmScore),
+                    new SleepAction(.5),
+                    new InstantAction(wrist::setScorePosition)
+            ));
+        }
 
         if (gamepad2.dpad_down) {
             runningActions.add(new SequentialAction(
-                    new InstantAction(wrist::setScorePosition),
-                    new SleepAction(.5),
                     new InstantAction(arm::ArmRest),
                     new SleepAction(.3),
                     new InstantAction(slide::Reset)

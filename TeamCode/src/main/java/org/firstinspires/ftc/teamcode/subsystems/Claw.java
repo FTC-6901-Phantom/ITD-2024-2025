@@ -26,7 +26,7 @@ public class Claw {
     public Claw(OpMode opMode) {
         driver1 = opMode.gamepad1;
         driver2 = opMode.gamepad2;
-            colorSensor = opMode.hardwareMap.get(ColorRangeSensor.class, "sensor");
+        colorSensor = opMode.hardwareMap.get(ColorRangeSensor.class, "sensor");
         clawServo = opMode.hardwareMap.get(Servo.class, "claw");
 
         clawServo.setDirection(Servo.Direction.FORWARD);
@@ -43,28 +43,24 @@ public class Claw {
     }
 
     private void handleToggle() {
-        if (debounceCounter > DEBOUNCE_THRESHOLD) {
-            if (driver2.right_trigger >= 0.1) {
+        // Disable sensor when trigger is pressed
+        if (driver2.right_trigger >= 0.1) {
+            isSensorActive = false; // Deactivate sensor
+            if (debounceCounter > DEBOUNCE_THRESHOLD) {
                 toggleClaw();
                 debounceCounter = 0;
-                isSensorActive=false;
             }
         } else {
+            isSensorActive = true; // Reactivate sensor
             debounceCounter++;
-            isSensorActive=true;
-        }
-        while (driver2.right_trigger>=0.1){
-            isSensorActive=false;
         }
     }
 
     private void toggleClaw() {
         if (isClawOpen) {
             setClawClosed();
-            isSensorActive = false;
         } else {
             setClawOpen();
-            isSensorActive = true;
         }
     }
 

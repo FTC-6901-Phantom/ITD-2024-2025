@@ -11,8 +11,8 @@ public class Rotator {
     private static Gamepad driver1;
     private static Gamepad driver2;
 
-    private static final double VERTICAL_POSITION = 0.0; // Adjust to correct value
-    private static final double HORIZONTAL_POSITION = 0.5444; // Adjust to correct value
+    private static final double VERTICAL_POSITION = 0.5444; // Adjust to correct value
+    private static final double HORIZONTAL_POSITION = 0; // Adjust to correct value
 
     private boolean isVertical = true;
     private int debounceCounter = 0;
@@ -60,10 +60,9 @@ public class Rotator {
 
     // Additional utility methods if you need direct access to these positions
     public void moveToVertical() {
-        setVertical();
+        rotatorServo.setPosition(VERTICAL_POSITION);
     }
-
     public void moveToHorizontal() {
-        setHorizontal();
+        rotatorServo.setPosition(HORIZONTAL_POSITION);
     }
 }

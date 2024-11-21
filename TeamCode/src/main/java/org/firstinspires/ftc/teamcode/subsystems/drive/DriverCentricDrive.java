@@ -31,7 +31,7 @@ public class DriverCentricDrive {
     }
 
     public void driverCentric() {
-        if(Driver1.right_bumper){
+        if(Driver1.left_trigger>=0.1){
             speed=.5;
         } else{
             speed=1;

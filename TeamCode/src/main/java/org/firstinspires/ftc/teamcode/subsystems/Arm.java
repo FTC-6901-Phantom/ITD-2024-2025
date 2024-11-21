@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -10,9 +12,9 @@ public class Arm {
     private static Gamepad Driver1;
     private static Gamepad Driver2;
 
-    private static final double scorePosition = .66;
+    private static final double scorePosition = .8;
     private static final double intakePosition = 0.04;
-    private static final double rest = 0.486;
+    private static final double rest = 0.5494;
     public static boolean ArmIsUp;
     private static boolean previousButtonState = false; // Tracks the previous state of the 'a' button
 
@@ -22,8 +24,8 @@ public class Arm {
         leftServo = opMode.hardwareMap.get(Servo.class, "leftArm");
         rightServo = opMode.hardwareMap.get(Servo.class, "rightArm");
 
-        leftServo.setDirection(Servo.Direction.REVERSE);
-        rightServo.setDirection(Servo.Direction.FORWARD);
+        leftServo.setDirection(Servo.Direction.FORWARD);
+        rightServo.setDirection(Servo.Direction.REVERSE);
         armServo(rest, rest);
         ArmIsUp = true;
     }
@@ -50,7 +52,7 @@ public class Arm {
             armServo(intakePosition, intakePosition);
             ArmIsUp = false;
         } else {
-            armServo(scorePosition, scorePosition);
+            armServo(rest, rest);
             ArmIsUp = true;
         }
     }

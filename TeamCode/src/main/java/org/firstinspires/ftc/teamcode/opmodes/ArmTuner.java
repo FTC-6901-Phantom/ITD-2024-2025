@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
-@TeleOp
+//@TeleOp comment back in later when needed
 public class ArmTuner extends OpMode {
     static Servo leftservo;
     static Servo rightservo;
@@ -16,8 +16,8 @@ public class ArmTuner extends OpMode {
     public void init() {
         leftservo = hardwareMap.get(Servo.class, "leftArm");
         rightservo = hardwareMap.get(Servo.class, "rightArm");
-        leftservo.setDirection(Servo.Direction.REVERSE);
-        rightservo.setDirection(Servo.Direction.FORWARD);
+        leftservo.setDirection(Servo.Direction.FORWARD);
+        rightservo.setDirection(Servo.Direction.REVERSE);
         //servo1.setDirection(Servo.Direction.FORWARD);
 
         leftservo.setPosition(0);
