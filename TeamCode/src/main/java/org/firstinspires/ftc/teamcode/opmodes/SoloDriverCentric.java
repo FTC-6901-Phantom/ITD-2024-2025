@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.acmerobotics.roadrunner.SequentialAction;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -21,8 +20,8 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.FieldCentricDrive;
 import java.util.ArrayList;
 import java.util.List;
 
-@TeleOp(name = "DriverCentric")
-public class DriverCentricTeleOp extends OpMode {
+@TeleOp(name = "SoloDriverCentric")
+public class SoloDriverCentric extends OpMode {
 
     private final FtcDashboard dash = FtcDashboard.getInstance();
     private List<Action> runningActions = new ArrayList<>();
@@ -51,13 +50,13 @@ public class DriverCentricTeleOp extends OpMode {
     @Override
     public void loop() {
         // Standard operations
-        driverCentricDrive.driverCentric();
+        driverCentricDrive.driverCentricSolo();
         claw.teleOp();
-        slide.teleOp();
+        //slide.teleOp();
         arm.teleOp();
         wrist.teleOp();
         rotator.teleOp();
-        climb.teleOp();
+        climb.teleOp2();
 
         // Check for sequential actions
         if (gamepad2.dpad_up) {
@@ -74,8 +73,7 @@ public class DriverCentricTeleOp extends OpMode {
             runningActions.add(new SequentialAction(
                     new InstantAction(arm::ArmRest),
                     new SleepAction(.3),
-                    new InstantAction(slide::Reset),
-                    new InstantAction(wrist::setIntakePosition)
+                    new InstantAction(slide::Reset)
             ));}
 
         // Run the queued sequential actions

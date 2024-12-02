@@ -23,7 +23,7 @@ public class Climb {
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;
 
-        LeftClimb = hardwareMap.get(DcMotor.class,"LClimb");
+        LeftClimb = hardwareMap.get(DcMotor.class, "LClimb");
         LeftClimb.setDirection(DcMotorSimple.Direction.REVERSE);
         LeftClimb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -31,29 +31,57 @@ public class Climb {
         RightClimb.setDirection(DcMotorSimple.Direction.FORWARD);
         RightClimb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        LeftClimb.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        RightClimb.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        // Reset encoders to start at 0
+        LeftClimb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RightClimb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    public void teleOp(){
-        if(Driver1.right_bumper) Up();
-        else if (Driver1.left_bumper) Down();
-        else Stop();}
+    public void teleOp() {
+        if (Driver1.right_bumper) moveByTicks(100);  // Increment by 20 ticks
+        else if (Driver1.left_bumper) moveByTicks(-100);  // Decrement by 20 ticks
+    }
 
-    public void teleOp2(){
-        if(Driver2.dpad_left) Up();
-        if (Driver2.dpad_right) Down();
-        else Stop();}
+    public void teleOp2() {
+        if (Driver2.dpad_left) moveByTicks(100);  // Increment by 20 ticks
+        else if (Driver2.dpad_right) moveByTicks(-100);  // Decrement by 20 ticks
+    }
 
-    public void Up(){
+    /**
+     * Moves both motors by the specified number of ticks.
+     *
+     * @param ticks Number of encoder ticks to add/subtract (positive for up, negative for down)
+     */
+    public void moveByTicks(int ticks) {
+        // Calculate new target positions by adding ticks
+        int newLeftTarget = LeftClimb.getCurrentPosition() + ticks;
+        int newRightTarget = RightClimb.getCurrentPosition() + ticks;
+
+        // Set target positions
+        LeftClimb.setTargetPosition(newLeftTarget);
+        RightClimb.setTargetPosition(newRightTarget);
+
+        // Switch to RUN_TO_POSITION mode
+        LeftClimb.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        RightClimb.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        // Apply power to move the motors
         LeftClimb.setPower(1);
-        RightClimb.setPower(1);}
-    public void Down() {
-        LeftClimb.setPower(-1);
-        RightClimb.setPower(-1);
+        RightClimb.setPower(1);
+
+        // Optional telemetry for debugging
+        telemetry.addData("Left Target", newLeftTarget);
+        telemetry.addData("Right Target", newRightTarget);
+        telemetry.addData("Left Position", LeftClimb.getCurrentPosition());
+        telemetry.addData("Right Position", RightClimb.getCurrentPosition());
+        telemetry.update();
     }
-    public void Stop(){
+
+    /**
+     * Stops both motors and holds their position.
+     */
+    public void Stop() {
+        // Stop power but hold position
         LeftClimb.setPower(0);
         RightClimb.setPower(0);
     }
-    }
+}

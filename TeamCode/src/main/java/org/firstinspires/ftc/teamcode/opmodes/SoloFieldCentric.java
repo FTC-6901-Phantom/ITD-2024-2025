@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.acmerobotics.roadrunner.SequentialAction;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -15,14 +14,13 @@ import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 import org.firstinspires.ftc.teamcode.subsystems.Rotator;
 import org.firstinspires.ftc.teamcode.subsystems.Climb;
-import org.firstinspires.ftc.teamcode.subsystems.drive.DriverCentricDrive;
 import org.firstinspires.ftc.teamcode.subsystems.drive.FieldCentricDrive;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@TeleOp(name = "SoloTeleOp")
-public class SoloTeleOp extends OpMode {
+@TeleOp(name = "SoloFieldCentric")
+public class SoloFieldCentric extends OpMode {
 
     private final FtcDashboard dash = FtcDashboard.getInstance();
     private List<Action> runningActions = new ArrayList<>();
@@ -53,7 +51,7 @@ public class SoloTeleOp extends OpMode {
         // Standard operations
         fieldCentricDrive.fieldCentricSolo();
         claw.teleOp();
-        slide.teleOp();
+        //slide.teleOp();
         arm.teleOp();
         wrist.teleOp();
         rotator.teleOp();
@@ -69,7 +67,6 @@ public class SoloTeleOp extends OpMode {
                     new InstantAction(wrist::setScorePosition)
             ));
         }
-
         if (gamepad2.dpad_down) {
             runningActions.add(new SequentialAction(
                     new InstantAction(arm::ArmRest),

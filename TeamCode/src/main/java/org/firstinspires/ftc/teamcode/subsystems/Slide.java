@@ -93,10 +93,10 @@ public class Slide {
 
     }
     public void Reset(){
-        slideLeft.setPower(1);
+        slideLeft.setPower(.75);
         slideLeft.setTargetPosition(RESET);
 
-        slideRight.setPower(1);
+        slideRight.setPower(.75);
         slideRight.setTargetPosition(RESET);
     }
     public void moveMotors(int position){

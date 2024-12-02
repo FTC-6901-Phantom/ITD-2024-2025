@@ -62,6 +62,7 @@ public class FieldCentricTeleOp extends OpMode {
         if (gamepad2.dpad_up) {
             runningActions.add(new SequentialAction(
                     new InstantAction(slide::moveHighBasket),
+                    new InstantAction(arm::ArmRest),
                     new SleepAction(1.5),
                     new InstantAction(arm::ArmScore),
                     new SleepAction(.5),

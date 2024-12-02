@@ -29,7 +29,7 @@ public class Claw {
         colorSensor = opMode.hardwareMap.get(ColorRangeSensor.class, "sensor");
         clawServo = opMode.hardwareMap.get(Servo.class, "claw");
 
-        clawServo.setDirection(Servo.Direction.FORWARD);
+        clawServo.setDirection(Servo.Direction.REVERSE);
         clawServo.setPosition(CLOSED_POSITION);
     }
 

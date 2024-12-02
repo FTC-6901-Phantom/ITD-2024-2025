@@ -11,8 +11,8 @@ public class Rotator {
     private static Gamepad driver1;
     private static Gamepad driver2;
 
-    private static final double VERTICAL_POSITION = 0.5444; // Adjust to correct value
-    private static final double HORIZONTAL_POSITION = 0; // Adjust to correct value
+    private static final double VERTICAL_POSITION = 0; // Adjust to correct value
+    private static final double HORIZONTAL_POSITION = .5444; // Adjust to correct value
 
     private boolean isVertical = true;
     private int debounceCounter = 0;
