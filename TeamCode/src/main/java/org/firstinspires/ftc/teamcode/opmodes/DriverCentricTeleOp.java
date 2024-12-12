@@ -21,7 +21,7 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.FieldCentricDrive;
 import java.util.ArrayList;
 import java.util.List;
 
-@TeleOp(name = "DriverCentric")
+//@TeleOp(name = "DriverCentric")
 public class DriverCentricTeleOp extends OpMode {
 
     private final FtcDashboard dash = FtcDashboard.getInstance();
@@ -63,6 +63,7 @@ public class DriverCentricTeleOp extends OpMode {
         if (gamepad2.dpad_up) {
             runningActions.add(new SequentialAction(
                     new InstantAction(slide::moveHighBasket),
+                    new InstantAction(arm::ArmRest),
                     new SleepAction(1),
                     new InstantAction(arm::ArmScore),
                     new SleepAction(.5),
