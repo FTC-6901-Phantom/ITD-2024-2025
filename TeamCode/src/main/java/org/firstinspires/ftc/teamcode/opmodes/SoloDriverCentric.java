@@ -51,7 +51,7 @@ public class SoloDriverCentric extends OpMode {
     public void loop() {
         // Standard operations
         driverCentricDrive.driverCentricSolo();
-        claw.teleOp();
+        claw.teleOp2();
         //slide.teleOp();
         arm.teleOp();
         wrist.teleOp();
@@ -62,7 +62,7 @@ public class SoloDriverCentric extends OpMode {
         if (gamepad2.dpad_up) {
             runningActions.add(new SequentialAction(
                     new InstantAction(slide::moveHighBasket),
-                    new SleepAction(1.5),
+                    new SleepAction(1),
                     new InstantAction(arm::ArmScore),
                     new SleepAction(.5),
                     new InstantAction(wrist::setScorePosition)

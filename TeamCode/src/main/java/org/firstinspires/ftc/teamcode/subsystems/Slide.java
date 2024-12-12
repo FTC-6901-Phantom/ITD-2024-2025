@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Slide {
 
     public static double POWER = 1;
-    public static int HighBasket =1550;
+    public static int HighBasket =1850;
     public static int SpecimenIntake = 100;
     public static int HighRung = 700;
     public static int RESET = 0;
@@ -58,8 +58,7 @@ public class Slide {
         if (Driver2.dpad_right) moveHighRung();
         //if(Driver2.dpad_down) Reset();
         //if (Driver2.left_bumper) moveMotors(position + MANUAL_MOVE_SPEED);
-        //
-        // if (Driver2.right_bumper) moveMotors(position - MANUAL_MOVE_SPEED);
+       // if (Driver2.right_bumper) moveMotors(position - MANUAL_MOVE_SPEED);
 
         // Add telemetry data
         telemetry.addData("Slide Position", slideLeft.getCurrentPosition());
@@ -93,10 +92,10 @@ public class Slide {
 
     }
     public void Reset(){
-        slideLeft.setPower(.75);
+        slideLeft.setPower(1);
         slideLeft.setTargetPosition(RESET);
 
-        slideRight.setPower(.75);
+        slideRight.setPower(1);
         slideRight.setTargetPosition(RESET);
     }
     public void moveMotors(int position){

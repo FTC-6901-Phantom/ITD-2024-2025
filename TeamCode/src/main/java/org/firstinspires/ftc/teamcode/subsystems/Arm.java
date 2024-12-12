@@ -13,8 +13,8 @@ public class Arm {
     private static Gamepad Driver2;
 
     private static final double scorePosition = .8;
-    private static final double intakePosition = 0.038;
-    private static final double rest = 0.5494;
+    private static final double intakePosition = 0.07;
+    private static final double rest = 0.56;
     public static boolean ArmIsUp;
     private static boolean previousButtonState = false; // Tracks the previous state of the 'a' button
 

@@ -63,7 +63,7 @@ public class FieldCentricTeleOp extends OpMode {
             runningActions.add(new SequentialAction(
                     new InstantAction(slide::moveHighBasket),
                     new InstantAction(arm::ArmRest),
-                    new SleepAction(1.5),
+                    new SleepAction(1),
                     new InstantAction(arm::ArmScore),
                     new SleepAction(.5),
                     new InstantAction(wrist::setScorePosition)

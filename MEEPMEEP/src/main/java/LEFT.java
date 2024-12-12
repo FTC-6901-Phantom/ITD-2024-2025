@@ -4,7 +4,7 @@ import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 import com.acmerobotics.roadrunner.Vector2d;
 
-public class BlueLeft {
+public class LEFT {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 

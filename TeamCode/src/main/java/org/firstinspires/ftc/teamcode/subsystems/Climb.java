@@ -37,13 +37,13 @@ public class Climb {
     }
 
     public void teleOp() {
-        if (Driver1.right_bumper) moveByTicks(100);  // Increment by 20 ticks
-        else if (Driver1.left_bumper) moveByTicks(-100);  // Decrement by 20 ticks
+        if (Driver1.right_bumper) moveByTicks(150);  // Increment by 20 ticks
+        else if (Driver1.left_bumper) moveByTicks(-150);  // Decrement by 20 ticks
     }
 
     public void teleOp2() {
-        if (Driver2.dpad_left) moveByTicks(100);  // Increment by 20 ticks
-        else if (Driver2.dpad_right) moveByTicks(-100);  // Decrement by 20 ticks
+        if (Driver2.dpad_left) moveByTicks(150);  // Increment by 20 ticks
+        else if (Driver2.dpad_right) moveByTicks(-150);  // Decrement by 20 ticks
     }
 
     /**
@@ -56,15 +56,12 @@ public class Climb {
         int newLeftTarget = LeftClimb.getCurrentPosition() + ticks;
         int newRightTarget = RightClimb.getCurrentPosition() + ticks;
 
-        // Set target positions
         LeftClimb.setTargetPosition(newLeftTarget);
         RightClimb.setTargetPosition(newRightTarget);
 
-        // Switch to RUN_TO_POSITION mode
         LeftClimb.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         RightClimb.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        // Apply power to move the motors
         LeftClimb.setPower(1);
         RightClimb.setPower(1);
 

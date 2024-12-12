@@ -4,21 +4,17 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.ColorRangeSensor;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class Claw {
     private static final double OPEN_POSITION = 0.0;
-    private static final double CLOSED_POSITION = 0.6;
+    private static final double CLOSED_POSITION = 0.3;
 
     private static Servo clawServo;
-    private static ColorRangeSensor colorSensor;
     private static Gamepad driver1;
     private static Gamepad driver2;
 
     public static boolean isClawOpen = false;
-    private static boolean isSensorActive = false;
 
     private int debounceCounter = 0;
     private static final int DEBOUNCE_THRESHOLD = 40;
@@ -26,7 +22,6 @@ public class Claw {
     public Claw(OpMode opMode) {
         driver1 = opMode.gamepad1;
         driver2 = opMode.gamepad2;
-        colorSensor = opMode.hardwareMap.get(ColorRangeSensor.class, "sensor");
         clawServo = opMode.hardwareMap.get(Servo.class, "claw");
 
         clawServo.setDirection(Servo.Direction.REVERSE);
@@ -35,23 +30,32 @@ public class Claw {
 
     public void teleOp() {
         handleToggle();
+    }
 
-        // Automatic closing if sensor detects object within 1 cm and claw is open
-        if (isSensorActive && colorSensor.getDistance(DistanceUnit.CM) < 4) {
-            setClawClosed();
-        }
+    public void teleOp2() {
+        handleToggle2();
     }
 
     private void handleToggle() {
-        // Disable sensor when trigger is pressed
-        if (driver2.right_trigger >= 0.1) {
-            isSensorActive = false; // Deactivate sensor
+        // Toggle claw when trigger is pressed
+        if (driver1.right_trigger >= 0.1) {
             if (debounceCounter > DEBOUNCE_THRESHOLD) {
                 toggleClaw();
                 debounceCounter = 0;
             }
         } else {
-            isSensorActive = true; // Reactivate sensor
+            debounceCounter++;
+        }
+    }
+
+    private void handleToggle2() {
+        // Toggle claw when trigger is pressed
+        if (driver2.right_trigger >= 0.1) {
+            if (debounceCounter > DEBOUNCE_THRESHOLD) {
+                toggleClaw();
+                debounceCounter = 0;
+            }
+        } else {
             debounceCounter++;
         }
     }
