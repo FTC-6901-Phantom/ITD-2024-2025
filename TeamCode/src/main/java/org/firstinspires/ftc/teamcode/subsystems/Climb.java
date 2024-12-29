@@ -42,8 +42,8 @@ public class Climb {
     }
 
     public void teleOp2() {
-        if (Driver2.dpad_left) moveByTicks(150);  // Increment by 20 ticks
-        else if (Driver2.dpad_right) moveByTicks(-150);  // Decrement by 20 ticks
+        if (Driver2.square) moveByTicks(150);  // Increment by 20 ticks
+        else if (Driver2.triangle) moveByTicks(-150);  // Decrement by 20 ticks
     }
 
     /**

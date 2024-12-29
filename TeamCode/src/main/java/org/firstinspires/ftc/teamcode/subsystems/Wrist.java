@@ -10,15 +10,15 @@ public class Wrist {
     private static Servo wristServo;
     private static Gamepad driver2;
 
-    private static final double SCORE_POSITION = 0.6;
-    private static final double INTAKE_POSITION = -1;
+    private static final double SCORE_POSITION = 0.186;
+    private static final double INTAKE_POSITION = .63;
     private static final double SPECIMEN_POSITION = 0;
 
 
 
     private boolean isScorePosition = true;
     private int debounceCounter = 0;
-    private static final int DEBOUNCE_THRESHOLD = 40;
+    private static final int DEBOUNCE_THRESHOLD = 70;
 
     public Wrist(OpMode opMode) {
         driver2 = opMode.gamepad2;

@@ -11,12 +11,14 @@ public class Rotator {
     private static Gamepad driver1;
     private static Gamepad driver2;
 
-    private static final double VERTICAL_POSITION = 0; // Adjust to correct value
-    private static final double HORIZONTAL_POSITION = .5444; // Adjust to correct value
+    private static final double VERTICAL_POSITION = .5444; // Adjust to correct value
+    private static final double HORIZONTAL_POSITION = 0; // Adjust to correct value
+    private static final double FullRotation = 1; // Adjust to correct value
+
 
     private boolean isVertical = true;
     private int debounceCounter = 0;
-    private static final int DEBOUNCE_THRESHOLD = 40;
+    private static final int DEBOUNCE_THRESHOLD = 70;
 
     public Rotator(OpMode opMode) {
         driver1 = opMode.gamepad1;
@@ -56,6 +58,9 @@ public class Rotator {
     private void setHorizontal() {
         rotatorServo.setPosition(HORIZONTAL_POSITION);
         isVertical = false;
+    }
+    public void FullRotate() {
+        rotatorServo.setPosition(FullRotation);
     }
 
     // Additional utility methods if you need direct access to these positions

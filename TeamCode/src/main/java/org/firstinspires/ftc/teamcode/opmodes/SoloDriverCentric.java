@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.FieldCentricDrive;
 import java.util.ArrayList;
 import java.util.List;
 
-//@TeleOp(name = "SoloDriverCentric")
+//@TeleOp(name = "DriverCentric")
 public class SoloDriverCentric extends OpMode {
 
     private final FtcDashboard dash = FtcDashboard.getInstance();
@@ -76,6 +76,27 @@ public class SoloDriverCentric extends OpMode {
                     new SleepAction(.3),
                     new InstantAction(slide::Reset)
             ));}
+
+        if (gamepad2.dpad_right) {
+            runningActions.add(new SequentialAction(
+                    new InstantAction(arm::ArmRest),
+                    new SleepAction(.1),
+                    new InstantAction(rotator::FullRotate),
+                    new InstantAction(slide::HighRung),
+                    new SleepAction(.4),
+                    new InstantAction(wrist::setScorePosition),
+                    new SleepAction(.1),
+                    new InstantAction(arm::ArmScore),
+                    new SleepAction(.4),
+                    new InstantAction(claw::setClawOpen)
+            ));}
+
+        if (gamepad2.dpad_left) {
+            runningActions.add(new SequentialAction(
+                    new InstantAction(arm::ArmIntake),
+                    new SleepAction(.1),
+                    new InstantAction(rotator::moveToHorizontal),
+                    new InstantAction(slide::moveToWall)));}
 
         // Run the queued sequential actions
         List<Action> newActions = new ArrayList<>();

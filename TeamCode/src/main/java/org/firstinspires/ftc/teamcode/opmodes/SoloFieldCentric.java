@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.FieldCentricDrive;
 import java.util.ArrayList;
 import java.util.List;
 
-@TeleOp(name = "SoloFieldCentric")
+@TeleOp(name = "FieldCentric")
 public class SoloFieldCentric extends OpMode {
 
     private final FtcDashboard dash = FtcDashboard.getInstance();
@@ -51,8 +51,7 @@ public class SoloFieldCentric extends OpMode {
         // Standard operations
         fieldCentricDrive.fieldCentricSolo();
         claw.teleOp2();
-        //slide.teleOp();
-        arm.teleOp();
+          arm.teleOp();
         wrist.teleOp();
         rotator.teleOp();
         climb.teleOp2();
@@ -64,6 +63,7 @@ public class SoloFieldCentric extends OpMode {
                     new InstantAction(arm::ArmRest),
                     new SleepAction(1),
                     new InstantAction(arm::ArmScore),
+                    new InstantAction(rotator::moveToHorizontal),
                     new SleepAction(.5),
                     new InstantAction(wrist::setScorePosition)
             ));
@@ -71,9 +71,31 @@ public class SoloFieldCentric extends OpMode {
         if (gamepad2.dpad_down) {
             runningActions.add(new SequentialAction(
                     new InstantAction(arm::ArmRest),
+                    new InstantAction(rotator::moveToHorizontal),
                     new SleepAction(.3),
                     new InstantAction(slide::Reset)
             ));}
+
+        if (gamepad2.dpad_right) {
+            runningActions.add(new SequentialAction(
+                    new InstantAction(arm::ArmRest),
+                    new SleepAction(.1),
+                    new InstantAction(rotator::FullRotate),
+                    new InstantAction(slide::HighRung),
+                    new SleepAction(.4),
+                    new InstantAction(wrist::setScorePosition),
+                    new SleepAction(.1),
+                    new InstantAction(arm::ArmScore),
+                    new SleepAction(.4),
+                    new InstantAction(claw::setClawOpen)
+            ));}
+
+        if (gamepad2.dpad_left) {
+            runningActions.add(new SequentialAction(
+                    new InstantAction(arm::ArmIntake),
+                    new SleepAction(.1),
+                    new InstantAction(rotator::moveToHorizontal),
+                    new InstantAction(slide::moveToWall)));}
 
         // Run the queued sequential actions
         List<Action> newActions = new ArrayList<>();

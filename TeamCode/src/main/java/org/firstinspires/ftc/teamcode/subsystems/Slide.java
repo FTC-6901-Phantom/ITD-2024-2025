@@ -11,9 +11,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Slide {
 
     public static double POWER = 1;
-    public static int HighBasket =1850;
-    public static int SpecimenIntake = 100;
-    public static int HighRung = 700;
+    public static int HighBasket =1785;
+    public static int SpecimenIntake = 250;
+    public static int HighRung = 450;
     public static int RESET = 0;
     public static int MANUAL_MOVE_SPEED = 10;
     private int position = 0;
@@ -51,23 +51,6 @@ public class Slide {
 
 
     }
-
-    public void teleOp(){
-        //if(Driver2.dpad_up) moveHighBasket();
-        if (Driver2.dpad_left) moveLowBasket();
-        if (Driver2.dpad_right) moveHighRung();
-        //if(Driver2.dpad_down) Reset();
-        //if (Driver2.left_bumper) moveMotors(position + MANUAL_MOVE_SPEED);
-       // if (Driver2.right_bumper) moveMotors(position - MANUAL_MOVE_SPEED);
-
-        // Add telemetry data
-        telemetry.addData("Slide Position", slideLeft.getCurrentPosition());
-
-        // Update the telemetry to reflect the changes on the Driver Hub
-        telemetry.update();
-    }
-
-
     public void moveHighBasket(){
         slideLeft.setPower(1);
         slideLeft.setTargetPosition(HighBasket);
@@ -75,20 +58,12 @@ public class Slide {
         slideRight.setPower(1);
         slideRight.setTargetPosition(HighBasket);
     }
-    public void moveLowBasket() {
+    public void moveToWall() {
         slideLeft.setPower(1);
         slideLeft.setTargetPosition(SpecimenIntake);
 
         slideRight.setPower(1);
         slideRight.setTargetPosition(SpecimenIntake);
-
-    }
-    public void moveHighRung() {
-        slideLeft.setPower(1);
-        slideLeft.setTargetPosition(HighRung);
-
-        slideRight.setPower(1);
-        slideRight.setTargetPosition(HighRung);
 
     }
     public void Reset(){
@@ -97,6 +72,13 @@ public class Slide {
 
         slideRight.setPower(1);
         slideRight.setTargetPosition(RESET);
+    }
+    public void HighRung(){
+        slideLeft.setPower(1);
+        slideLeft.setTargetPosition(HighRung);
+
+        slideRight.setPower(1);
+        slideRight.setTargetPosition(HighRung);
     }
     public void moveMotors(int position){
         this.position = position;

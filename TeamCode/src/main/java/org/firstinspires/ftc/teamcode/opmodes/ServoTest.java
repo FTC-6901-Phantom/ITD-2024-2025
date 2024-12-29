@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
-//@TeleOp   //comment back in later
+@TeleOp   //comment back in later
 public class ServoTest extends OpMode {
     Servo servo1;
     /**
@@ -14,7 +14,7 @@ public class ServoTest extends OpMode {
     @Override
     public void init() {
         servo1 = hardwareMap.get(Servo.class, "testservo");
-        servo1.setDirection(Servo.Direction.FORWARD);
+        servo1.setDirection(Servo.Direction.REVERSE);
         //servo1.setDirection(Servo.Direction.FORWARD);
 
         servo1.setPosition(0);

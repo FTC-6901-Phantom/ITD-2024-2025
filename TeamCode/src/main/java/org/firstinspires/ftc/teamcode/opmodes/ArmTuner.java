@@ -18,8 +18,6 @@ public class ArmTuner extends OpMode {
         rightservo = hardwareMap.get(Servo.class, "rightArm");
         leftservo.setDirection(Servo.Direction.FORWARD);
         rightservo.setDirection(Servo.Direction.REVERSE);
-        //servo1.setDirection(Servo.Direction.FORWARD);
-
         leftservo.setPosition(0);
     }
 

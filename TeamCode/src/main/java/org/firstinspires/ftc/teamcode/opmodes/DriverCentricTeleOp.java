@@ -53,7 +53,6 @@ public class DriverCentricTeleOp extends OpMode {
         // Standard operations
         driverCentricDrive.driverCentric();
         claw.teleOp();
-        slide.teleOp();
         arm.teleOp();
         wrist.teleOp();
         rotator.teleOp();
