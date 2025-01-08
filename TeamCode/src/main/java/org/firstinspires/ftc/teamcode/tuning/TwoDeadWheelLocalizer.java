@@ -26,8 +26,8 @@ import org.firstinspires.ftc.teamcode.RoadRunner.Localizer;
 @Config
 public final class TwoDeadWheelLocalizer implements Localizer {
     public static class Params {
-        public double parYTicks = 8957.319989520178; // y position of the parallel encoder (in tick units)
-        public double perpXTicks = 3536.191403705514; // x position of the perpendicular encoder (in tick units)
+        public double parYTicks = 4715.832904952076; // y position of the parallel encoder (in tick units)
+        public double perpXTicks = 3803.1232208154684; // x position of the perpendicular encoder (in tick units)
     }
 
     public static Params PARAMS = new Params();
@@ -49,7 +49,6 @@ public final class TwoDeadWheelLocalizer implements Localizer {
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
         par = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "leftBack")));
         perp = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "leftFront")));
-        par.setDirection(DcMotorSimple.Direction.REVERSE);
         perp.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // TODO: reverse encoder directions if needed

@@ -18,7 +18,6 @@ import org.firstinspires.ftc.teamcode.subsystems.Rotator;
 public final class LeftAuto extends LinearOpMode {
 
     // Declare subsystem variables
-
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialize the pose

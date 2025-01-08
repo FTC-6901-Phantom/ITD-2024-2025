@@ -19,20 +19,28 @@ public final class RightAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(-10, 63, Math.toRadians(270));
+        Pose2d beginPose = new Pose2d(-12, 63, Math.toRadians(90));
+        Pose2d WallIntake = new Pose2d(-37, 50, Math.toRadians(90));
+        Pose2d Score1 = new Pose2d(-2, 27, Math.toRadians(90));
+        Pose2d Score2 = new Pose2d(-2.5, 27, Math.toRadians(90));
+        Pose2d Score3 = new Pose2d(-3, 27, Math.toRadians(90));
+        Pose2d Score4 = new Pose2d(-3.5, 27, Math.toRadians(90));
+        Pose2d Score5 = new Pose2d(-4, 27, Math.toRadians(90));
+
+
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Claw claw = new Claw(this);
         Arm arm = new Arm(this);
-        Slide slides = new Slide(this);
+        Slide slide = new Slide(this);
         Wrist wrist = new Wrist(this);
         Rotator rotator = new Rotator(this);
 
         while (!opModeIsActive() && !isStopRequested()) {
             claw.setClawClosed();
             arm.ArmRest();
-            wrist.setIntakePosition();
-            rotator.moveToHorizontal();
+            wrist.setScorePosition();
+            rotator.FullRotate();
         }
 
         waitForStart();
@@ -41,95 +49,153 @@ public final class RightAuto extends LinearOpMode {
             // Preload
             Actions.runBlocking(
                     drive.actionBuilder(beginPose)
-                            .lineToYConstantHeading(38)
-                            .waitSeconds(0.5)
+                            .strafeTo(new Vector2d(-2,32))
                             .build()
             );
+            slide.HighRung();
+            sleep(100);
+            arm.ArmScore();
+            sleep(200);
+            claw.setClawOpen();
+            sleep(200);
+            arm.ArmRest();
+            slide.Reset();
+            sleep(50);
+            rotator.moveToHorizontal();
 
-            // Grab First
             Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(-10, 38, Math.toRadians(270)))
-                            .strafeTo(new Vector2d(-48, 42))
-                            .waitSeconds(0.3)
-                            .build()
-            );
+                    drive.actionBuilder(Score1)
+                            .splineToLinearHeading(new Pose2d(-38,40,Math.toRadians(90)),Math.toRadians(270))
+                            .strafeTo(new Vector2d(-38,10))
+                            .strafeTo(new Vector2d(-46,10))
+                            .strafeTo(new Vector2d(-46,56))
+                            .strafeTo(new Vector2d(-46,10))
+                            .strafeTo(new Vector2d(-54,10))
+                            .strafeTo(new Vector2d(-54,56))
+                            .strafeTo(new Vector2d(-54,10))
+                            .strafeTo(new Vector2d(-62,10))
+                            .strafeTo(new Vector2d(-62,56))
+                            .strafeTo(new Vector2d(-37,50))
+                            .build());
 
-            // Drop Off 1
-            Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(-48, 42, Math.toRadians(270)))
-                            .setTangent(Math.toRadians(90))
-                            .lineToYConstantHeading(-48)
-                            .waitSeconds(0.3)
-                            .build()
-            );
+            rotator.moveToHorizontal();
+            sleep(200);
+            arm.ArmIntake();
+            slide.moveToWall();
+            sleep(100);
+            claw.setClawClosed();
+            sleep(200);
+            arm.ArmRest();
 
-            // Grab Second
             Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(-48, 50, Math.toRadians(90)))
-                            .strafeTo(new Vector2d(-58, 42))
-                            .waitSeconds(0.3)
-                            .build()
-            );
+                    drive.actionBuilder(WallIntake)
+                            .strafeTo(new Vector2d(-2.5,32))
+                            .build());
+            rotator.FullRotate();
+            slide.HighRung();
+            sleep(100);
+            wrist.setScorePosition();
+            sleep(200);
+            arm.ArmScore();
+            sleep(200);
+            claw.setClawOpen();
+            sleep(200);
+            arm.ArmRest();
+            slide.Reset();
+            sleep(50);
+            rotator.moveToHorizontal();
 
-            // Drop Off 2
-            Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(-58, 42, Math.toRadians(90)))
-                            .setTangent(Math.toRadians(90))
-                            .lineToYConstantHeading(50)
-                            .waitSeconds(0.3)
-                            .build()
-            );
+            Actions.runBlocking(drive.actionBuilder(Score2)
+                            .strafeTo(new Vector2d(-37,50))
+                            .build());
+            rotator.moveToHorizontal();
+            sleep(200);
+            arm.ArmIntake();
+            slide.moveToWall();
+            sleep(100);
+            claw.setClawClosed();
+            sleep(200);
+            arm.ArmRest();
 
-            // Grab 2
             Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(-58, 50, Math.toRadians(90)))
-                            .setTangent(0)
-                            .splineToLinearHeading(new Pose2d(-36, 56, Math.toRadians(90)), Math.toRadians(90))
-                            .waitSeconds(0.5)
-                            .build()
-            );
+                    drive.actionBuilder(WallIntake)
+                            .strafeTo(new Vector2d(-3,32))
+                            .build());
+            rotator.FullRotate();
+            slide.HighRung();
+            sleep(100);
+            wrist.setScorePosition();
+            sleep(200);
+            arm.ArmScore();
+            sleep(200);
+            claw.setClawOpen();
+            sleep(200);
+            arm.ArmRest();
+            slide.Reset();
+            sleep(50);
+            rotator.moveToHorizontal();
 
-            // Score 2nd
-            Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(-36, 56, Math.toRadians(90)))
-                            .setTangent(0)
-                            .splineToLinearHeading(new Pose2d(-6, 38, Math.toRadians(-90)), Math.toRadians(135))
-                            .waitSeconds(0.5)
-                            .build()
-            );
+            Actions.runBlocking(drive.actionBuilder(Score3)
+                    .strafeTo(new Vector2d(-37,50))
+                    .build());
+            rotator.moveToHorizontal();
+            sleep(200);
+            arm.ArmIntake();
+            slide.moveToWall();
+            sleep(100);
+            claw.setClawClosed();
+            sleep(200);
+            arm.ArmRest();
 
-            // Grab 3rd
             Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(-6, 38, Math.toRadians(-90)))
-                            .setTangent(90)
-                            .splineToLinearHeading(new Pose2d(-36, 56, Math.toRadians(90)), Math.toRadians(90))
-                            .waitSeconds(0.5)
-                            .build()
-            );
+                    drive.actionBuilder(WallIntake)
+                            .strafeTo(new Vector2d(-3.5,32))
+                            .build());
+            rotator.FullRotate();
+            slide.HighRung();
+            sleep(100);
+            wrist.setScorePosition();
+            sleep(200);
+            arm.ArmScore();
+            sleep(200);
+            claw.setClawOpen();
+            sleep(200);
+            arm.ArmRest();
+            slide.Reset();
+            sleep(50);
+            rotator.moveToHorizontal();
 
-            //Score 3rd
-            Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(-58, 50, Math.toRadians(90)))
-                            .setTangent(0)
-                            .splineToLinearHeading(new Pose2d(-36, 56, Math.toRadians(90)), Math.toRadians(90))
-                            .waitSeconds(0.5)
-                            .build()
-            );
+            Actions.runBlocking(drive.actionBuilder(Score4)
+                    .strafeTo(new Vector2d(-37,50))
+                    .build());
+            rotator.moveToHorizontal();
+            sleep(200);
+            arm.ArmIntake();
+            slide.moveToWall();
+            sleep(100);
+            claw.setClawClosed();
+            sleep(200);
+            arm.ArmRest();
 
-            // Grab 4th
             Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(-6, 38, Math.toRadians(-90)))
-                            .setTangent(90)
-                            .splineToLinearHeading(new Pose2d(-36, 56, Math.toRadians(90)), Math.toRadians(90))
-                            .waitSeconds(0.5)
-                            .build()
-            );
-            //Score 4th
-            Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(-58, 50, Math.toRadians(90)))
-                            .setTangent(0)
-                            .splineToLinearHeading(new Pose2d(-36, 56, Math.toRadians(90)), Math.toRadians(90))
-                            .waitSeconds(0.5)
-                            .build()
-            );
+                    drive.actionBuilder(WallIntake)
+                            .strafeTo(new Vector2d(-4,32))
+                            .build());
+            rotator.FullRotate();
+            slide.HighRung();
+            sleep(100);
+            wrist.setScorePosition();
+            sleep(200);
+            arm.ArmScore();
+            sleep(200);
+            claw.setClawOpen();
+            sleep(200);
+            arm.ArmRest();
+            slide.Reset();
+            sleep(50);
+            rotator.moveToHorizontal();
+
+            Actions.runBlocking(drive.actionBuilder(Score4)
+                    .strafeTo(new Vector2d(-37,50))
+                    .build());
         }}}

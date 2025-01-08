@@ -9,13 +9,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Claw {
     private static final double OPEN_POSITION = 0.0;
     private static final double CLOSED_POSITION = 0.27;
-
     private static Servo clawServo;
     private static Gamepad driver1;
     private static Gamepad driver2;
-
     public static boolean isClawOpen = false;
-
     private int debounceCounter = 0;
     private static final int DEBOUNCE_THRESHOLD = 40;
 
@@ -23,32 +20,14 @@ public class Claw {
         driver1 = opMode.gamepad1;
         driver2 = opMode.gamepad2;
         clawServo = opMode.hardwareMap.get(Servo.class, "claw");
-
         clawServo.setDirection(Servo.Direction.REVERSE);
-        clawServo.setPosition(CLOSED_POSITION);
+        clawServo.setPosition(CLOSED_POSITION); // Start with the claw closed
     }
 
     public void teleOp() {
         handleToggle();
     }
-
-    public void teleOp2() {
-        handleToggle2();
-    }
-
     private void handleToggle() {
-        // Toggle claw when trigger is pressed
-        if (driver1.right_trigger >= 0.1) {
-            if (debounceCounter > DEBOUNCE_THRESHOLD) {
-                toggleClaw();
-                debounceCounter = 0;
-            }
-        } else {
-            debounceCounter++;
-        }
-    }
-
-    private void handleToggle2() {
         // Toggle claw when trigger is pressed
         if (driver2.right_trigger >= 0.1) {
             if (debounceCounter > DEBOUNCE_THRESHOLD) {
@@ -59,7 +38,6 @@ public class Claw {
             debounceCounter++;
         }
     }
-
     private void toggleClaw() {
         if (isClawOpen) {
             setClawClosed();
@@ -67,14 +45,20 @@ public class Claw {
             setClawOpen();
         }
     }
-
     public void setClawClosed() {
         clawServo.setPosition(CLOSED_POSITION);
         isClawOpen = false;
     }
-
     public void setClawOpen() {
         clawServo.setPosition(OPEN_POSITION);
         isClawOpen = true;
+    }
+    public boolean isOpen() {
+        return isClawOpen;
+    }
+    public void addTelemetry(OpMode opMode) {
+        opMode.telemetry.addData("Claw State", isClawOpen ? "Open" : "Closed");
+        opMode.telemetry.addData("Claw Position", clawServo.getPosition());
+        opMode.telemetry.update();
     }
 }

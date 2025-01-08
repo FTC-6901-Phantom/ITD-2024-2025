@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -13,8 +11,11 @@ public class Arm {
     private static Gamepad Driver2;
 
     private static final double scorePosition = .83;
-    private static final double intakePosition = 0.05;
+    private static final double intakePosition = 0;
     private static final double rest = 0.56;
+
+    private static final double intake2 = 0.1;
+
     public static boolean ArmIsUp;
     private static boolean previousButtonState = false; // Tracks the previous state of the 'a' button
 
@@ -73,4 +74,9 @@ public class Arm {
     public void ArmRest() {
         armServo(rest, rest);
     }
+
+    public void ArmIntake2() {
+        armServo(intake2, intake2);
+    }
+
 }

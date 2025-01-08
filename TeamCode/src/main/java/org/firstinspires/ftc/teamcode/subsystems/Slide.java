@@ -9,18 +9,17 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Slide {
-
     public static double POWER = 1;
-    public static int HighBasket =1785;
-    public static int SpecimenIntake = 250;
-    public static int HighRung = 450;
+    public static int HighBasket = 1785;
+    public static int SpecimenIntake = 270;
+    public static int HighRung = 440;
     public static int RESET = 0;
+    public static int POSITION_TOLERANCE = 20; // Tolerance for position checking
     public static int MANUAL_MOVE_SPEED = 10;
     private int position = 0;
 
     public final DcMotor slideLeft;
     public final DcMotor slideRight;
-
     private final HardwareMap hardwareMap;
     private final Gamepad Driver2;
     private final Gamepad Driver1;
@@ -32,7 +31,7 @@ public class Slide {
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;
 
-        slideLeft = hardwareMap.get(DcMotor.class,"leftSlide");
+        slideLeft = hardwareMap.get(DcMotor.class, "leftSlide");
         slideLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         slideLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -48,45 +47,65 @@ public class Slide {
 
         slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
     }
-    public void moveHighBasket(){
-        slideLeft.setPower(1);
-        slideLeft.setTargetPosition(HighBasket);
 
+    public void moveHighBasket() {
+        slideLeft.setPower(1);
         slideRight.setPower(1);
+        slideLeft.setTargetPosition(HighBasket);
         slideRight.setTargetPosition(HighBasket);
     }
+
     public void moveToWall() {
         slideLeft.setPower(1);
+        slideRight.setPower(1);
         slideLeft.setTargetPosition(SpecimenIntake);
-
-        slideRight.setPower(1);
         slideRight.setTargetPosition(SpecimenIntake);
-
     }
-    public void Reset(){
-        slideLeft.setPower(1);
-        slideLeft.setTargetPosition(RESET);
 
+    public void Reset() {
+        slideLeft.setPower(1);
         slideRight.setPower(1);
+        slideLeft.setTargetPosition(RESET);
         slideRight.setTargetPosition(RESET);
     }
-    public void HighRung(){
-        slideLeft.setPower(1);
-        slideLeft.setTargetPosition(HighRung);
 
+    public void HighRung() {
+        slideLeft.setPower(1);
         slideRight.setPower(1);
+        slideLeft.setTargetPosition(HighRung);
         slideRight.setTargetPosition(HighRung);
     }
-    public void moveMotors(int position){
+
+    public void moveMotors(int position) {
         this.position = position;
         slideLeft.setTargetPosition(position);
         slideRight.setTargetPosition(position);
         slideLeft.setPower(POWER);
         slideRight.setPower(POWER);
-
     }
 
+    /**
+     * Checks if the slides are at the high position.
+     *
+     * @return true if the slides are at the high position within tolerance.
+     */
+    public boolean isAtHighPosition() {
+        int leftPosition = slideLeft.getCurrentPosition();
+        int rightPosition = slideRight.getCurrentPosition();
+        return Math.abs(leftPosition - HighBasket) <= POSITION_TOLERANCE &&
+                Math.abs(rightPosition - HighBasket) <= POSITION_TOLERANCE;
     }
+
+    /**
+     * Adds telemetry data for debugging.
+     */
+    public void addTelemetry() {
+        telemetry.addData("Slide Left Position", slideLeft.getCurrentPosition());
+        telemetry.addData("Slide Right Position", slideRight.getCurrentPosition());
+        telemetry.addData("Target Position", position);
+        telemetry.addData("Slide Power", slideLeft.getPower());
+        telemetry.addData("At High Position", isAtHighPosition());
+        telemetry.update();
+    }
+}

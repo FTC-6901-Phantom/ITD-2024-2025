@@ -14,21 +14,21 @@ import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 import org.firstinspires.ftc.teamcode.subsystems.Rotator;
 import org.firstinspires.ftc.teamcode.subsystems.Climb;
-import org.firstinspires.ftc.teamcode.subsystems.drive.DriverCentricDrive;
 import org.firstinspires.ftc.teamcode.subsystems.drive.FieldCentricDrive;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-//@TeleOp(name = "DriverCentric")
-public class SoloDriverCentric extends OpMode {
+@TeleOp(name = "TeleOp2")
+public class NewFieldCentric extends OpMode {
 
     private final FtcDashboard dash = FtcDashboard.getInstance();
     private List<Action> runningActions = new ArrayList<>();
 
     // Subsystems
     private Slide slide;
-    private DriverCentricDrive driverCentricDrive;
+    private FieldCentricDrive fieldCentricDrive;
     private Claw claw;
     private Arm arm;
     private Wrist wrist;
@@ -39,44 +39,71 @@ public class SoloDriverCentric extends OpMode {
     public void init() {
         // Initialize subsystems
         slide = new Slide(this);
-        driverCentricDrive = new DriverCentricDrive(this);
+        fieldCentricDrive = new FieldCentricDrive(this);
         claw = new Claw(this);
         arm = new Arm(this);
         wrist = new Wrist(this);
         rotator = new Rotator(this);
         climb = new Climb(this);
     }
-
+    private boolean wasLeftBumperPressed = false;
     @Override
     public void loop() {
         // Standard operations
-        driverCentricDrive.driverCentricSolo();
-        claw.teleOp2();
-        //slide.teleOp();
-        arm.teleOp();
-        wrist.teleOp();
+        fieldCentricDrive.fieldCentric();
+        claw.teleOp();
         rotator.teleOp();
-        climb.teleOp2();
+        climb.teleop();
 
-        // Check for sequential actions
+        // Check for left bumper actions
+        boolean isLeftBumperPressed = gamepad2.left_bumper;
+
+        if (isLeftBumperPressed && wasLeftBumperPressed) {
+            // Actions triggered on the initial press of the left bumper
+            runningActions.add(new SequentialAction(Arrays.asList(
+                    new InstantAction(slide::Reset),
+                    new InstantAction(arm::ArmIntake2),
+                    new SleepAction(0.1), // 0.05-second delay
+                    new InstantAction(claw::setClawOpen),
+                    new SleepAction(0.1), // 0.05-second delay
+                    new InstantAction(wrist::setIntakePosition),
+                    new SleepAction(0.1))));
+                    // Reset slide last)));
+        } else if (!isLeftBumperPressed && wasLeftBumperPressed) {
+            // Actions triggered on the release of the left bumper
+            runningActions.add(new SequentialAction(Arrays.asList(
+                    new InstantAction(arm::ArmIntake),
+                    new SleepAction(0.2), // Wait 0.2 seconds
+                    new InstantAction(claw::setClawClosed),
+                    new SleepAction(0.4), // Wait 0.4 seconds
+                    new InstantAction(wrist::setScorePosition),
+                    new SleepAction(1),
+                    new InstantAction(arm::ArmRest),
+                    new InstantAction(wrist::setIntakePosition)
+            )));}
+        // Check if the claw is open and slides are at the high position
+
+        if (claw.isOpen() && slide.isAtHighPosition()) {
+            runningActions.add(new SequentialAction(
+                    new SleepAction(.3),
+                    new InstantAction(arm::ArmRest),
+                    new SleepAction(.3),
+                    new InstantAction(slide::Reset),
+                    new InstantAction(rotator::moveToHorizontal)
+            ));
+        }
+        // Update the previous state of the left bumper
+        wasLeftBumperPressed = isLeftBumperPressed;
+        // Check for dpad actions
         if (gamepad2.dpad_up) {
             runningActions.add(new SequentialAction(
                     new InstantAction(slide::moveHighBasket),
                     new InstantAction(arm::ArmRest),
+                    new InstantAction(rotator::moveToHorizontal),
                     new SleepAction(1),
                     new InstantAction(arm::ArmScore),
                     new SleepAction(.5),
-                    new InstantAction(wrist::setScorePosition)
-            ));
-        }
-
-        if (gamepad2.dpad_down) {
-            runningActions.add(new SequentialAction(
-                    new InstantAction(arm::ArmRest),
-                    new SleepAction(.3),
-                    new InstantAction(slide::Reset)
-            ));}
-
+                    new InstantAction(wrist::setScorePosition)));}
         if (gamepad2.dpad_right) {
             runningActions.add(new SequentialAction(
                     new InstantAction(arm::ArmRest),
@@ -90,13 +117,19 @@ public class SoloDriverCentric extends OpMode {
                     new SleepAction(.4),
                     new InstantAction(claw::setClawOpen)
             ));}
-
         if (gamepad2.dpad_left) {
             runningActions.add(new SequentialAction(
                     new InstantAction(arm::ArmIntake),
                     new SleepAction(.1),
                     new InstantAction(rotator::moveToHorizontal),
                     new InstantAction(slide::moveToWall)));}
+        if (gamepad2.dpad_down) {
+            runningActions.add(new SequentialAction(
+                    new InstantAction(arm::ArmRest),
+                    new InstantAction(rotator::moveToHorizontal),
+                    new SleepAction(.3),
+                    new InstantAction(slide::Reset)
+            ));}
 
         // Run the queued sequential actions
         List<Action> newActions = new ArrayList<>();
@@ -110,5 +143,4 @@ public class SoloDriverCentric extends OpMode {
             dash.sendTelemetryPacket(packet);
         }
         runningActions = newActions;
-    }
-}
+    }}

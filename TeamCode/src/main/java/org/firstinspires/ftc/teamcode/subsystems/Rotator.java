@@ -14,12 +14,9 @@ public class Rotator {
     private static final double VERTICAL_POSITION = .5444; // Adjust to correct value
     private static final double HORIZONTAL_POSITION = 0; // Adjust to correct value
     private static final double FullRotation = 1; // Adjust to correct value
-
-
     private boolean isVertical = true;
     private int debounceCounter = 0;
     private static final int DEBOUNCE_THRESHOLD = 70;
-
     public Rotator(OpMode opMode) {
         driver1 = opMode.gamepad1;
         driver2 = opMode.gamepad2;
@@ -28,13 +25,11 @@ public class Rotator {
         rotatorServo.setDirection(Servo.Direction.FORWARD);
         setVertical(); // Initialize to vertical position
     }
-
     public void teleOp() {
         handleToggle();
 
         // Additional teleOp functionality can be added here if needed
     }
-
     private void handleToggle() {
         if (debounceCounter > DEBOUNCE_THRESHOLD) {
             if (driver2.right_bumper) {
@@ -47,14 +42,11 @@ public class Rotator {
             }
         } else {
             debounceCounter++;
-        }
-    }
-
+        }}
     private void setVertical() {
         rotatorServo.setPosition(VERTICAL_POSITION);
         isVertical = true;
     }
-
     private void setHorizontal() {
         rotatorServo.setPosition(HORIZONTAL_POSITION);
         isVertical = false;

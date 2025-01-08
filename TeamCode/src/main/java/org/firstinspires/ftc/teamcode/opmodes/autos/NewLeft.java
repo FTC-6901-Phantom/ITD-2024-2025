@@ -75,19 +75,19 @@ public final class NewLeft extends LinearOpMode {
             sleep(2000);
 
             Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(-61, -52, 0))
+                    drive.actionBuilder(new Pose2d(-61, -52, 90))
                             .strafeToConstantHeading(new Vector2d(-59, -42))
                             .build());
             sleep(2000);
 
             Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(-59, -42, 0))
+                    drive.actionBuilder(new Pose2d(-59, -42, 90))
                             .strafeToConstantHeading(new Vector2d(-61, -52))
                             .build());
             sleep(2000);
 
             Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(-61, -52, 0))
+                    drive.actionBuilder(new Pose2d(-61, -52, 90))
                             .strafeToLinearHeading(new Pose2d(-48, -26, Math.toRadians(45)).component1(), Math.toRadians(180))
                             .build());
             sleep(2000);
@@ -99,13 +99,13 @@ public final class NewLeft extends LinearOpMode {
             sleep(2000);
 
             Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(-54, -26, 0))
+                    drive.actionBuilder(new Pose2d(-54, -26, 45))
                             .strafeToConstantHeading(new Vector2d(-48, -26))
                             .build());
             sleep(2000);
 
             Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(-48, -26, 0))
+                    drive.actionBuilder(new Pose2d(-48, -26, 45))
                             .strafeToLinearHeading(new Pose2d(-61, -52, Math.toRadians(45)).component1(), Math.toRadians(90))
                             .build());
         }

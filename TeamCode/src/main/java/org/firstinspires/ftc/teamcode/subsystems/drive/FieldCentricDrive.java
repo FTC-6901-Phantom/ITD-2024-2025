@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.IMU;
 
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class FieldCentricDrive {
@@ -49,41 +50,8 @@ public class FieldCentricDrive {
         imu.initialize(parameters);
 
     }
-
     public void fieldCentric() {
-        if(Driver1.left_trigger>=0.1){
-            speed=.5;
-        } else{
-            speed=1;
-        }
-        double y = -Driver1.left_stick_y;
-        double x = Driver1.left_stick_x;
-        double rx = Driver1.right_stick_x;
-
-        if (Driver1.start) {
-            imu.resetYaw();
-        }
-
-        double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
-
-        double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
-        double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
-
-        rotX = rotX * 1.1; //counteract imperfect strafing
-
-        double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-        double frontLeftPower = (rotY + rotX + rx) / denominator * speed;
-        double backLeftPower = (rotY - rotX + rx) / denominator* speed;
-        double frontRightPower = (rotY - rotX - rx) / denominator* speed;
-        double backRightPower = (rotY + rotX - rx) / denominator* speed;
-
-        leftFront.setPower(frontLeftPower);
-        leftBack.setPower(backLeftPower);
-        rightFront.setPower(frontRightPower);
-        rightBack.setPower(backRightPower);
-    }
-    public void fieldCentricSolo() {
-        if(Driver2.left_trigger>=0.1){
+        if(Driver2.left_bumper){
             speed=.5;
         } else{
             speed=1;
