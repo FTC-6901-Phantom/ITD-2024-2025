@@ -19,15 +19,13 @@ public final class RightAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(-12, 63, Math.toRadians(90));
-        Pose2d WallIntake = new Pose2d(-37, 50, Math.toRadians(90));
-        Pose2d Score1 = new Pose2d(-2, 27, Math.toRadians(90));
-        Pose2d Score2 = new Pose2d(-2.5, 27, Math.toRadians(90));
-        Pose2d Score3 = new Pose2d(-3, 27, Math.toRadians(90));
-        Pose2d Score4 = new Pose2d(-3.5, 27, Math.toRadians(90));
-        Pose2d Score5 = new Pose2d(-4, 27, Math.toRadians(90));
-
-
+        Pose2d beginPose = new Pose2d(-12, 62.25, Math.toRadians(90));
+        Pose2d WallIntake = new Pose2d(-37, 48, Math.toRadians(90));
+        Pose2d Score1 = new Pose2d(1.5, 27.75, Math.toRadians(90));
+        Pose2d Score2 = new Pose2d(.5, 27.75, Math.toRadians(90));
+        Pose2d Score3 = new Pose2d(-1, 27.75, Math.toRadians(90));
+        Pose2d Score4 = new Pose2d(-4.5, 27.75, Math.toRadians(90));
+        Pose2d Score5 = new Pose2d(-6.25, 27.75, Math.toRadians(90));
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Claw claw = new Claw(this);
@@ -49,13 +47,13 @@ public final class RightAuto extends LinearOpMode {
             // Preload
             Actions.runBlocking(
                     drive.actionBuilder(beginPose)
-                            .strafeTo(new Vector2d(-2,32))
+                            .strafeTo(new Vector2d(1.5,27.75))
                             .build()
             );
             slide.HighRung();
-            sleep(100);
+            sleep(400);
             arm.ArmScore();
-            sleep(200);
+            sleep(300);
             claw.setClawOpen();
             sleep(200);
             arm.ArmRest();
@@ -67,29 +65,29 @@ public final class RightAuto extends LinearOpMode {
                     drive.actionBuilder(Score1)
                             .splineToLinearHeading(new Pose2d(-38,40,Math.toRadians(90)),Math.toRadians(270))
                             .strafeTo(new Vector2d(-38,10))
-                            .strafeTo(new Vector2d(-46,10))
-                            .strafeTo(new Vector2d(-46,56))
-                            .strafeTo(new Vector2d(-46,10))
-                            .strafeTo(new Vector2d(-54,10))
-                            .strafeTo(new Vector2d(-54,56))
-                            .strafeTo(new Vector2d(-54,10))
-                            .strafeTo(new Vector2d(-62,10))
-                            .strafeTo(new Vector2d(-62,56))
-                            .strafeTo(new Vector2d(-37,50))
+                            .strafeTo(new Vector2d(-52,10))
+                            .strafeTo(new Vector2d(-52,56))
+                            .strafeTo(new Vector2d(-52,10))
+                            .strafeTo(new Vector2d(-58,10))
+                            .strafeTo(new Vector2d(-58,56))
+                            .strafeTo(new Vector2d(-58,10))
+                            .strafeTo(new Vector2d(-66,10))
+                            .strafeTo(new Vector2d(-66,56))
+                            .strafeTo(new Vector2d(-37,47.75))
                             .build());
 
             rotator.moveToHorizontal();
             sleep(200);
             arm.ArmIntake();
             slide.moveToWall();
-            sleep(100);
+            sleep(1000);
             claw.setClawClosed();
             sleep(200);
             arm.ArmRest();
 
             Actions.runBlocking(
                     drive.actionBuilder(WallIntake)
-                            .strafeTo(new Vector2d(-2.5,32))
+                            .strafeTo(new Vector2d(.5,27.75))
                             .build());
             rotator.FullRotate();
             slide.HighRung();
@@ -97,7 +95,7 @@ public final class RightAuto extends LinearOpMode {
             wrist.setScorePosition();
             sleep(200);
             arm.ArmScore();
-            sleep(200);
+            sleep(300);
             claw.setClawOpen();
             sleep(200);
             arm.ArmRest();
@@ -106,20 +104,20 @@ public final class RightAuto extends LinearOpMode {
             rotator.moveToHorizontal();
 
             Actions.runBlocking(drive.actionBuilder(Score2)
-                            .strafeTo(new Vector2d(-37,50))
+                            .strafeTo(new Vector2d(-37,48))
                             .build());
             rotator.moveToHorizontal();
             sleep(200);
             arm.ArmIntake();
             slide.moveToWall();
-            sleep(100);
+            sleep(1000);
             claw.setClawClosed();
             sleep(200);
             arm.ArmRest();
 
             Actions.runBlocking(
                     drive.actionBuilder(WallIntake)
-                            .strafeTo(new Vector2d(-3,32))
+                            .strafeTo(new Vector2d(-1,27.75))
                             .build());
             rotator.FullRotate();
             slide.HighRung();
@@ -127,7 +125,7 @@ public final class RightAuto extends LinearOpMode {
             wrist.setScorePosition();
             sleep(200);
             arm.ArmScore();
-            sleep(200);
+            sleep(300);
             claw.setClawOpen();
             sleep(200);
             arm.ArmRest();
@@ -136,20 +134,20 @@ public final class RightAuto extends LinearOpMode {
             rotator.moveToHorizontal();
 
             Actions.runBlocking(drive.actionBuilder(Score3)
-                    .strafeTo(new Vector2d(-37,50))
+                    .strafeTo(new Vector2d(-37,48.25))
                     .build());
             rotator.moveToHorizontal();
             sleep(200);
             arm.ArmIntake();
             slide.moveToWall();
-            sleep(100);
+            sleep(1000);
             claw.setClawClosed();
             sleep(200);
             arm.ArmRest();
 
             Actions.runBlocking(
                     drive.actionBuilder(WallIntake)
-                            .strafeTo(new Vector2d(-3.5,32))
+                            .strafeTo(new Vector2d(-4.5,27.75))
                             .build());
             rotator.FullRotate();
             slide.HighRung();
@@ -157,7 +155,7 @@ public final class RightAuto extends LinearOpMode {
             wrist.setScorePosition();
             sleep(200);
             arm.ArmScore();
-            sleep(200);
+            sleep(300);
             claw.setClawOpen();
             sleep(200);
             arm.ArmRest();
@@ -166,20 +164,20 @@ public final class RightAuto extends LinearOpMode {
             rotator.moveToHorizontal();
 
             Actions.runBlocking(drive.actionBuilder(Score4)
-                    .strafeTo(new Vector2d(-37,50))
+                    .strafeTo(new Vector2d(-37,48))
                     .build());
             rotator.moveToHorizontal();
             sleep(200);
             arm.ArmIntake();
             slide.moveToWall();
-            sleep(100);
+            sleep(1000);
             claw.setClawClosed();
             sleep(200);
             arm.ArmRest();
 
             Actions.runBlocking(
                     drive.actionBuilder(WallIntake)
-                            .strafeTo(new Vector2d(-4,32))
+                            .strafeTo(new Vector2d(-6.25,28))
                             .build());
             rotator.FullRotate();
             slide.HighRung();
@@ -187,7 +185,7 @@ public final class RightAuto extends LinearOpMode {
             wrist.setScorePosition();
             sleep(200);
             arm.ArmScore();
-            sleep(200);
+            sleep(300);
             claw.setClawOpen();
             sleep(200);
             arm.ArmRest();
@@ -195,7 +193,7 @@ public final class RightAuto extends LinearOpMode {
             sleep(50);
             rotator.moveToHorizontal();
 
-            Actions.runBlocking(drive.actionBuilder(Score4)
-                    .strafeTo(new Vector2d(-37,50))
+            Actions.runBlocking(drive.actionBuilder(Score5)
+                    .strafeTo(new Vector2d(-37,48))
                     .build());
         }}}

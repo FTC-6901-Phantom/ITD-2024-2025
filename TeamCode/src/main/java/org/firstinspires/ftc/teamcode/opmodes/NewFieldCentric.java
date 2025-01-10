@@ -104,6 +104,7 @@ public class NewFieldCentric extends OpMode {
                     new InstantAction(arm::ArmScore),
                     new SleepAction(.5),
                     new InstantAction(wrist::setScorePosition)));}
+
         if (gamepad2.dpad_right) {
             runningActions.add(new SequentialAction(
                     new InstantAction(arm::ArmRest),
@@ -117,12 +118,14 @@ public class NewFieldCentric extends OpMode {
                     new SleepAction(.4),
                     new InstantAction(claw::setClawOpen)
             ));}
+
         if (gamepad2.dpad_left) {
             runningActions.add(new SequentialAction(
                     new InstantAction(arm::ArmIntake),
                     new SleepAction(.1),
                     new InstantAction(rotator::moveToHorizontal),
                     new InstantAction(slide::moveToWall)));}
+
         if (gamepad2.dpad_down) {
             runningActions.add(new SequentialAction(
                     new InstantAction(arm::ArmRest),
