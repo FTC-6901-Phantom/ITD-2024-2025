@@ -7,24 +7,20 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.IMU;
-
-
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class FieldCentricDrive {
-    private final DcMotor leftFront,leftBack,rightFront,rightBack;
-    private final HardwareMap hardwareMap;
-    private final Gamepad Driver1;
-    private final Gamepad Driver2;
+    private final DcMotor leftFront, leftBack, rightFront, rightBack;
     private final IMU imu;
-    double speed=.85;
+    private final Gamepad driver;
+
+    private double speed = 1.0; // Default speed
 
     public FieldCentricDrive(OpMode opMode) {
-        Driver1 = opMode.gamepad1;
-        Driver2 = opMode.gamepad2;
-        hardwareMap = opMode.hardwareMap;
-        imu = hardwareMap.get(IMU.class, "imu");
+        driver = opMode.gamepad2;
+        HardwareMap hardwareMap = opMode.hardwareMap;
 
+        imu = hardwareMap.get(IMU.class, "imu");
         leftFront = hardwareMap.get(DcMotor.class, "leftFront");
         leftBack = hardwareMap.get(DcMotor.class, "leftBack");
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
@@ -32,50 +28,44 @@ public class FieldCentricDrive {
 
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightBack.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-
-        //SET UP HUB POSITION
-        IMU imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
                 RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
-
         imu.initialize(parameters);
-
     }
-    public void fieldCentric() {
-        if(Driver2.left_bumper){
-            speed=.5;
-        } else{
-            speed=1;
-        }
-        double y = -Driver2.left_stick_y;
-        double x = Driver2.left_stick_x;
-        double rx = Driver2.right_stick_x;
 
-        if (Driver2.start) {
+    public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior behavior) {
+        leftFront.setZeroPowerBehavior(behavior);
+        leftBack.setZeroPowerBehavior(behavior);
+        rightFront.setZeroPowerBehavior(behavior);
+        rightBack.setZeroPowerBehavior(behavior);
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public void fieldCentric() {
+        double y = -driver.left_stick_y;
+        double x = driver.left_stick_x * 1.1; // Counteract imperfect strafing
+        double rx = driver.right_stick_x;
+
+        if (driver.start) {
             imu.resetYaw();
         }
 
         double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
-
         double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
         double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
 
-        rotX = rotX * 1.1; //counteract imperfect strafing
-
-        double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
+        double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1.0);
         double frontLeftPower = (rotY + rotX + rx) / denominator * speed;
-        double backLeftPower = (rotY - rotX + rx) / denominator* speed;
-        double frontRightPower = (rotY - rotX - rx) / denominator* speed;
-        double backRightPower = (rotY + rotX - rx) / denominator* speed;
+        double backLeftPower = (rotY - rotX + rx) / denominator * speed;
+        double frontRightPower = (rotY - rotX - rx) / denominator * speed;
+        double backRightPower = (rotY + rotX - rx) / denominator * speed;
 
         leftFront.setPower(frontLeftPower);
         leftBack.setPower(backLeftPower);

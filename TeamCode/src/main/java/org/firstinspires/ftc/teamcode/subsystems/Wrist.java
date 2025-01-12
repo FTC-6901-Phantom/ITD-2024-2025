@@ -14,7 +14,7 @@ public class Wrist {
     private static final double SPECIMEN_POSITION = 0;
     private boolean isScorePosition = true;
     private int debounceCounter = 0;
-    private static final int DEBOUNCE_THRESHOLD = 70;
+    private static final int DEBOUNCE_THRESHOLD = 40;
     public Wrist(OpMode opMode) {
         driver2 = opMode.gamepad2;
         wristServo = opMode.hardwareMap.get(Servo.class, "Wrist");

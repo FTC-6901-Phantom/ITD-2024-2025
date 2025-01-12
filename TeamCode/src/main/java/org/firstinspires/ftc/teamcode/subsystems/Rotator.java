@@ -16,7 +16,7 @@ public class Rotator {
     private static final double FullRotation = 1; // Adjust to correct value
     private boolean isVertical = true;
     private int debounceCounter = 0;
-    private static final int DEBOUNCE_THRESHOLD = 70;
+    private static final int DEBOUNCE_THRESHOLD = 30;
     public Rotator(OpMode opMode) {
         driver1 = opMode.gamepad1;
         driver2 = opMode.gamepad2;

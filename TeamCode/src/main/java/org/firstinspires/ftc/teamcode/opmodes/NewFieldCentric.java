@@ -49,6 +49,14 @@ public class NewFieldCentric extends OpMode {
     private boolean wasLeftBumperPressed = false;
     @Override
     public void loop() {
+
+        if (gamepad2.left_bumper) {
+            fieldCentricDrive.setSpeed(0.5); // Reduce speed while left bumper is held
+        } else if (slide.isAtHighPosition()) {
+            fieldCentricDrive.setSpeed(0.5); // Reduce speed when slides are at high position
+        } else {
+            fieldCentricDrive.setSpeed(1.0); // Default speed
+        }
         // Standard operations
         fieldCentricDrive.fieldCentric();
         claw.teleOp();
@@ -124,7 +132,9 @@ public class NewFieldCentric extends OpMode {
                     new InstantAction(arm::ArmIntake),
                     new SleepAction(.1),
                     new InstantAction(rotator::moveToHorizontal),
-                    new InstantAction(slide::moveToWall)));}
+                    new InstantAction(slide::moveToWall),
+                    new SleepAction(.2),
+                    new InstantAction(wrist::setScorePosition)));}
 
         if (gamepad2.dpad_down) {
             runningActions.add(new SequentialAction(

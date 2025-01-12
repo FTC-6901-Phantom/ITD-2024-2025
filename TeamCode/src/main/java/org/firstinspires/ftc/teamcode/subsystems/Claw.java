@@ -14,7 +14,7 @@ public class Claw {
     private static Gamepad driver2;
     public static boolean isClawOpen = false;
     private int debounceCounter = 0;
-    private static final int DEBOUNCE_THRESHOLD = 40;
+    private static final int DEBOUNCE_THRESHOLD = 30;
 
     public Claw(OpMode opMode) {
         driver1 = opMode.gamepad1;

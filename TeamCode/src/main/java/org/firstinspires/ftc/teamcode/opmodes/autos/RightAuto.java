@@ -51,15 +51,12 @@ public final class RightAuto extends LinearOpMode {
                             .build()
             );
             slide.HighRung();
-            sleep(400);
-            arm.ArmScore();
             sleep(300);
+            arm.ArmScore();
+            sleep(200);
             claw.setClawOpen();
             sleep(200);
-            arm.ArmRest();
             slide.Reset();
-            sleep(50);
-            rotator.moveToHorizontal();
 
             Actions.runBlocking(
                     drive.actionBuilder(Score1)
@@ -80,7 +77,7 @@ public final class RightAuto extends LinearOpMode {
             sleep(200);
             arm.ArmIntake();
             slide.moveToWall();
-            sleep(1000);
+            sleep(750);
             claw.setClawClosed();
             sleep(200);
             arm.ArmRest();
@@ -91,17 +88,10 @@ public final class RightAuto extends LinearOpMode {
                             .build());
             rotator.FullRotate();
             slide.HighRung();
-            sleep(100);
-            wrist.setScorePosition();
             sleep(200);
             arm.ArmScore();
-            sleep(300);
-            claw.setClawOpen();
             sleep(200);
-            arm.ArmRest();
-            slide.Reset();
-            sleep(50);
-            rotator.moveToHorizontal();
+            claw.setClawOpen();
 
             Actions.runBlocking(drive.actionBuilder(Score2)
                             .strafeTo(new Vector2d(-37,48))
@@ -110,7 +100,7 @@ public final class RightAuto extends LinearOpMode {
             sleep(200);
             arm.ArmIntake();
             slide.moveToWall();
-            sleep(1000);
+            sleep(750);
             claw.setClawClosed();
             sleep(200);
             arm.ArmRest();
@@ -121,17 +111,11 @@ public final class RightAuto extends LinearOpMode {
                             .build());
             rotator.FullRotate();
             slide.HighRung();
-            sleep(100);
-            wrist.setScorePosition();
             sleep(200);
             arm.ArmScore();
-            sleep(300);
+            sleep(200);
             claw.setClawOpen();
             sleep(200);
-            arm.ArmRest();
-            slide.Reset();
-            sleep(50);
-            rotator.moveToHorizontal();
 
             Actions.runBlocking(drive.actionBuilder(Score3)
                     .strafeTo(new Vector2d(-37,48.25))
@@ -140,7 +124,7 @@ public final class RightAuto extends LinearOpMode {
             sleep(200);
             arm.ArmIntake();
             slide.moveToWall();
-            sleep(1000);
+            sleep(750);
             claw.setClawClosed();
             sleep(200);
             arm.ArmRest();
@@ -151,17 +135,10 @@ public final class RightAuto extends LinearOpMode {
                             .build());
             rotator.FullRotate();
             slide.HighRung();
-            sleep(100);
-            wrist.setScorePosition();
             sleep(200);
             arm.ArmScore();
-            sleep(300);
-            claw.setClawOpen();
             sleep(200);
-            arm.ArmRest();
-            slide.Reset();
-            sleep(50);
-            rotator.moveToHorizontal();
+            claw.setClawOpen();
 
             Actions.runBlocking(drive.actionBuilder(Score4)
                     .strafeTo(new Vector2d(-37,48))
@@ -170,7 +147,7 @@ public final class RightAuto extends LinearOpMode {
             sleep(200);
             arm.ArmIntake();
             slide.moveToWall();
-            sleep(1000);
+            sleep(750);
             claw.setClawClosed();
             sleep(200);
             arm.ArmRest();
@@ -181,17 +158,13 @@ public final class RightAuto extends LinearOpMode {
                             .build());
             rotator.FullRotate();
             slide.HighRung();
-            sleep(100);
-            wrist.setScorePosition();
             sleep(200);
             arm.ArmScore();
-            sleep(300);
+            sleep(200);
             claw.setClawOpen();
             sleep(200);
-            arm.ArmRest();
-            slide.Reset();
-            sleep(50);
             rotator.moveToHorizontal();
+            slide.Reset();
 
             Actions.runBlocking(drive.actionBuilder(Score5)
                     .strafeTo(new Vector2d(-37,48))

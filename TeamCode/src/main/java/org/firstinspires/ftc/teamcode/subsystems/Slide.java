@@ -11,10 +11,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Slide {
     public static double POWER = 1;
     public static int HighBasket = 1785;
+
     public static int SpecimenIntake = 270;
     public static int HighRung = 425;
     public static int RESET = 0;
-    public static int POSITION_TOLERANCE = 20; // Tolerance for position checking
+    public static int POSITION_TOLERANCE = 600; // Tolerance for position checking
     public static int MANUAL_MOVE_SPEED = 10;
     private int position = 0;
 
