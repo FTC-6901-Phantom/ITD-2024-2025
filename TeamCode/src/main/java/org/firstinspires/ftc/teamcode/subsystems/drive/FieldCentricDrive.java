@@ -26,9 +26,8 @@ public class FieldCentricDrive {
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
         rightBack = hardwareMap.get(DcMotor.class, "rightBack");
 
-        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
-
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(

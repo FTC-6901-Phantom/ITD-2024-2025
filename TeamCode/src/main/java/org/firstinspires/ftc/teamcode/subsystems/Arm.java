@@ -10,11 +10,11 @@ public class Arm {
     private static Gamepad Driver1;
     private static Gamepad Driver2;
 
-    private static final double scorePosition = .83;
-    private static final double intakePosition = 0;
-    private static final double rest = 0.56;
-
-    private static final double intake2 = 0.1;
+    private static final double scorePosition = .9;
+    private static final double intakePosition = 0.05;
+    private static final double rest = 0.58;
+    private static final double detection = 0.32;
+    private static final double intake2 = 0.13;
 
     public static boolean ArmIsUp;
     private static boolean previousButtonState = false; // Tracks the previous state of the 'a' button
@@ -77,6 +77,9 @@ public class Arm {
 
     public void ArmIntake2() {
         armServo(intake2, intake2);
+    }
+    public void Detect() {
+        armServo(detection, detection);
     }
 
 }

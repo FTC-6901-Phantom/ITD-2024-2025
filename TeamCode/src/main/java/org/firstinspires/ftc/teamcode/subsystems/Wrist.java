@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Wrist {
     private static Servo wristServo;
     private static Gamepad driver2;
-    private static final double SCORE_POSITION = 0.186;
-    private static final double INTAKE_POSITION = .63;
+    private static final double SCORE_POSITION = 0.63;
+    private static final double INTAKE_POSITION = 0.186;
     private static final double SPECIMEN_POSITION = 0;
     private boolean isScorePosition = true;
     private int debounceCounter = 0;

@@ -1,11 +1,13 @@
-package org.firstinspires.ftc.teamcode.tuning;
+package org.firstinspires.ftc.teamcode.RoadRunner.tuning;
 
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
-import org.firstinspires.ftc.teamcode.subsystems.drive.uSELESS;
+import org.firstinspires.ftc.teamcode.RoadRunner.TankDrive;
+import org.firstinspires.ftc.teamcode.RoadRunner.ThreeDeadWheelLocalizer;
+import org.firstinspires.ftc.teamcode.RoadRunner.TwoDeadWheelLocalizer;
 
 public final class ManualFeedbackTuner extends LinearOpMode {
     public static double DISTANCE = 64;
@@ -33,8 +35,8 @@ public final class ManualFeedbackTuner extends LinearOpMode {
                             .lineToX(0)
                             .build());
             }
-        } else if (TuningOpModes.DRIVE_CLASS.equals(uSELESS.class)) {
-            uSELESS drive = new uSELESS(hardwareMap, new Pose2d(0, 0, 0));
+        } else if (TuningOpModes.DRIVE_CLASS.equals(TankDrive.class)) {
+            TankDrive drive = new TankDrive(hardwareMap, new Pose2d(0, 0, 0));
 
             if (drive.localizer instanceof TwoDeadWheelLocalizer) {
                 if (TwoDeadWheelLocalizer.PARAMS.perpXTicks == 0 && TwoDeadWheelLocalizer.PARAMS.parYTicks == 0) {

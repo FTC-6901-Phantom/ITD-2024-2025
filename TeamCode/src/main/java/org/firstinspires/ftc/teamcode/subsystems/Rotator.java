@@ -22,7 +22,7 @@ public class Rotator {
         driver2 = opMode.gamepad2;
         rotatorServo = opMode.hardwareMap.get(Servo.class, "rotator");
 
-        rotatorServo.setDirection(Servo.Direction.FORWARD);
+        rotatorServo.setDirection(Servo.Direction.REVERSE);
         setVertical(); // Initialize to vertical position
     }
     public void teleOp() {

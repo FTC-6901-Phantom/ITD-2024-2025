@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tuning;
+package org.firstinspires.ftc.teamcode.RoadRunner.tuning;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -8,8 +8,9 @@ import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.RoadRunner.Drawing;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
-import org.firstinspires.ftc.teamcode.subsystems.drive.uSELESS;
+import org.firstinspires.ftc.teamcode.RoadRunner.TankDrive;
 
 public class LocalizationTest extends LinearOpMode {
     @Override
@@ -32,18 +33,19 @@ public class LocalizationTest extends LinearOpMode {
 
                 drive.updatePoseEstimate();
 
-                telemetry.addData("x", drive.pose.position.x);
-                telemetry.addData("y", drive.pose.position.y);
-                telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
+                Pose2d pose = drive.localizer.getPose();
+                telemetry.addData("x", pose.position.x);
+                telemetry.addData("y", pose.position.y);
+                telemetry.addData("heading (deg)", Math.toDegrees(pose.heading.toDouble()));
                 telemetry.update();
 
                 TelemetryPacket packet = new TelemetryPacket();
                 packet.fieldOverlay().setStroke("#3F51B5");
-                Drawing.drawRobot(packet.fieldOverlay(), drive.pose);
+                Drawing.drawRobot(packet.fieldOverlay(), pose);
                 FtcDashboard.getInstance().sendTelemetryPacket(packet);
             }
-        } else if (TuningOpModes.DRIVE_CLASS.equals(uSELESS.class)) {
-            uSELESS drive = new uSELESS(hardwareMap, new Pose2d(0, 0, 0));
+        } else if (TuningOpModes.DRIVE_CLASS.equals(TankDrive.class)) {
+            TankDrive drive = new TankDrive(hardwareMap, new Pose2d(0, 0, 0));
 
             waitForStart();
 
@@ -58,14 +60,15 @@ public class LocalizationTest extends LinearOpMode {
 
                 drive.updatePoseEstimate();
 
-                telemetry.addData("x", drive.pose.position.x);
-                telemetry.addData("y", drive.pose.position.y);
-                telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
+                Pose2d pose = drive.localizer.getPose();
+                telemetry.addData("x", pose.position.x);
+                telemetry.addData("y", pose.position.y);
+                telemetry.addData("heading (deg)", Math.toDegrees(pose.heading.toDouble()));
                 telemetry.update();
 
                 TelemetryPacket packet = new TelemetryPacket();
                 packet.fieldOverlay().setStroke("#3F51B5");
-                Drawing.drawRobot(packet.fieldOverlay(), drive.pose);
+                Drawing.drawRobot(packet.fieldOverlay(), pose);
                 FtcDashboard.getInstance().sendTelemetryPacket(packet);
             }
         } else {

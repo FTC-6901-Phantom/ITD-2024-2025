@@ -84,7 +84,7 @@ public class NewFieldCentric extends OpMode {
                     new SleepAction(0.2), // Wait 0.2 seconds
                     new InstantAction(claw::setClawClosed),
                     new SleepAction(0.4), // Wait 0.4 seconds
-                    new InstantAction(wrist::setScorePosition),
+                    new InstantAction(arm::ArmIntake2),
                     new SleepAction(1),
                     new InstantAction(arm::ArmRest),
                     new InstantAction(wrist::setIntakePosition)
@@ -103,12 +103,12 @@ public class NewFieldCentric extends OpMode {
         // Update the previous state of the left bumper
         wasLeftBumperPressed = isLeftBumperPressed;
         // Check for dpad actions
-        if (gamepad2.dpad_up) {
+        if (gamepad2.circle) {
             runningActions.add(new SequentialAction(
                     new InstantAction(slide::moveHighBasket),
                     new InstantAction(arm::ArmRest),
                     new InstantAction(rotator::moveToHorizontal),
-                    new SleepAction(1),
+                    new SleepAction(.9),
                     new InstantAction(arm::ArmScore),
                     new SleepAction(.5),
                     new InstantAction(wrist::setScorePosition)));}
