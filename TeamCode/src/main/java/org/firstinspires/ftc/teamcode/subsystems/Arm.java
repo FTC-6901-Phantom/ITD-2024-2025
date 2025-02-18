@@ -14,7 +14,7 @@ public class Arm {
     private static final double intakePosition = 0.05;
     private static final double rest = 0.58;
     private static final double detection = 0.32;
-    private static final double intake2 = 0.13;
+    private static final double intake2 = 0.14;
 
     public static boolean ArmIsUp;
     private static boolean previousButtonState = false; // Tracks the previous state of the 'a' button

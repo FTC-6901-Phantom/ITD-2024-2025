@@ -51,9 +51,11 @@ public class NewFieldCentric extends OpMode {
     public void loop() {
 
         if (gamepad2.left_bumper) {
-            fieldCentricDrive.setSpeed(0.5); // Reduce speed while left bumper is held
+            fieldCentricDrive.setSpeed(0.65); // Reduce speed while left bumper is held
         } else if (slide.isAtHighPosition()) {
-            fieldCentricDrive.setSpeed(0.5); // Reduce speed when slides are at high position
+            fieldCentricDrive.setSpeed(0.75); // Reduce speed when slides are at high position
+        } else if (slide.isAtIntakePosition()) {
+                fieldCentricDrive.setSpeed(0.5);
         } else {
             fieldCentricDrive.setSpeed(1.0); // Default speed
         }

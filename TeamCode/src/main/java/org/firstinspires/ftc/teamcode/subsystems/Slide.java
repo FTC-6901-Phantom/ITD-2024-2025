@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import android.widget.GridLayout;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -10,12 +12,14 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Slide {
     public static double POWER = 1;
-    public static int HighBasket = 1785;
+    public static int HighBasket = 1740;
 
-    public static int SpecimenIntake = 270;
+    public static int SpecimenIntake = 350;
     public static int HighRung = 425;
     public static int RESET = 0;
     public static int POSITION_TOLERANCE = 600; // Tolerance for position checking
+    public static int POSITION_TOLERANCE2 = 50; // Tolerance for position checking
+
     public static int MANUAL_MOVE_SPEED = 10;
     private int position = 0;
 
@@ -96,6 +100,12 @@ public class Slide {
         int rightPosition = slideRight.getCurrentPosition();
         return Math.abs(leftPosition - HighBasket) <= POSITION_TOLERANCE &&
                 Math.abs(rightPosition - HighBasket) <= POSITION_TOLERANCE;
+    }
+    public boolean isAtIntakePosition() {
+        int leftPosition = slideLeft.getCurrentPosition();
+        int rightPosition = slideRight.getCurrentPosition();
+        return Math.abs(leftPosition - SpecimenIntake) <= POSITION_TOLERANCE2 &&
+                Math.abs(rightPosition - SpecimenIntake) <= POSITION_TOLERANCE2;
     }
 
     /**

@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
-@TeleOp //comment back in later when needed
+@TeleOp//comment back in later when needed
 public class ArmTuner extends OpMode {
     static Servo leftservo;
     static Servo rightservo;

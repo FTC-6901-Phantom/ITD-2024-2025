@@ -41,15 +41,15 @@ public final class LeftAuto extends LinearOpMode {
             claw.setClawClosed();
             arm.ArmRest();
             wrist.setIntakePosition();}
-            rotator.moveToHorizontal();
+        rotator.moveToHorizontal();
 
         waitForStart();
 
         if (opModeIsActive()) {
-           //preload
+            //preload
             Actions.runBlocking(
                     drive.actionBuilder(beginPose)
-                            .strafeToLinearHeading(new Vector2d(61, 61), Math.toRadians(215))
+                            .strafeToLinearHeading(new Vector2d(63, 59), Math.toRadians(195))
                             .build());
 
             rotator.moveToHorizontal();
@@ -69,12 +69,14 @@ public final class LeftAuto extends LinearOpMode {
             // Go to First Sample
             Actions.runBlocking(
                     drive.actionBuilder(Basket)
-                            .splineToLinearHeading(new Pose2d(50.25, 41, Math.toRadians(275)), Math.toRadians(225))
+                            .splineToLinearHeading(new Pose2d(51, 39, Math.toRadians(275)), Math.toRadians(225))
                             .build());
 
             // Grabbing First Sample
             wrist.setIntakePosition();
             sleep(200);
+            arm.ArmIntake2();
+            sleep(400);
             arm.ArmIntake();
             sleep(400);
             claw.setClawClosed();
@@ -87,7 +89,7 @@ public final class LeftAuto extends LinearOpMode {
                     drive.actionBuilder(firstsample)
                             .setTangent(45)
                             .splineToLinearHeading(new Pose2d(61,61, Math.toRadians(195)), Math.toRadians(45))
-                    .build());
+                            .build());
 
             // Scoring First Sample Score
             rotator.moveToHorizontal();
@@ -107,12 +109,14 @@ public final class LeftAuto extends LinearOpMode {
             // Driving to Second Sample
             Actions.runBlocking(
                     drive.actionBuilder(Basket)
-                            .splineToLinearHeading(new Pose2d(61, 39.5,Math.toRadians(273)), -Math.PI / 2)
-                    .build());
+                            .splineToLinearHeading(new Pose2d(62, 39,Math.toRadians(273)), -Math.PI / 2)
+                            .build());
 
             // Picking Up Second Commands
             wrist.setIntakePosition();
             sleep(200);
+            arm.ArmIntake2();
+            sleep(400);
             arm.ArmIntake();
             sleep(400);
             claw.setClawClosed();
@@ -123,7 +127,7 @@ public final class LeftAuto extends LinearOpMode {
             Actions.runBlocking(
                     drive.actionBuilder(secondsample)
                             .splineToLinearHeading(new Pose2d(61,61, Math.toRadians(195)), Math.toRadians(270))
-                    .build());
+                            .build());
 
             // Scoring Second Commands
             rotator.moveToHorizontal();
@@ -145,15 +149,15 @@ public final class LeftAuto extends LinearOpMode {
             Actions.runBlocking(
                     drive.actionBuilder(Basket)
                             .setTangent(Math.toRadians(250))
-                            .lineToYLinearHeading(25 , Math.toRadians(0))
-                    .build());
+                            .lineToYLinearHeading(25.5 , Math.toRadians(0))
+                            .build());
 
             //Grabbing Third Commands
             rotator.moveToVertical();
             sleep(200);
             wrist.setIntakePosition();
             sleep(200);
-            arm.ArmIntake();
+            arm.ArmIntake2();
 
             Actions.runBlocking(
                     drive.actionBuilder(thirdSample)
@@ -161,6 +165,8 @@ public final class LeftAuto extends LinearOpMode {
                             .lineToXLinearHeading(56, Math.toRadians(3))
                             .build());
 
+            sleep(500);
+            arm.ArmIntake();
             sleep(500);
             claw.setClawClosed();
             sleep(500);
@@ -177,8 +183,8 @@ public final class LeftAuto extends LinearOpMode {
             //Going to last Basket
             Actions.runBlocking(
                     drive.actionBuilder(thirdSample)
-                    .splineToLinearHeading(new Pose2d(59,59, Math.toRadians(195)), Math.toRadians(270))
-                    .build());
+                            .splineToLinearHeading(new Pose2d(61,59, Math.toRadians(195)), Math.toRadians(270))
+                            .build());
 
             // Scoring Third Commands
             rotator.moveToHorizontal( );
@@ -198,8 +204,8 @@ public final class LeftAuto extends LinearOpMode {
             //Park
             Actions.runBlocking(
                     drive.actionBuilder(Basket)
-                    .setTangent(Math.toRadians(238.5))
-                    .lineToYLinearHeading(-15, Math.toRadians(180))
-                    .build());
+                            .setTangent(Math.toRadians(238.5))
+                            .lineToYLinearHeading(-15, Math.toRadians(180))
+                            .build());
 
-}}}
+        }}}
