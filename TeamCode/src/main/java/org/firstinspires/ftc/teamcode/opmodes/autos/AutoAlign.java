@@ -22,11 +22,11 @@ public class AutoAlign extends LinearOpMode {
     private MecanumDrive drive;
 
     // Alignment Constants
-    private final double kpLateral = 0.1;
-    private final double kpForward = 0.1;
+    private final double kpLateral = 0.05;
+    private final double kpForward = 0.05;
     private final double forwardOffset = .2;
     private final double clawYOffset = -.2;
-    private final double tolerance = 1;
+    private final double tolerance = 0.4;
 
     @Override
     public void runOpMode() {

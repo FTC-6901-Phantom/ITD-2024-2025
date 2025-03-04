@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.FieldCentricDrive;
 
 import java.util.ArrayList;
 import java.util.List;
-@TeleOp(name = "TeleOp")
+//@TeleOp(name = "TeleOp")
 public class FieldCentric extends OpMode {
     private final FtcDashboard dash = FtcDashboard.getInstance();
     private List<Action> runningActions = new ArrayList<>();

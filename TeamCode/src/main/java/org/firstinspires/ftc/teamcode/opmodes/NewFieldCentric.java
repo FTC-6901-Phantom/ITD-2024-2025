@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@TeleOp(name = "TeleOp2")
+@TeleOp(name = "TeleOp")
 public class NewFieldCentric extends OpMode {
 
     private final FtcDashboard dash = FtcDashboard.getInstance();
@@ -87,7 +87,7 @@ public class NewFieldCentric extends OpMode {
                     new InstantAction(claw::setClawClosed),
                     new SleepAction(0.4), // Wait 0.4 seconds
                     new InstantAction(arm::ArmIntake2),
-                    new SleepAction(1),
+                    new SleepAction(.65),
                     new InstantAction(arm::ArmRest),
                     new InstantAction(wrist::setIntakePosition)
             )));}

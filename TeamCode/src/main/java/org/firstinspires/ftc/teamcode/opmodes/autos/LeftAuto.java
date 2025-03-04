@@ -58,10 +58,9 @@ public final class LeftAuto extends LinearOpMode {
             arm.ArmScore();
             sleep(200);
             wrist.setScorePosition();
-            sleep(300);
+            sleep(200);
             claw.setClawOpen();
-            sleep(400);
-            wrist.setScorePosition();
+            sleep(200);
             arm.ArmRest();
             sleep(200);
             slides.Reset();
@@ -78,7 +77,7 @@ public final class LeftAuto extends LinearOpMode {
             arm.ArmIntake2();
             sleep(400);
             arm.ArmIntake();
-            sleep(400);
+            sleep(200);
             claw.setClawClosed();
             sleep(550);
             arm.ArmRest();
@@ -109,7 +108,7 @@ public final class LeftAuto extends LinearOpMode {
             // Driving to Second Sample
             Actions.runBlocking(
                     drive.actionBuilder(Basket)
-                            .splineToLinearHeading(new Pose2d(62, 39,Math.toRadians(273)), -Math.PI / 2)
+                            .splineToLinearHeading(new Pose2d(62, 40,Math.toRadians(273)), -Math.PI / 2)
                             .build());
 
             // Picking Up Second Commands
@@ -118,7 +117,7 @@ public final class LeftAuto extends LinearOpMode {
             arm.ArmIntake2();
             sleep(400);
             arm.ArmIntake();
-            sleep(400);
+            sleep(200);
             claw.setClawClosed();
             sleep(550);
             arm.ArmRest();
@@ -148,8 +147,9 @@ public final class LeftAuto extends LinearOpMode {
             //Going To Grabbing Third
             Actions.runBlocking(
                     drive.actionBuilder(Basket)
-                            .setTangent(Math.toRadians(250))
-                            .lineToYLinearHeading(25.5 , Math.toRadians(0))
+                            .setTangent(Math.toRadians(270))
+                            //.lineToYLinearHeading(25.5 , Math.toRadians(0))
+                            .strafeToLinearHeading(new Vector2d(56,25.5),Math.toRadians(0))
                             .build());
 
             //Grabbing Third Commands
@@ -162,14 +162,14 @@ public final class LeftAuto extends LinearOpMode {
             Actions.runBlocking(
                     drive.actionBuilder(thirdSample)
                             .setTangent(Math.toRadians(0))
-                            .lineToXLinearHeading(56, Math.toRadians(3))
+                            .strafeToLinearHeading(new Vector2d(61,25.5),Math.toRadians(0))
                             .build());
 
-            sleep(500);
+            sleep(300);
             arm.ArmIntake();
-            sleep(500);
+            sleep(200);
             claw.setClawClosed();
-            sleep(500);
+            sleep(200);
             arm.ArmRest();
 
 //            Actions.runBlocking(
