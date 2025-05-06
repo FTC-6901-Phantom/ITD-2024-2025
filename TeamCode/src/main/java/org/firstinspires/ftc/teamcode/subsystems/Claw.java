@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Claw {
     private static final double OPEN_POSITION = 0.0;
-    private static final double CLOSED_POSITION = 0.27;
+    private static final double CLOSED_POSITION = 0.28;
     private static Servo clawServo;
     private static Gamepad driver1;
     private static Gamepad driver2;

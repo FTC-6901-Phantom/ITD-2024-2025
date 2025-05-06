@@ -14,7 +14,8 @@ public class Arm {
     private static final double intakePosition = 0.05;
     private static final double rest = 0.58;
     private static final double detection = 0.32;
-    private static final double intake2 = 0.14;
+    private static final double intake2 = 0.17;
+    private static final double Wall = 1;
 
     public static boolean ArmIsUp;
     private static boolean previousButtonState = false; // Tracks the previous state of the 'a' button
@@ -27,7 +28,7 @@ public class Arm {
 
         leftServo.setDirection(Servo.Direction.FORWARD);
         rightServo.setDirection(Servo.Direction.REVERSE);
-        armServo(rest, rest);
+        armServo(scorePosition, scorePosition);
         ArmIsUp = true;
     }
 
@@ -69,6 +70,9 @@ public class Arm {
     public void ArmIntake() {
         armServo(intakePosition, intakePosition);
         ArmIsUp = false;
+    }
+    public void Wall() {
+        armServo(Wall, Wall);
     }
 
     public void ArmRest() {

@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Slide {
     public static double POWER = 1;
-    public static int HighBasket = 1740;
+    public static int HighBasket = 1650;
 
     public static int SpecimenIntake = 350;
     public static int HighRung = 425;

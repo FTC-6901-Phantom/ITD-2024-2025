@@ -11,7 +11,7 @@ public class Wrist {
     private static Gamepad driver2;
     private static final double SCORE_POSITION = 0.63;
     private static final double INTAKE_POSITION = 0.186;
-    private static final double SPECIMEN_POSITION = 0;
+    private static final double SPECIMEN_POSITION = .7;
     private boolean isScorePosition = true;
     private int debounceCounter = 0;
     private static final int DEBOUNCE_THRESHOLD = 40;
@@ -36,4 +36,8 @@ public class Wrist {
         isScorePosition = true;}
     public void setIntakePosition() {
         wristServo.setPosition(INTAKE_POSITION);
-        isScorePosition = false;}}
+        isScorePosition = false;}
+
+    public void Spec() {
+        wristServo.setPosition(SPECIMEN_POSITION);}
+}

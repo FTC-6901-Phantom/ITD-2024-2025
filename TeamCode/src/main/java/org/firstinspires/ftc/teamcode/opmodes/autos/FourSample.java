@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.autos;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -14,8 +15,8 @@ import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 import org.firstinspires.ftc.teamcode.subsystems.Rotator;
 
 @Config
-@Autonomous(name = "LeftAuto", group = "Autonomous")
-public final class LeftAuto extends LinearOpMode {
+@Autonomous(name = "0+4", group = "Autonomous")
+public final class FourSample extends LinearOpMode {
 
     // Declare subsystem variables
     @Override
@@ -26,6 +27,7 @@ public final class LeftAuto extends LinearOpMode {
         Pose2d secondsample = new Pose2d(61, 39.5, Math.toRadians(273));
         Pose2d Basket = new Pose2d(61, 61, Math.toRadians(195));
         Pose2d thirdSample = new Pose2d(52, 22, Math.toRadians(0));
+        Pose2d fourthSample = new Pose2d(14, 58, Math.toRadians(180));
 
         // Initialize the drivetrain
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
@@ -39,7 +41,7 @@ public final class LeftAuto extends LinearOpMode {
 
         while (!opModeIsActive()&&!isStopRequested()){
             claw.setClawClosed();
-            arm.ArmRest();
+            arm.ArmScore();
             wrist.setIntakePosition();}
         rotator.moveToHorizontal();
 
@@ -47,14 +49,15 @@ public final class LeftAuto extends LinearOpMode {
 
         if (opModeIsActive()) {
             //preload
+            arm.ArmRest();
+
             Actions.runBlocking(
                     drive.actionBuilder(beginPose)
-                            .strafeToLinearHeading(new Vector2d(63, 59), Math.toRadians(195))
+                            .afterTime(.5, new InstantAction(slides::moveHighBasket))
+                            .strafeToLinearHeading(new Vector2d(62, 56), Math.toRadians(215))
                             .build());
 
             rotator.moveToHorizontal();
-            slides.moveHighBasket();
-            sleep(1000);
             arm.ArmScore();
             sleep(200);
             wrist.setScorePosition();
@@ -68,7 +71,7 @@ public final class LeftAuto extends LinearOpMode {
             // Go to First Sample
             Actions.runBlocking(
                     drive.actionBuilder(Basket)
-                            .splineToLinearHeading(new Pose2d(51, 39, Math.toRadians(275)), Math.toRadians(225))
+                            .splineToLinearHeading(new Pose2d(51.25, 40.25, Math.toRadians(270)), Math.toRadians(225))
                             .build());
 
             // Grabbing First Sample
@@ -79,21 +82,19 @@ public final class LeftAuto extends LinearOpMode {
             arm.ArmIntake();
             sleep(200);
             claw.setClawClosed();
-            sleep(550);
+            sleep(250);
             arm.ArmRest();
-            sleep(100);
 
             // Going to scoring
             Actions.runBlocking(
                     drive.actionBuilder(firstsample)
+                            .afterTime(.6, new InstantAction(slides::moveHighBasket))
                             .setTangent(45)
-                            .splineToLinearHeading(new Pose2d(61,61, Math.toRadians(195)), Math.toRadians(45))
+                            .splineToLinearHeading(new Pose2d(62,56, Math.toRadians(215)), Math.toRadians(45))
                             .build());
 
             // Scoring First Sample Score
             rotator.moveToHorizontal();
-            slides.moveHighBasket();
-            sleep(1000);
             arm.ArmScore();
             sleep(200);
             wrist.setScorePosition();
@@ -108,7 +109,7 @@ public final class LeftAuto extends LinearOpMode {
             // Driving to Second Sample
             Actions.runBlocking(
                     drive.actionBuilder(Basket)
-                            .splineToLinearHeading(new Pose2d(62, 40,Math.toRadians(273)), -Math.PI / 2)
+                            .splineToLinearHeading(new Pose2d(62.5, 40.5,Math.toRadians(273)), -Math.PI / 2)
                             .build());
 
             // Picking Up Second Commands
@@ -119,19 +120,17 @@ public final class LeftAuto extends LinearOpMode {
             arm.ArmIntake();
             sleep(200);
             claw.setClawClosed();
-            sleep(550);
+            sleep(250);
             arm.ArmRest();
-            sleep(100);
             //Going to Basket Second Time
             Actions.runBlocking(
                     drive.actionBuilder(secondsample)
-                            .splineToLinearHeading(new Pose2d(61,61, Math.toRadians(195)), Math.toRadians(270))
+                            .afterTime(.6, new InstantAction(slides::moveHighBasket))
+                            .splineToLinearHeading(new Pose2d(62,55, Math.toRadians(215)), Math.toRadians(270))
                             .build());
 
             // Scoring Second Commands
             rotator.moveToHorizontal();
-            slides.moveHighBasket();
-            sleep(1000);
             arm.ArmScore();
             sleep(200);
             wrist.setScorePosition();
@@ -142,14 +141,13 @@ public final class LeftAuto extends LinearOpMode {
             arm.ArmRest();
             sleep(200);
             slides.Reset();
-            sleep(500);
 
             //Going To Grabbing Third
             Actions.runBlocking(
                     drive.actionBuilder(Basket)
                             .setTangent(Math.toRadians(270))
                             //.lineToYLinearHeading(25.5 , Math.toRadians(0))
-                            .strafeToLinearHeading(new Vector2d(56,25.5),Math.toRadians(0))
+                            .strafeToLinearHeading(new Vector2d(54,25.5),Math.toRadians(0))
                             .build());
 
             //Grabbing Third Commands
@@ -162,34 +160,24 @@ public final class LeftAuto extends LinearOpMode {
             Actions.runBlocking(
                     drive.actionBuilder(thirdSample)
                             .setTangent(Math.toRadians(0))
-                            .strafeToLinearHeading(new Vector2d(61,25.5),Math.toRadians(0))
+                            .strafeToLinearHeading(new Vector2d(57,26),Math.toRadians(0))
                             .build());
 
-            sleep(300);
             arm.ArmIntake();
             sleep(200);
             claw.setClawClosed();
-            sleep(200);
+            sleep(250);
             arm.ArmRest();
-
-//            Actions.runBlocking(
-//                    drive.actionBuilder(new Pose2d(54, 26, Math.toRadians(0)))
-//                            .setTangent(Math.toRadians(0))
-//                            .lineToXLinearHeading (50,Math.toRadians(0))
-//                            .build());
-
-            //arm.ArmRest();
 
             //Going to last Basket
             Actions.runBlocking(
                     drive.actionBuilder(thirdSample)
-                            .splineToLinearHeading(new Pose2d(61,59, Math.toRadians(195)), Math.toRadians(270))
+                            .afterTime(1.65, new InstantAction(slides::moveHighBasket))
+                            .splineToLinearHeading(new Pose2d(64,55, Math.toRadians(215)), Math.toRadians(270))
                             .build());
 
             // Scoring Third Commands
             rotator.moveToHorizontal( );
-            slides.moveHighBasket();
-            sleep(1000);
             arm.ArmScore();
             sleep(200);
             wrist.setScorePosition();
@@ -201,10 +189,11 @@ public final class LeftAuto extends LinearOpMode {
             sleep(200);
             slides.Reset();
             claw.setClawClosed();
+
             //Park
             Actions.runBlocking(
                     drive.actionBuilder(Basket)
-                            .setTangent(Math.toRadians(238.5))
+                            .setTangent(Math.toRadians(239.5))
                             .lineToYLinearHeading(-15, Math.toRadians(180))
                             .build());
 

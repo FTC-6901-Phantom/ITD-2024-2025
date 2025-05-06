@@ -14,8 +14,8 @@ import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 import org.firstinspires.ftc.teamcode.subsystems.Rotator;
 
 @Config
-@Autonomous(name = "RightAuto", group = "Autonomous")
-public final class RightAuto extends LinearOpMode {
+@Autonomous(name = "5+0", group = "Autonomous")
+public final class FiveSpec extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {

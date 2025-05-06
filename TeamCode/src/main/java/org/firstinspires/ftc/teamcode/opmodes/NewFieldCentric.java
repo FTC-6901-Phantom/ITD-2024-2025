@@ -110,16 +110,16 @@ public class NewFieldCentric extends OpMode {
                     new InstantAction(slide::moveHighBasket),
                     new InstantAction(arm::ArmRest),
                     new InstantAction(rotator::moveToHorizontal),
-                    new SleepAction(.9),
+                    new SleepAction(.75),
                     new InstantAction(arm::ArmScore),
-                    new SleepAction(.5),
+                    new SleepAction(.3),
                     new InstantAction(wrist::setScorePosition)));}
 
         if (gamepad2.dpad_right) {
             runningActions.add(new SequentialAction(
                     new InstantAction(arm::ArmRest),
                     new SleepAction(.1),
-                    new InstantAction(rotator::FullRotate),
+                    new InstantAction(rotator::moveToHorizontal),
                     new InstantAction(slide::HighRung),
                     new SleepAction(.4),
                     new InstantAction(wrist::setScorePosition),
@@ -131,12 +131,12 @@ public class NewFieldCentric extends OpMode {
 
         if (gamepad2.dpad_left) {
             runningActions.add(new SequentialAction(
-                    new InstantAction(arm::ArmIntake),
+                    new InstantAction(slide::Reset),
+                    new InstantAction(arm::Wall),
                     new SleepAction(.1),
                     new InstantAction(rotator::moveToHorizontal),
-                    new InstantAction(slide::moveToWall),
                     new SleepAction(.2),
-                    new InstantAction(wrist::setScorePosition)));}
+                    new InstantAction(wrist::Spec)));}
 
         if (gamepad2.dpad_down) {
             runningActions.add(new SequentialAction(
